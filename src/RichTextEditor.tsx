@@ -71,8 +71,6 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
         sendAction(action);
     }
 
-    console.log(height);
-
     return (
         <>
             <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={[]} onPress={onPress} />
