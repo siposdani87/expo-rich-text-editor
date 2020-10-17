@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import RichTextToolbar from './RichTextToolbar';
-// import { HTML } from './editor';
+import { HTML } from './editor';
 
 let htmlSource = require('./editor.html');
+if (Platform.OS === 'android'){
+    htmlSource = { html: HTML };
+}
 
 export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (v) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean }) {
     const webViewRef = useRef(null);
