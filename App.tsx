@@ -1,12 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
+import RichTextEditor from './src/RichTextEditor';
 
 export default function App() {
+  const value = 'Hello <b>bold</b> world!<p>this is a new <i>italic</i> paragraph</p> <p>this is another new <u>underline</u> paragraph</p>';
+  const numberOfLines = 5;
+  const minHeight = 20 * numberOfLines;
+
+  async function onValueChange(v) {
+    console.log('onValueChange', v);
+  }
+
+  function actionMap() {
+    function getColor(selected) {
+      return selected ? 'red' : 'black';
+    }
+
+    const size= 24;
+
+    return {
+      undo: ({ selected }) => (<MaterialIcons name='undo' size={size} color={getColor(selected)} />),
+      redo: ({ selected }) => (<MaterialIcons name='redo' size={size} color={getColor(selected)} />),
+      bold: ({ selected }) => (<MaterialIcons name='format-bold' size={size} color={getColor(selected)} />),
+      italic: ({ selected }) => (<MaterialIcons name='format-italic' size={size} color={getColor(selected)} />),
+      underline: ({ selected }) => (<MaterialIcons name='format-underlined' size={size} color={getColor(selected)} />),
+      unorderedList: ({ selected }) => (<MaterialIcons name='format-list-bulleted' size={size} color={getColor(selected)} />),
+      orderedList: ({ selected }) => (<MaterialIcons name='format-list-numbered' size={size} color={getColor(selected)} />),
+      clear: ({ selected }) => (<MaterialIcons name='format-clear' size={size} color={getColor(selected)} />),
+      code: ({ selected }) => (<MaterialIcons name='code' size={size} color={getColor(selected)} />),
+    };
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
+
+      <View style={[styles.editorView]}>
+        <RichTextEditor minHeight={minHeight} value={value} actionMap={actionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+      </View>
     </View>
   );
 }
@@ -14,8 +47,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  editorView: {
+    width: '100%',
+    backgroundColor: 'yellow',
+  },
+  editor: {
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  toolbar: {
+    borderColor: 'red',
+    borderWidth: 1,
   },
 });
