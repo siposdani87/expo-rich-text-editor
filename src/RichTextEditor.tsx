@@ -83,7 +83,6 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
 
 const styles = StyleSheet.create({
     editorContainer: {
-        // flex: 1,
         padding: 10,
     },
     toolbarContainer: {
