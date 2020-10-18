@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
 import RichTextEditor from './src/RichTextEditor';
 
 export default function App() {
@@ -11,17 +13,18 @@ export default function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      const v = 'Hello <b>bold</b> world!<p>this is a new <i>italic</i> paragraph</p> <p>this is another new <u>underline</u> paragraph</p>';
+      const v = '<p><i><u>Vadásztársaságunk</u></i> <b>2006</b>-ban alakult, a volt <i>Rábaközi Vadásztársaság</i> területeinek feldarabolása <b>következtében</b>.<br></p><p>Hello <b>bold</b> world!</p><p>this is a new <i>italic</i> paragraph</p> <p>this is another new <u>underline</u> paragraph</p>';
       setValue(v);
     }, 2000);
   }, []);
 
   async function onValueChange(v) {
     console.log('onValueChange', v);
+    setValue(v);
   }
 
   function getActionMap() {
-    const size= 24;
+    const size = 24;
 
     function getColor(selected) {
       return selected ? 'red' : 'black';
@@ -41,28 +44,36 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style='auto' />
-
-      <View style={[styles.editorView]}>
-        <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
-      </View>
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <View style={styles.container}>
+          <StatusBar style='auto' />
+          <ScrollView>
+            <View style={[styles.editorView]}>
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+            </View>
+            <View style={[styles.editorView]}>
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+            </View>
+            <View style={[styles.editorView]}>
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+            </View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'lightgrey',
   },
   editorView: {
-    width: '100%',
-    backgroundColor: 'yellow',
+    margin: 10,
   },
   editor: {
-    borderColor: 'black',
+    borderColor: 'blue',
     borderWidth: 1,
   },
   toolbar: {

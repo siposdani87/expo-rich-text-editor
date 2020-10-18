@@ -25,17 +25,21 @@ export const HTML = `<!DOCTYPE html>
                 sans-serif;
             font-size: 1em;
             color: #000000;
-            overflow: scroll;
-            height: 100%;
+        }
+
+        p {
+            margin: 0 0 1em 0;
         }
 
         .editor,
-        .content {
+        .content,
+        .textarea {
             outline: 0;
             padding: 0;
             margin: 0;
             width: 100%;
             border: none;
+            background: transparent;
         }
 
         [placeholder]:empty:before,
@@ -85,16 +89,20 @@ export const HTML = `<!DOCTYPE html>
                     sendAction('changeHtml', contentEditor.innerHTML);
                 },
                 changeHeight: function(){
-                    var newHeight = Math.min(contentEditor.scrollHeight, contentEditor.offsetHeight);
+                    var newHeight = Math.max(contentEditor.scrollHeight, contentEditor.offsetHeight);
                     if (height !== newHeight) {
                         height = newHeight;
+                        textareaEditor.style.height = newHeight + 'px';
                         sendAction('changeHeight', newHeight);
                     }
                 },
                 setHtml: function (value) {
-                    contentEditor.innerHTML = correctValue(value);
-                    textareaEditor.value = contentEditor.innerHTML;
-                    Actions.changeHeight();
+                    const correctedValue = correctValue(value);
+                    if (contentEditor.innerHTML !== correctedValue){
+                        contentEditor.innerHTML = correctedValue;
+                        textareaEditor.value = contentEditor.innerHTML;
+                        Actions.changeHeight();
+                    }
                 },
                 undo: function () {
                     exec('undo');
@@ -142,7 +150,7 @@ export const HTML = `<!DOCTYPE html>
                 var defaultParagraphSeparator = 'p';
 
                 var textarea = document.createElement('textarea');
-                textarea.className = 'content';
+                textarea.className = 'textarea';
                 textarea.addEventListener('input', () => {
                     content.innerHTML = textarea.value;
                 }, false);
