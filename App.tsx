@@ -47,16 +47,16 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView>
         <View style={styles.container}>
-          <StatusBar style='auto' />
+          <StatusBar style='dark' />
           <ScrollView>
             <View style={[styles.editorView]}>
-              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
             </View>
             <View style={[styles.editorView]}>
-              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editorDark} debug={true} />
             </View>
             <View style={[styles.editorView]}>
-              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} />
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
             </View>
           </ScrollView>
         </View>
@@ -75,6 +75,12 @@ const styles = StyleSheet.create({
   editor: {
     borderColor: 'blue',
     borderWidth: 1,
+  },
+  editorDark: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    backgroundColor: 'black',
+    color: 'white',
   },
   toolbar: {
     borderColor: 'red',
