@@ -19,7 +19,7 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
             props.onValueChange(html);
         },
         changeHeight: function(h){
-            setHeight(h + 40);
+            setHeight(h + 30);
         },
         log: function (message) {
             console.log(message);
@@ -53,8 +53,8 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
         }
     }
 
-    function setHTML(value) {
-        sendAction('setHtml', value);
+    function setHTML(html) {
+        sendAction('setHtml', html);
     }
 
     function onLoad() {
@@ -82,12 +82,10 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
 }
 
 const styles = StyleSheet.create({
-    editorContainer: {
-        padding: 10,
-    },
-    toolbarContainer: {
-    },
+    editorContainer: {},
+    toolbarContainer: {},
     webView: {
-        // flex: 1,
+        margin: 10,
+        backgroundColor: 'white',
     }
 });
