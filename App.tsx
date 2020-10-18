@@ -21,11 +21,11 @@ export default function App() {
   }
 
   function getActionMap() {
+    const size= 24;
+
     function getColor(selected) {
       return selected ? 'red' : 'black';
     }
-
-    const size= 24;
 
     return {
       undo: ({ selected }) => (<MaterialIcons name='undo' size={size} color={getColor(selected)} />),
