@@ -9,7 +9,7 @@ if (Platform.OS === 'android'){
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean }) {
+export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const webViewRef = useRef(null);
     const [inited, setInited] = useState(false);
     const [height, setHeight] = useState(props.minHeight);
@@ -19,10 +19,15 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
             props.onValueChange(html);
         },
         changeHeight: function(h){
+            if (h < props.minHeight){
+                h = props.minHeight;
+            }
             setHeight(h + 30);
         },
         log: function (message) {
-            console.log(message);
+            if (props.debug) {
+                console.log(message);
+            }
         }
     };
 
@@ -57,8 +62,15 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
         sendAction('setHtml', html);
     }
 
+    function setColor(color) {
+        sendAction('setColor', color);
+    }
+
     function onLoad() {
         setInited(true);
+        if (props.editorStyle && props.editorStyle.color){
+            setColor(props.editorStyle.color);
+        }
         setHTML(props.value);
     }
 
@@ -86,6 +98,6 @@ const styles = StyleSheet.create({
     toolbarContainer: {},
     webView: {
         margin: 10,
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
     }
 });

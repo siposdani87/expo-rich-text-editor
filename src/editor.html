@@ -24,7 +24,6 @@
             font-family: '-apple-system', 'HelveticaNeue', Helvetica, Roboto, Arial,
                 sans-serif;
             font-size: 1em;
-            color: #000000;
         }
 
         p {
@@ -40,12 +39,6 @@
             width: 100%;
             border: none;
             background: transparent;
-        }
-
-        [placeholder]:empty:before,
-        [placeholder]:empty:focus:before {
-            content: attr(placeholder);
-            color: #d1d1d1;
         }
 
         [contenteditable] {
@@ -96,13 +89,17 @@
                         sendAction('changeHeight', newHeight);
                     }
                 },
-                setHtml: function (value) {
-                    const correctedValue = correctValue(value);
-                    if (contentEditor.innerHTML !== correctedValue){
-                        contentEditor.innerHTML = correctedValue;
+                setHtml: function (html) {
+                    const validHtml = correctValue(html);
+                    if (contentEditor.innerHTML !== validHtml){
+                        contentEditor.innerHTML = validHtml;
                         textareaEditor.value = contentEditor.innerHTML;
                         Actions.changeHeight();
                     }
+                },
+                setColor: function(color){
+                    contentEditor.style.color = color;
+                    textareaEditor.style.color = color;
                 },
                 undo: function () {
                     exec('undo');
