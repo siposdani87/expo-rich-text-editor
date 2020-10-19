@@ -1,11 +1,24 @@
 {
+  "name": "expo-rich-text-editor",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Dániel Sipos",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/siposdani87",
+  "private": true,
   "main": "node_modules/expo/AppEntry.js",
+  "keywords": ["expo-rich-text-editor"],
+  "files": [
+    "src/*",
+    "package.json"
+  ],
   "scripts": {
-    "start": "expo start",
+    "start": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "tsc-test": "tsc --project . --noEmit"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
@@ -24,6 +37,5 @@
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
     "typescript": "~3.9.5"
-  },
-  "private": true
+  }
 }
