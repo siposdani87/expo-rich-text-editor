@@ -5,7 +5,7 @@ import RichTextToolbar from './RichTextToolbar';
 
 import { HTML } from './editor';
 let htmlSource = require('./editor.html');
-if (Platform.OS === 'android'){
+if (Platform.OS === 'android' || Platform.OS === 'web'){
     htmlSource = { html: HTML };
 }
 
