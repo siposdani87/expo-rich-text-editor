@@ -28,8 +28,8 @@
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
-    "react-native-web": "~0.13.12",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-web": "~0.13.7",
     "react-native-webview": "10.7.0",
     "react-native-safe-area-context": "3.1.4"
   },
@@ -41,6 +41,6 @@
     "eslint-config-react-native": "4.1.0",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "4.2.0",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.2"
   }
 }
