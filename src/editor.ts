@@ -78,10 +78,10 @@ export const HTML = `<!DOCTYPE html>
             }
 
             var Actions = {
-                changeHtml: function(){
+                changeHtml: function () {
                     sendAction('changeHtml', contentEditor.innerHTML);
                 },
-                changeHeight: function(){
+                changeHeight: function () {
                     var newHeight = Math.max(contentEditor.scrollHeight, contentEditor.offsetHeight);
                     if (height !== newHeight) {
                         height = newHeight;
@@ -91,15 +91,19 @@ export const HTML = `<!DOCTYPE html>
                 },
                 setHtml: function (html) {
                     const validHtml = correctValue(html);
-                    if (contentEditor.innerHTML !== validHtml){
+                    if (contentEditor.innerHTML !== validHtml) {
                         contentEditor.innerHTML = validHtml;
                         textareaEditor.value = contentEditor.innerHTML;
                         Actions.changeHeight();
                     }
                 },
-                setColor: function(color){
+                setColor: function (color) {
                     contentEditor.style.color = color;
                     textareaEditor.style.color = color;
+                },
+                setDisabled: function (disabled) {
+                    contentEditor.contentEditable = !disabled;
+                    textareaEditor.disabled = disabled;
                 },
                 undo: function () {
                     exec('undo');
@@ -127,7 +131,7 @@ export const HTML = `<!DOCTYPE html>
                 },
                 code: function () {
                     isCode = !isCode;
-                    if (isCode){
+                    if (isCode) {
                         contentEditor.style.display = 'none';
                         textareaEditor.style.display = 'block';
                     } else {
