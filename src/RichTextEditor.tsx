@@ -10,6 +10,7 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
 }
 
 export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value: string) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+    const editorStyle = StyleSheet.flatten(props.editorStyle);
     const webViewRef = useRef(null);
     const [inited, setInited] = useState(false);
     const [height, setHeight] = useState(props.minHeight);
@@ -38,10 +39,10 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
     }, [inited, props.value]);
 
     useEffect(() => {
-        if (inited && props.editorStyle && props.editorStyle.color) {
-            setColor(props.editorStyle.color);
+        if (inited && editorStyle && editorStyle.color) {
+            setColor(editorStyle.color);
         }
-    }, [inited, props.editorStyle]);
+    }, [inited, editorStyle]);
 
     useEffect(() => {
         if (inited) {
@@ -100,7 +101,7 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
     return (
         <>
             <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={[]} onPress={onPress} />
-            <View style={[styles.editorContainer, props.editorStyle, { height }]}>
+            <View style={[styles.editorContainer, editorStyle, { height }]}>
                 <WebView ref={webViewRef} source={htmlSource} style={styles.webView} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
         </>
