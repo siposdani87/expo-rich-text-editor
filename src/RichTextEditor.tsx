@@ -5,26 +5,26 @@ import RichTextToolbar from './RichTextToolbar';
 
 import { HTML } from './editor';
 let htmlSource = require('./editor.html');
-if (Platform.OS === 'android' || Platform.OS === 'web'){
+if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value: string) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const webViewRef = useRef(null);
     const [inited, setInited] = useState(false);
     const [height, setHeight] = useState(props.minHeight);
 
     const Actions = {
-        changeHtml: function (html) {
+        changeHtml: (html: string) => {
             props.onValueChange(html);
         },
-        changeHeight: function(h){
-            if (h < props.minHeight){
+        changeHeight: (h: number) => {
+            if (h < props.minHeight) {
                 h = props.minHeight;
             }
             setHeight(h + 30);
         },
-        log: function (message) {
+        log: (message: string) => {
             if (props.debug) {
                 console.log(message);
             }
@@ -36,6 +36,18 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
             setHTML(props.value);
         }
     }, [inited, props.value]);
+
+    useEffect(() => {
+        if (inited && props.editorStyle && props.editorStyle.color) {
+            setColor(props.editorStyle.color);
+        }
+    }, [inited, props.editorStyle]);
+
+    useEffect(() => {
+        if (inited) {
+            setDisabled(!!props.disabled);
+        }
+    }, [inited, props.disabled]);
 
     function onMessage(event) {
         try {
@@ -51,27 +63,27 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
         }
     };
 
-    function sendAction(type, data = null) {
+    function sendAction(type: string, data: any = null) {
         let message = JSON.stringify({ type, data });
         if (webViewRef.current) {
             webViewRef.current.postMessage(message);
         }
     }
 
-    function setHTML(html) {
+    function setHTML(html: string) {
         sendAction('setHtml', html);
     }
 
-    function setColor(color) {
+    function setColor(color: string) {
         sendAction('setColor', color);
+    }
+
+    function setDisabled(disabled: boolean) {
+        sendAction('setDisabled', disabled);
     }
 
     function onLoad() {
         setInited(true);
-        if (props.editorStyle && props.editorStyle.color){
-            setColor(props.editorStyle.color);
-        }
-        setHTML(props.value);
     }
 
     function onError(syntheticEvent) {
@@ -79,15 +91,17 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
         console.warn('WebView error: ', nativeEvent);
     }
 
-    function onPress(action) {
-        sendAction(action);
+    function onPress(action: string) {
+        if (!props.disabled) {
+            sendAction(action);
+        }
     }
 
     return (
         <>
             <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={[]} onPress={onPress} />
             <View style={[styles.editorContainer, props.editorStyle, { height }]}>
-                 <WebView ref={webViewRef} source={htmlSource} style={styles.webView} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
+                <WebView ref={webViewRef} source={htmlSource} style={styles.webView} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
         </>
     );

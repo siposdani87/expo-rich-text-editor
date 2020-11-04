@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default function RichTextToolbar(props: { actionMap: {}, selectedActions: string[], onPress: (action) => void, style?: any }) {
+export default function RichTextToolbar(props: { actionMap: {}, selectedActions: string[], onPress: (action: string) => void, style?: any }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -9,7 +9,7 @@ export default function RichTextToolbar(props: { actionMap: {}, selectedActions:
     setData(getActions(actions, props.selectedActions));
   }, [props.actionMap, props.selectedActions]);
 
-  function getActions(actions, selectedActions) {
+  function getActions(actions: string[], selectedActions: string[]) {
     return actions.map((action) => {
       return {
         action,
@@ -18,7 +18,7 @@ export default function RichTextToolbar(props: { actionMap: {}, selectedActions:
     });
   }
 
-  function renderAction(action, selected) {
+  function renderAction(action: string, selected: boolean) {
     const icon = props.actionMap[action]({ selected });
     return (
       <TouchableOpacity style={styles.touchableOpacity} activeOpacity={0.6} key={action} onPress={() => props.onPress(action)} >
