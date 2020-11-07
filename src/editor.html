@@ -101,6 +101,22 @@
                     contentEditor.style.color = color;
                     textareaEditor.style.color = color;
                 },
+                setFontFamily: function (fontFamily) {
+                    const [capitalizeFontFamily, weightWithText, fontStyle] = fontFamily.split('_', 3);
+                    var familyNames = capitalizeFontFamily.split(/(?=[A-Z])/);
+                    var weight = weightWithText.match(/[0-9]+/g)[0];
+                    var styleLink = document.getElementById('google-font');
+                    if (!styleLink) {
+                        styleLink = document.createElement('link');
+                        styleLink.id = 'google-font';
+                        styleLink.rel = 'stylesheet';
+                        document.head.appendChild(styleLink);
+                    }
+                    styleLink.href = 'https://fonts.googleapis.com/css?family=' + familyNames.join('+') + ':' + weight + '&subset=latin-ext&display=swap';
+                    document.body.style.fontFamily = familyNames.join(' ');
+                    document.body.style.fontWeight = weight;
+                    document.body.style.fontStyle = fontStyle ? fontStyle.toLowerCase() : 'normal';
+                },
                 setDisabled: function (disabled) {
                     contentEditor.contentEditable = !disabled;
                     textareaEditor.disabled = disabled;

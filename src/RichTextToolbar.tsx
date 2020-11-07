@@ -5,7 +5,7 @@ export default function RichTextToolbar(props: { actionMap: {}, selectedActions:
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const actions = Object.keys(props.actionMap);
+    const actions = Object.keys(props.actionMap || {});
     setData(getActions(actions, props.selectedActions));
   }, [props.actionMap, props.selectedActions]);
 
@@ -21,22 +21,24 @@ export default function RichTextToolbar(props: { actionMap: {}, selectedActions:
   function renderAction(action: string, selected: boolean) {
     const icon = props.actionMap[action]({ selected });
     return (
-      <TouchableOpacity style={styles.touchableOpacity} activeOpacity={0.6} key={action} onPress={() => props.onPress(action)} >
+      <TouchableOpacity style={styles.touchableOpacity} activeOpacity={0.6} key={action} onPress={() => props.onPress(action)}>
         {icon}
       </TouchableOpacity>
     );
   }
 
-  return (
-    <View style={[styles.toolbarContainer, props.style]}>
-      <FlatList horizontal={true} keyExtractor={(item) => item.action} data={data} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={({ item }) => renderAction(item.action, item.selected)} />
-    </View>
-  );
+  if (data.length > 0) {
+    return (
+      <View style={[styles.toolbarContainer, props.style]}>
+        <FlatList horizontal={true} keyExtractor={(item) => item.action} data={data} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={({ item }) => renderAction(item.action, item.selected)} />
+      </View>
+    );
+  }
+  return null;
 }
 
 const styles = StyleSheet.create({
-  toolbarContainer: {
-  },
+  toolbarContainer: {},
   touchableOpacity: {
     marginRight: 8,
     marginBottom: 2
