@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { AppLoading } from 'expo';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Inter_500Medium } from '@expo-google-fonts/inter';
+import { Oswald_400Regular } from '@expo-google-fonts/oswald';
+import { RobotoCondensed_400Regular_Italic } from '@expo-google-fonts/roboto-condensed';
+import { useFonts } from 'expo-font';
 
 import RichTextEditor from './src/RichTextEditor';
+import RichTextViewer from './src/RichTextViewer';
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Inter_500Medium,
+    Oswald_400Regular,
+    RobotoCondensed_400Regular_Italic
+  });
+
   const [value, setValue] = useState(null);
   const numberOfLines = 5;
   const minHeight = 20 * numberOfLines;
@@ -43,19 +55,26 @@ export default function App() {
     };
   }
 
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
         <View style={styles.container}>
           <StatusBar style='dark' />
           <ScrollView>
-            <View style={[styles.editorView]}>
+            <View style={[styles.editorContainer]}>
+              <RichTextViewer html={value} editorStyle={styles.editorViewer} debug={true} />
+            </View>
+            <View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
             </View>
-            <View style={[styles.editorView]}>
+            <View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editorDark} debug={true} />
             </View>
-            <View style={[styles.editorView]}>
+            <View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} disabled={true} debug={true} />
             </View>
           </ScrollView>
@@ -69,18 +88,28 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'lightgrey',
   },
-  editorView: {
+  editorContainer: {
     margin: 10,
+  },
+  editorViewer: {
+    borderColor: 'green',
+    borderWidth: 1,
+    padding: 5,
+    fontFamily: 'Oswald_400Regular',
   },
   editor: {
     borderColor: 'blue',
     borderWidth: 1,
+    padding: 5,
+    fontFamily: 'Inter_500Medium',
   },
   editorDark: {
     borderColor: 'blue',
     borderWidth: 1,
     backgroundColor: 'black',
     color: 'white',
+    padding: 15,
+    fontFamily: 'RobotoCondensed_400Regular_Italic',
   },
   toolbar: {
     borderColor: 'red',

@@ -9,21 +9,23 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, actionMap: {}, minHeight: number, onValueChange: (value: string) => void, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, onValueChange: (value: string) => void, actionMap?: {}, minHeight?: number, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const webViewRef = useRef(null);
     const [inited, setInited] = useState(false);
-    const [height, setHeight] = useState(props.minHeight);
+    const [minHeight] = useState(props.minHeight || 0);
+    const [height, setHeight] = useState(minHeight);
 
     const Actions = {
         changeHtml: (html: string) => {
             props.onValueChange(html);
         },
         changeHeight: (h: number) => {
-            if (h < props.minHeight) {
-                h = props.minHeight;
+            if (h < minHeight) {
+                h = minHeight;
             }
-            setHeight(h + 30);
+            const offset = editorStyle.padding || 0;
+            setHeight(h + offset + 20);
         },
         log: (message: string) => {
             if (props.debug) {
@@ -39,8 +41,9 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
     }, [inited, props.value]);
 
     useEffect(() => {
-        if (inited && editorStyle && editorStyle.color) {
+        if (inited && editorStyle) {
             setColor(editorStyle.color);
+            setFontFamily(editorStyle.fontFamily);
         }
     }, [inited, editorStyle]);
 
@@ -76,7 +79,15 @@ export default function RichTextEditor(props: { value: string, actionMap: {}, mi
     }
 
     function setColor(color: string) {
-        sendAction('setColor', color);
+        if (color) {
+            sendAction('setColor', color);
+        }
+    }
+
+    function setFontFamily(fontFamily: string) {
+        if (fontFamily) {
+            sendAction('setFontFamily', fontFamily);
+        }
     }
 
     function setDisabled(disabled: boolean) {
@@ -112,7 +123,6 @@ const styles = StyleSheet.create({
     editorContainer: {},
     toolbarContainer: {},
     webView: {
-        margin: 10,
         backgroundColor: 'transparent',
     }
 });
