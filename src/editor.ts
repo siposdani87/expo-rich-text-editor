@@ -156,12 +156,6 @@ export const HTML = `<!DOCTYPE html>
                     }
                 }
             };
-            /* var Actions = {
-                
-                UPDATE_HEIGHT: function () {
-                    
-                }
-            }; */
 
             var init = function (element) {
                 var defaultParagraphSeparator = 'p';
