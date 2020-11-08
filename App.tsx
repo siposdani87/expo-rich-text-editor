@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     fontFamily: 'Inter_500Medium',
+    fontSize: 18,
   },
   editorDark: {
     borderColor: 'blue',
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 15,
     fontFamily: 'RobotoCondensed_400Regular_Italic',
+    fontSize: 12,
   },
   toolbar: {
     borderColor: 'red',

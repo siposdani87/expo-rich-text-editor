@@ -13,7 +13,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const webViewRef = useRef(null);
     const [inited, setInited] = useState(false);
-    const [minHeight] = useState(props.minHeight || 0);
+    const [minHeight] = useState(props.minHeight || 40);
     const [height, setHeight] = useState(minHeight);
 
     const Actions = {
@@ -44,6 +44,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
         if (inited && editorStyle) {
             setColor(editorStyle.color);
             setFontFamily(editorStyle.fontFamily);
+            setFontSize(editorStyle.fontSize);
         }
     }, [inited, editorStyle]);
 
@@ -81,6 +82,12 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
     function setColor(color: string) {
         if (color) {
             sendAction('setColor', color);
+        }
+    }
+
+    function setFontSize(fontSize: string) {
+        if (fontSize) {
+            sendAction('setFontSize', fontSize);
         }
     }
 

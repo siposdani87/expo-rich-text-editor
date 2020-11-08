@@ -23,11 +23,11 @@ export const HTML = `<!DOCTYPE html>
             margin: 0;
             font-family: '-apple-system', 'HelveticaNeue', Helvetica, Roboto, Arial,
                 sans-serif;
-            font-size: 1em;
+            font-size: 14px;
         }
 
         p {
-            margin: 0 0 1em 0;
+            margin: 0 0 14px 0;
         }
 
         .editor,
@@ -116,6 +116,9 @@ export const HTML = `<!DOCTYPE html>
                     document.body.style.fontFamily = familyNames.join(' ');
                     document.body.style.fontWeight = weight;
                     document.body.style.fontStyle = fontStyle ? fontStyle.toLowerCase() : 'normal';
+                },
+                setFontSize: function (fontSize) {
+                    document.body.style.fontSize = fontSize || 14;
                 },
                 setDisabled: function (disabled) {
                     contentEditor.contentEditable = !disabled;
