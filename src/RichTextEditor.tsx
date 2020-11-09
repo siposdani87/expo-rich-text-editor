@@ -24,8 +24,8 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
             if (h < minHeight) {
                 h = minHeight;
             }
-            const offset = editorStyle.padding || 0;
-            setHeight(h + offset + 20);
+            const offset = editorStyle.fontSize || 16;
+            setHeight(h + offset);
         },
         log: (message: string) => {
             if (props.debug) {
@@ -85,7 +85,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
         }
     }
 
-    function setFontSize(fontSize: string) {
+    function setFontSize(fontSize: number) {
         if (fontSize) {
             sendAction('setFontSize', fontSize);
         }
@@ -119,17 +119,20 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
     return (
         <>
             <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={[]} onPress={onPress} />
-            <View style={[styles.editorContainer, editorStyle, { height }]}>
-                <WebView ref={webViewRef} source={htmlSource} style={styles.webView} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
+            <View style={[styles.editorContainer, editorStyle]}>
+                <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    editorContainer: {},
+    editorContainer: {
+        flex: 1,
+    },
     toolbarContainer: {},
     webView: {
+        flex: 0,
         backgroundColor: 'transparent',
     }
 });

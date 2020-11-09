@@ -7,6 +7,6 @@ export default function RichTextViewer(props: { html: string, editorStyle?: any,
     }
 
     return (
-        <RichTextEditor value={props.html} onValueChange={onValueChange} editorStyle={[props.editorStyle]} debug={props.debug} disabled={true} />
+        <RichTextEditor value={props.html} onValueChange={onValueChange} editorStyle={props.editorStyle} debug={props.debug} disabled={true} />
     );
 }
