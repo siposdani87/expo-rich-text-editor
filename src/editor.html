@@ -118,7 +118,7 @@
                     document.body.style.fontStyle = fontStyle ? fontStyle.toLowerCase() : 'normal';
                 },
                 setFontSize: function (fontSize) {
-                    document.body.style.fontSize = fontSize || 16;
+                    document.body.style.fontSize = (fontSize || 16) + 'px';
                 },
                 setDisabled: function (disabled) {
                     contentEditor.contentEditable = !disabled;
