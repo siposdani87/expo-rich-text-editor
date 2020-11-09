@@ -57,6 +57,7 @@
             var textareaEditor = null;
             var isWebView = window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage === 'function';
             var height = 0;
+            var currentHtml = '';
 
             function exec(command, value) {
                 return document.execCommand(command, false, value);
@@ -73,13 +74,10 @@
                 sendAction('log', message);
             };
 
-            function correctValue(value) {
-                return value;
-            }
-
             var Actions = {
                 changeHtml: function () {
-                    sendAction('changeHtml', contentEditor.innerHTML);
+                    currentHtml = contentEditor.innerHTML;
+                    sendAction('changeHtml', currentHtml);
                 },
                 changeHeight: function () {
                     var newHeight = Math.max(contentEditor.scrollHeight, contentEditor.offsetHeight);
@@ -89,11 +87,10 @@
                         sendAction('changeHeight', newHeight);
                     }
                 },
-                setHtml: function (html) {
-                    const validHtml = correctValue(html);
-                    if (contentEditor.innerHTML !== validHtml) {
-                        contentEditor.innerHTML = validHtml;
-                        textareaEditor.value = contentEditor.innerHTML;
+                setHtml: function (newHtml) {
+                    if (currentHtml !== newHtml) {
+                        contentEditor.innerHTML = newHtml;
+                        textareaEditor.value = newHtml;
                         Actions.changeHeight();
                     }
                 },
