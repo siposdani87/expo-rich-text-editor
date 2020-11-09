@@ -12,12 +12,14 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
 export default function RichTextEditor(props: { value: string, onValueChange: (value: string) => void, actionMap?: {}, minHeight?: number, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const webViewRef = useRef(null);
+    const [value, setValue] = useState(props.value);
     const [inited, setInited] = useState(false);
     const [minHeight] = useState(props.minHeight || 40);
     const [height, setHeight] = useState(minHeight);
 
     const Actions = {
         changeHtml: (html: string) => {
+            setValue(html);
             props.onValueChange(html);
         },
         changeHeight: (h: number) => {
@@ -35,10 +37,14 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
     };
 
     useEffect(() => {
-        if (inited) {
-            setHTML(props.value);
-        }
+        setValue(props.value);
     }, [inited, props.value]);
+
+    useEffect(() => {
+        if (inited) {
+            setHTML(value);
+        }
+    }, [inited, value]);
 
     useEffect(() => {
         if (inited && editorStyle) {
