@@ -177,6 +177,8 @@
                 textarea.className = 'textarea';
                 textarea.addEventListener('input', () => {
                     content.innerHTML = textarea.value;
+                    Actions.changeHtml();
+                    Actions.changeHeight();
                 }, false);
                 element.appendChild(textarea);
 
