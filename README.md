@@ -1,1 +1,1 @@
-Expo-rich-text-editor
+expo-rich-text-editor

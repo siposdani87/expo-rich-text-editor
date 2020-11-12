@@ -41,9 +41,18 @@
             background: transparent;
         }
 
-        [contenteditable] {
+        .content[contenteditable] {
             -webkit-user-select: text;
             user-select: text;
+        }
+
+        .disabled-select {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
         }
     </style>
 </head>
@@ -97,6 +106,7 @@
                 setColor: function (color) {
                     contentEditor.style.color = color;
                     textareaEditor.style.color = color;
+                    Actions.changeHeight();
                 },
                 setFontFamily: function (fontFamily) {
                     const [capitalizeFontFamily, weightWithText, fontStyle] = fontFamily.split('_', 3);
@@ -113,13 +123,20 @@
                     document.body.style.fontFamily = familyNames.join(' ');
                     document.body.style.fontWeight = weight;
                     document.body.style.fontStyle = fontStyle ? fontStyle.toLowerCase() : 'normal';
+                    Actions.changeHeight();
                 },
                 setFontSize: function (fontSize) {
                     document.body.style.fontSize = (fontSize || 16) + 'px';
+                    Actions.changeHeight();
                 },
                 setDisabled: function (disabled) {
                     contentEditor.contentEditable = !disabled;
                     textareaEditor.disabled = disabled;
+                    if (disabled) {
+                        document.body.classList.add('disabled-select');
+                    } else {
+                        document.body.classList.remove('disabled-select');
+                    }
                 },
                 undo: function () {
                     exec('undo');
