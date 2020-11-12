@@ -16,6 +16,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
     const [inited, setInited] = useState(false);
     const [minHeight] = useState(props.minHeight || 40);
     const [height, setHeight] = useState(minHeight);
+    const [selectedActions, setSelectedActions] = useState([]);
 
     const Actions = {
         changeHtml: (html: string) => {
@@ -118,13 +119,25 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
 
     function onPress(action: string) {
         if (!props.disabled) {
+            handleSelectedActions(action);
             sendAction(action);
+        }
+    }
+
+    function handleSelectedActions(action: string) {
+        if (action === 'code'){
+            const index = selectedActions.indexOf('code');
+            if (index === -1){
+                setSelectedActions(['code']);
+            } else {
+                setSelectedActions([]);
+            }
         }
     }
 
     return (
         <>
-            <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={[]} onPress={onPress} />
+            <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress} />
             <View style={[styles.editorContainer, editorStyle]}>
                 <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
