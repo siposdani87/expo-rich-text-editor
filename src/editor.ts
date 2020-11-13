@@ -21,8 +21,7 @@ export const HTML = `<!DOCTYPE html>
             outline: 0;
             padding: 0;
             margin: 0;
-            font-family: '-apple-system', 'HelveticaNeue', Helvetica, Roboto, Arial,
-                sans-serif;
+            font-family: Arial, sans-serif;
             font-size: 16px;
         }
 
@@ -30,7 +29,11 @@ export const HTML = `<!DOCTYPE html>
             margin: 0 0 16px 0;
         }
 
-        .editor,
+        li {
+            margin-bottom: 16px;
+        }
+
+        .editors,
         .content,
         .textarea {
             outline: 0;
@@ -54,7 +57,7 @@ export const HTML = `<!DOCTYPE html>
 </head>
 
 <body>
-    <div class="editor"></div>
+    <div class="editors"></div>
     <script>
         (function () {
             var isCode = true;
@@ -171,14 +174,10 @@ export const HTML = `<!DOCTYPE html>
             };
 
             var init = function (element) {
-                var defaultParagraphSeparator = 'p';
-
                 var textarea = document.createElement('textarea');
                 textarea.className = 'textarea';
                 textarea.addEventListener('input', () => {
                     content.innerHTML = textarea.value;
-                    Actions.changeHtml();
-                    Actions.changeHeight();
                 }, false);
                 element.appendChild(textarea);
 
@@ -196,7 +195,7 @@ export const HTML = `<!DOCTYPE html>
                 }, false);
                 element.appendChild(content);
 
-                exec('defaultParagraphSeparator', defaultParagraphSeparator);
+                exec('defaultParagraphSeparator', 'p');
 
                 var onMessage = function (event) {
                     var message = JSON.parse(event.data);
@@ -216,7 +215,7 @@ export const HTML = `<!DOCTYPE html>
                 return [content, textarea];
             };
 
-            var [contentEditor, textareaEditor] = init(document.getElementsByClassName('editor')[0]);
+            var [contentEditor, textareaEditor] = init(document.getElementsByClassName('editors')[0]);
 
             Actions.code();
             Actions.changeHeight();
