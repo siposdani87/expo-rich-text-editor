@@ -25,8 +25,12 @@ export default function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      const v = '<p><i><u>Vadásztársaságunk</u></i> <b>2006</b>-ban alakult, a volt <i>Rábaközi Vadásztársaság</i> területeinek feldarabolása <b>következtében</b>.<br></p><p>Hello <b>bold</b> world!</p><p>this is a new <i>italic</i> paragraph</p> <p>this is another new <u>underline</u> paragraph</p>';
-      setValue(v);
+      let result = '';
+      let v = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u>.</p><p>New paragraph</p><p>This is a new <i>italic</i> paragraph</p><p>this is another new <u>underline</u> paragraph</p><ul><li>list item 1</li><li>list item 2</li></ul>';
+      for (let i = 0; i <= 3; i++){
+        result += (i + '<br />') + v;
+      }
+      setValue(result);
     }, 2000);
   }, []);
 

@@ -88,12 +88,14 @@
                     sendAction('changeHtml', currentHtml);
                 },
                 changeHeight: function () {
-                    var newHeight = Math.max(contentEditor.scrollHeight, contentEditor.offsetHeight);
-                    if (height !== newHeight) {
-                        height = newHeight;
-                        textareaEditor.style.height = newHeight + 'px';
-                        sendAction('changeHeight', newHeight);
-                    }
+                    setTimeout(function() {
+                        var newHeight = Math.ceil(contentEditor.getBoundingClientRect().height);
+                        if (height !== newHeight) {
+                            height = newHeight;
+                            textareaEditor.style.height = newHeight + 'px';
+                            sendAction('changeHeight', newHeight);
+                        }
+                    }, 100);
                 },
                 setHtml: function (newHtml) {
                     if (currentHtml !== newHtml) {
