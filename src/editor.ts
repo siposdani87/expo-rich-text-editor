@@ -23,6 +23,7 @@ export const HTML = `<!DOCTYPE html>
             margin: 0;
             font-family: Arial, sans-serif;
             font-size: 16px;
+            color: #000000;
         }
 
         p {
@@ -42,6 +43,9 @@ export const HTML = `<!DOCTYPE html>
             width: 100%;
             border: none;
             background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
         }
 
         .content[contenteditable] {
@@ -92,7 +96,6 @@ export const HTML = `<!DOCTYPE html>
                         var newHeight = Math.ceil(contentEditor.getBoundingClientRect().height);
                         if (height !== newHeight) {
                             height = newHeight;
-                            textareaEditor.style.height = newHeight + 'px';
                             sendAction('changeHeight', newHeight);
                         }
                     }, 100);
@@ -105,8 +108,7 @@ export const HTML = `<!DOCTYPE html>
                     }
                 },
                 setColor: function (color) {
-                    contentEditor.style.color = color;
-                    textareaEditor.style.color = color;
+                    document.body.style.color = color;
                     Actions.changeHeight();
                 },
                 setFontFamily: function (fontFamily) {
