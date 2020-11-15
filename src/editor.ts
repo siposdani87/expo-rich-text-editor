@@ -69,7 +69,16 @@ export const HTML = `<!DOCTYPE html>
             var textareaEditor = null;
             var isWebView = window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage === 'function';
             var height = 0;
-            var currentHtml = '';
+            var timeout = null;
+            var selection = document.getSelection();
+
+            function debounce(func, wait) {
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    timeout = null;
+                    func();
+                }, wait);
+            };
 
             function exec(command, value) {
                 return document.execCommand(command, false, value);
@@ -88,11 +97,12 @@ export const HTML = `<!DOCTYPE html>
 
             var Actions = {
                 changeHtml: function () {
-                    currentHtml = contentEditor.innerHTML;
-                    sendAction('changeHtml', currentHtml);
+                    debounce(function () {
+                        sendAction('changeHtml', contentEditor.innerHTML);
+                    }, 1000);
                 },
                 changeHeight: function () {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         var newHeight = Math.ceil(contentEditor.getBoundingClientRect().height);
                         if (height !== newHeight) {
                             height = newHeight;
@@ -101,9 +111,11 @@ export const HTML = `<!DOCTYPE html>
                     }, 100);
                 },
                 setHtml: function (newHtml) {
-                    if (currentHtml !== newHtml) {
+                    if (contentEditor.innerHTML !== newHtml) {
+                        var savedSelection = [selection.focusNode, selection.focusOffset];
                         contentEditor.innerHTML = newHtml;
                         textareaEditor.value = newHtml;
+                        selection.collapse(savedSelection[0], savedSelection[1]);
                         Actions.changeHeight();
                     }
                 },
