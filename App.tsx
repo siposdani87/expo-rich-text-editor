@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { AppLoading } from 'expo';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Inter_500Medium } from '@expo-google-fonts/inter';
 import { Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { RobotoCondensed_400Regular_Italic } from '@expo-google-fonts/roboto-condensed';
 import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 import RichTextEditor from './src/RichTextEditor';
 import RichTextViewer from './src/RichTextViewer';
