@@ -3,7 +3,7 @@ import RichTextEditor from './RichTextEditor';
 
 export default function RichTextViewer(props: { html: string, editorStyle?: any, debug?: boolean }) {
     function onValueChange() {
-
+        // empty onValueChange
     }
 
     return (
