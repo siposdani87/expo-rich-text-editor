@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default function RichTextToolbar(props: { actionMap: {}, selectedActions: string[], onPress: (action: string) => void, style?: any }) {
+export default function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onPress: (_action: string) => void, style?: any }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
   toolbarContainer: {},
   touchableOpacity: {
     marginRight: 8,
-    marginBottom: 2
-  }
+    marginBottom: 2,
+  },
 });

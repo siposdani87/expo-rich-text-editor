@@ -13,10 +13,10 @@ import RichTextEditor from './src/RichTextEditor';
 import RichTextViewer from './src/RichTextViewer';
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Inter_500Medium,
     Oswald_400Regular,
-    RobotoCondensed_400Regular_Italic
+    RobotoCondensed_400Regular_Italic,
   });
 
   const [value, setValue] = useState(null);
@@ -26,7 +26,7 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => {
       let result = '';
-      let v = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u>.</p><p>New paragraph</p><p>This is a new <i>italic</i> paragraph</p><p>this is another new <u>underline</u> paragraph</p><ul><li>list item 1</li><li>list item 2</li></ul>';
+      const v = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u>.</p><p>New paragraph</p><p>This is a new <i>italic</i> paragraph</p><p>this is another new <u>underline</u> paragraph</p><ul><li>list item 1</li><li>list item 2</li></ul>';
       for (let i = 0; i <= 3; i++){
         result += (i + '<br />') + v;
       }

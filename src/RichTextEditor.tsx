@@ -9,7 +9,7 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, onValueChange: (value: string) => void, actionMap?: {}, minHeight?: number, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, actionMap?: any, minHeight?: number, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const webViewRef = useRef(null);
     const [value, setValue] = useState(props.value);
@@ -34,7 +34,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
             if (props.debug) {
                 console.log(message);
             }
-        }
+        },
     };
 
     useEffect(() => {
@@ -73,10 +73,10 @@ export default function RichTextEditor(props: { value: string, onValueChange: (v
         } catch (e) {
             console.error('onMessage: ', e);
         }
-    };
+    }
 
     function sendAction(type: string, data: any = null) {
-        let message = JSON.stringify({ type, data });
+        const message = JSON.stringify({ type, data });
         if (webViewRef.current) {
             webViewRef.current.postMessage(message);
         }
@@ -153,5 +153,5 @@ const styles = StyleSheet.create({
     webView: {
         flex: 0,
         backgroundColor: 'transparent',
-    }
+    },
 });
