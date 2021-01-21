@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
 import { View, StyleSheet, Platform, Linking } from 'react-native';
 import RichTextToolbar from './RichTextToolbar';
@@ -147,12 +147,12 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
     }
 
     return (
-        <>
+        <Fragment>
             <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress} />
             <View style={[styles.editorContainer, editorStyle]}>
                 <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
-        </>
+        </Fragment>
     );
 }
 
