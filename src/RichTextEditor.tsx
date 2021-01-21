@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, Linking } from 'react-native';
 import RichTextToolbar from './RichTextToolbar';
 
 import { HTML } from './editor';
@@ -9,8 +9,9 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, actionMap?: any, minHeight?: number, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
+    const linkStyle = StyleSheet.flatten(props.linkStyle);
     const webViewRef = useRef(null);
     const [value, setValue] = useState(props.value);
     const [inited, setInited] = useState(false);
@@ -29,6 +30,9 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
             }
             const offset = editorStyle.fontSize || 16;
             setHeight(h + offset);
+        },
+        clickLink: (url: string) => {
+            Linking.openURL(url);
         },
         log: (message: string) => {
             if (props.debug) {
@@ -52,6 +56,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
             setColor(editorStyle.color);
             setFontFamily(editorStyle.fontFamily);
             setFontSize(editorStyle.fontSize);
+            setLinkColor(linkStyle?.color);
         }
     }, [inited, editorStyle]);
 
@@ -101,6 +106,12 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
     function setFontFamily(fontFamily: string) {
         if (fontFamily) {
             sendAction('setFontFamily', fontFamily);
+        }
+    }
+
+    function setLinkColor(color: string) {
+        if (color) {
+            sendAction('setLinkColor', color);
         }
     }
 
