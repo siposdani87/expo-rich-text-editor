@@ -52,7 +52,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
     }, [inited, value]);
 
     useEffect(() => {
-        if (inited && editorStyle) {
+        if (inited) {
             setColor(editorStyle?.color);
             setFontFamily(editorStyle?.fontFamily);
             setFontSize(editorStyle?.fontSize);
