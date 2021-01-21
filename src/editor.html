@@ -92,7 +92,11 @@
             };
 
             function log(message) {
-                sendAction('log', message);
+                if (isWebView) {
+                    sendAction('log', message);
+                } else {
+                    console.log(message);
+                }
             };
 
             var Actions = {
@@ -110,6 +114,9 @@
                         }
                     }, 100);
                 },
+                clickLink: function (href) {
+                    sendAction('clickLink', href);
+                },
                 setHtml: function (newHtml) {
                     if (contentEditor.innerHTML !== newHtml) {
                         var savedSelection = [selection.focusNode, selection.focusOffset];
@@ -124,9 +131,9 @@
                     Actions.changeHeight();
                 },
                 setFontFamily: function (fontFamily) {
-                    const [capitalizeFontFamily, weightWithText, fontStyle] = fontFamily.split('_', 3);
+                    var [capitalizeFontFamily, weightWithText, fontStyle] = fontFamily.split('_', 3);
                     var familyNames = capitalizeFontFamily.split(/(?=[A-Z])/);
-                    var weight = weightWithText.match(/[0-9]+/g)[0];
+                    var weight = weightWithText ? weightWithText.match(/[0-9]+/g)[0] : 400;
                     var styleLink = document.getElementById('google-font');
                     if (!styleLink) {
                         styleLink = document.createElement('link');
@@ -142,6 +149,21 @@
                 },
                 setFontSize: function (fontSize) {
                     document.body.style.fontSize = (fontSize || 16) + 'px';
+                    Actions.changeHeight();
+                },
+                setLinkColor: function (color) {
+                    var links = document.getElementsByTagName('a');
+                    var onClick = function(e) {
+                        e.preventDefault();
+                        var href = e.target.getAttribute('href');
+                        log(href);
+                        Actions.clickLink(href);
+                    }
+                    for (var i = 0; i < links.length; i++){  
+                        var link = links[i];
+                        link.style.color = color;
+                        link.onclick = onClick;
+                    }
                     Actions.changeHeight();
                 },
                 setDisabled: function (disabled) {
@@ -236,6 +258,14 @@
             Actions.code();
             Actions.changeHeight();
             log('initialized');
+            if (!isWebView) {
+                var sampleHtml = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u> and email link <a href="mailto:siposdani87@gmail.com">mailto</a> and standar link <a href="https://google.com" target="_blank">link to website</a> and link to <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">download file</a>.</p>';
+                Actions.setHtml(sampleHtml);
+                Actions.setColor('grey');
+                Actions.setFontSize('20');
+                Actions.setFontFamily('Roboto');
+                Actions.setLinkColor('green');
+            }
         })();
     </script>
 </body>
