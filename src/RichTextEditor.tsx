@@ -28,7 +28,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
             if (h < minHeight) {
                 h = minHeight;
             }
-            const offset = editorStyle.fontSize || 16;
+            const offset = editorStyle?.fontSize || 16;
             setHeight(h + offset);
         },
         clickLink: (url: string) => {
@@ -53,9 +53,9 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
 
     useEffect(() => {
         if (inited && editorStyle) {
-            setColor(editorStyle.color);
-            setFontFamily(editorStyle.fontFamily);
-            setFontSize(editorStyle.fontSize);
+            setColor(editorStyle?.color);
+            setFontFamily(editorStyle?.fontFamily);
+            setFontSize(editorStyle?.fontSize);
             setLinkColor(linkStyle?.color);
         }
     }, [inited, editorStyle]);
