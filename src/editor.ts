@@ -71,6 +71,7 @@ export const HTML = `<!DOCTYPE html>
             var height = 0;
             var timeout = null;
             var selection = document.getSelection();
+            var linkColor = 'blue';
 
             function debounce(func, wait) {
                 clearTimeout(timeout);
@@ -124,6 +125,7 @@ export const HTML = `<!DOCTYPE html>
                         textareaEditor.value = newHtml;
                         selection.collapse(savedSelection[0], savedSelection[1]);
                         Actions.changeHeight();
+                        Actions.setLinkColor(linkColor);
                     }
                 },
                 setColor: function (color) {
@@ -151,17 +153,21 @@ export const HTML = `<!DOCTYPE html>
                     document.body.style.fontSize = (fontSize || 16) + 'px';
                     Actions.changeHeight();
                 },
-                setLinkColor: function (color) {
+                setLinkColor: function (opt_color) {
+                    if (opt_color) {
+                        linkColor = opt_color;
+                    }
+                    var onClick = function (e) {
+                        e.preventDefault();
+                        var href = e.currentTarget.getAttribute('href');
+                        log(href);
+                        Actions.clickLink(href);
+                    };
                     var links = document.getElementsByTagName('a');
-                    for (var i = 0; i < links.length; i++){  
+                    for (var i = 0; i < links.length; i++) {
                         var link = links[i];
-                        link.style.color = color;
-                        link.onclick = function(e) {
-                            e.preventDefault();
-                            var href = link.getAttribute('href');
-                            log(href);
-                            Actions.clickLink(href);
-                        };
+                        link.style.color = linkColor;
+                        link.onclick = onClick;
                     }
                 },
                 setDisabled: function (disabled) {
@@ -255,15 +261,15 @@ export const HTML = `<!DOCTYPE html>
 
             Actions.code();
             Actions.changeHeight();
-            Actions.setLinkColor('blue');
             log('initialized');
             if (!isWebView) {
-                var sampleHtml = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u> and email link <a href="mailto:siposdani87@gmail.com">mailto</a> and standar link <a href="https://google.com" target="_blank"><b>link to website</b></a> and link to <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">download file</a>.</p>';
-                Actions.setHtml(sampleHtml);
                 Actions.setColor('grey');
                 Actions.setFontSize('20');
                 Actions.setFontFamily('Roboto');
                 Actions.setLinkColor('green');
+                
+                var sampleHtml = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u> and email link <a href="mailto:siposdani87@gmail.com">mailto</a> and standar link <a href="https://google.com" target="_blank"><b>link to website</b></a> and link to <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">download file</a>.</p>';
+                Actions.setHtml(sampleHtml);
             }
         })();
     </script>

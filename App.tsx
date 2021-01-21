@@ -26,7 +26,7 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => {
       let result = '';
-      const v = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u> and email link <a href="mailto:siposdani87@gmail.com">mailto</a> and standar link <a href="https://google.com" target="_blank">link to website</a> and link to <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">download file</a>.</p><p>New paragraph</p><p>This is a new <i>italic</i> paragraph</p><p>this is another new <u>underline</u> paragraph</p><ul><li>list item 1</li><li>list item 2</li></ul>';
+      const v = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal text with some characters <i>Italic word</i> another normal text <u>underline word</u> and email link <a href="mailto:siposdani87@gmail.com">mailto</a> and standar link <a href="https://google.com" target="_blank"><b>link to website</b></a> and link to <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank">download file</a>.</p><p>New paragraph</p><p>This is a new <i>italic</i> paragraph</p><p>this is another new <u>underline</u> paragraph</p><ul><li>list item 1</li><li>list item 2</li></ul>';
       for (let i = 0; i <= 3; i++){
         result += (i + '<br />') + v;
       }
