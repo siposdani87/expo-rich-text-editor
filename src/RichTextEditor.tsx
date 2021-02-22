@@ -12,12 +12,13 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
 export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
-    const webViewRef = useRef(null);
     const [value, setValue] = useState(props.value);
     const [inited, setInited] = useState(false);
     const [minHeight] = useState(props.minHeight || 40);
     const [height, setHeight] = useState(minHeight);
     const [selectedActions, setSelectedActions] = useState([]);
+    const webViewRef = useRef(null);
+    const toolbarRef = useRef(null);
 
     const Actions = {
         changeHtml: (html: string) => {
@@ -148,7 +149,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
 
     return (
         <Fragment>
-            <RichTextToolbar style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress} />
+            <RichTextToolbar ref={toolbarRef} style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress} />
             <View style={[styles.editorContainer, editorStyle]}>
                 <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
             </View>
