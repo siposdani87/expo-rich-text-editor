@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onPress: (_action: string) => void, style?: any }) {
+function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onPress: (_action: string) => void, style?: any }, ref) {
   const [data, setData] = useState([]);
+
+  useImperativeHandle(ref, () => ({
+    click: (action) => {
+      props.onPress(action);
+    },
+  }));
 
   useEffect(() => {
     const actions = Object.keys(props.actionMap || {});
@@ -44,3 +50,5 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
 });
+
+export default forwardRef(RichTextToolbar);
