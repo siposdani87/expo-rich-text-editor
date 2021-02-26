@@ -69,14 +69,14 @@ export const HTML = `<!DOCTYPE html>
             var textareaEditor = null;
             var isWebView = window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage === 'function';
             var height = 0;
-            var timeout = null;
+            var timeoutHtml = null;
             var selection = document.getSelection();
             var linkColor = 'blue';
 
-            function debounce(func, wait) {
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    timeout = null;
+            function debounceHtml(func, wait) {
+                clearTimeout(timeoutHtml);
+                timeoutHtml = setTimeout(function () {
+                    timeoutHtml = null;
                     func();
                 }, wait);
             };
@@ -102,7 +102,7 @@ export const HTML = `<!DOCTYPE html>
 
             var Actions = {
                 changeHtml: function () {
-                    debounce(function () {
+                    debounceHtml(function () {
                         sendAction('changeHtml', contentEditor.innerHTML);
                     }, 1000);
                 },
@@ -113,7 +113,7 @@ export const HTML = `<!DOCTYPE html>
                             height = newHeight;
                             sendAction('changeHeight', newHeight);
                         }
-                    }, 100);
+                    }, 250);
                 },
                 clickLink: function (href) {
                     sendAction('clickLink', href);
