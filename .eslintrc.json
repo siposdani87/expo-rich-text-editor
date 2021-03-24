@@ -20,6 +20,8 @@
     "react-hooks"
   ],
   "rules": {
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
@@ -38,6 +40,7 @@
     "no-invalid-this": "off",
     "no-use-before-define": "off",
     "no-console": "off",
+    "no-unused-expressions": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/jsx-no-bind": "off",
     "react/jsx-handler-names": "off",
