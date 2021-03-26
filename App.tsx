@@ -59,6 +59,14 @@ export default function App() {
     };
   }
 
+  function onFocus() {
+    console.log('onFocus');
+  }
+
+  function onBlur() {
+    console.log('onBlur');
+  }
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }
@@ -73,7 +81,7 @@ export default function App() {
               <RichTextViewer html={value} editorStyle={styles.editorViewer} linkStyle={styles.linkStyle} debug={true} />
             </View>
             <View style={[styles.editorContainer]}>
-              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
+              <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} onFocus={onFocus} onBlur={onBlur} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
             </View>
             <View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editorDark} debug={true} />
