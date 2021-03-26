@@ -9,7 +9,7 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [value, setValue] = useState(props.value);
@@ -34,6 +34,12 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         },
         clickLink: (url: string) => {
             Linking.openURL(url);
+        },
+        onFocus: () => {
+            props.onFocus?.();
+        },
+        onBlur: () => {
+            props.onBlur?.();
         },
         log: (message: string) => {
             if (props.debug) {
@@ -74,7 +80,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
             if (action) {
                 action(message.data);
             } else {
-                console.warn(`Missing Actions.${message.type} method`)
+                console.warn(`Missing Actions.${message.type} method`);
             }
         } catch (e) {
             console.error('onMessage: ', e);
@@ -83,9 +89,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
 
     function sendAction(type: string, data: any = null) {
         const message = JSON.stringify({ type, data });
-        if (webViewRef.current) {
-            webViewRef.current.postMessage(message);
-        }
+        webViewRef.current?.postMessage(message);
     }
 
     function setHTML(html: string) {
