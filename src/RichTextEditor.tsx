@@ -9,7 +9,7 @@ if (Platform.OS === 'android' || Platform.OS === 'web') {
     htmlSource = { html: HTML };
 }
 
-export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, selectionColor?: string, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [value, setValue] = useState(props.value);
@@ -64,6 +64,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
             setFontFamily(editorStyle?.fontFamily);
             setFontSize(editorStyle?.fontSize);
             setLinkColor(linkStyle?.color);
+            setSelectionColor(props.selectionColor);
         }
     }, [inited, editorStyle]);
 
@@ -117,6 +118,12 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
     function setLinkColor(color: string) {
         if (color) {
             sendAction('setLinkColor', color);
+        }
+    }
+
+    function setSelectionColor(color: string) {
+        if (color) {
+            sendAction('setSelectionColor', color);
         }
     }
 

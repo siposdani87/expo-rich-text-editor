@@ -35,8 +35,8 @@
         }
 
         .editors,
-        .content,
-        .textarea {
+        .content-editor,
+        .textarea-editor {
             outline: 0;
             padding: 0;
             margin: 0;
@@ -48,9 +48,14 @@
             color: inherit;
         }
 
-        .content[contenteditable] {
+        .content-editor[contenteditable] {
             -webkit-user-select: text;
             user-select: text;
+        }
+
+        .textarea-editor {
+            resize: none;
+            overflow: auto;
         }
 
         .disabled-select {
@@ -109,7 +114,6 @@
                 changeHeight: function () {
                     setTimeout(function () {
                         var newHeight = Math.ceil(contentEditor.getBoundingClientRect().height);
-                        textareaEditor.style.height = newHeight + 'px';
                         if (height !== newHeight) {
                             height = newHeight;
                             sendAction('changeHeight', newHeight);
@@ -177,6 +181,12 @@
                         link.onclick = onClick;
                     }
                 },
+                setSelectionColor: function (opt_color) {
+                    if (opt_color) {
+                        textareaEditor.style.caretColor = opt_color;
+                        contentEditor.style.caretColor = opt_color;
+                    }
+                },
                 setDisabled: function (disabled) {
                     contentEditor.contentEditable = !disabled;
                     textareaEditor.disabled = disabled;
@@ -215,6 +225,8 @@
                     if (isCode) {
                         contentEditor.style.display = 'none';
                         textareaEditor.style.display = 'block';
+                        // textareaEditor.style.height = '';
+                        // textareaEditor.style.height = textareaEditor.scrollHeight + 'px';
                     } else {
                         contentEditor.style.display = 'block';
                         textareaEditor.style.display = 'none';
@@ -224,7 +236,7 @@
 
             var init = function (element) {
                 var textarea = document.createElement('textarea');
-                textarea.className = 'textarea';
+                textarea.className = 'textarea-editor';
                 textarea.addEventListener('input', () => {
                     content.innerHTML = textarea.value;
                 }, false);
@@ -242,7 +254,7 @@
                 content.autocapitalize = 'off';
                 content.autocorrect = 'off';
                 content.autocomplete = 'off';
-                content.className = 'content';
+                content.className = 'content-editor';
                 content.addEventListener('input', () => {
                     textarea.value = content.innerHTML;
                     Actions.changeHtml();
