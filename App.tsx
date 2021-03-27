@@ -19,6 +19,8 @@ export default function App() {
     RobotoCondensed_400Regular_Italic,
   });
 
+  let exampleNumber = null;
+  exampleNumber = null;
   const [value, setValue] = useState(null);
   const numberOfLines = 5;
   const minHeight = 20 * numberOfLines;
@@ -30,6 +32,7 @@ export default function App() {
       for (let i = 0; i <= 3; i++){
         result += (i + '<br />') + v;
       }
+      result += '<br />End';
       setValue(result);
     }, 2000);
   }, []);
@@ -67,6 +70,10 @@ export default function App() {
     console.log('onBlur');
   }
 
+  function isSelectedExample(index) {
+    return index === exampleNumber || exampleNumber === null;
+  }
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }
@@ -77,18 +84,18 @@ export default function App() {
         <View style={styles.container}>
           <StatusBar style='dark' />
           <ScrollView>
-            <View style={[styles.editorContainer]}>
+            {isSelectedExample(0) && (<View style={[styles.editorContainer]}>
               <RichTextViewer html={value} editorStyle={styles.editorViewer} linkStyle={styles.linkStyle} debug={true} />
-            </View>
-            <View style={[styles.editorContainer]}>
+            </View>)}
+            {isSelectedExample(1) && (<View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} selectionColor='red' actionMap={getActionMap()} onValueChange={onValueChange} onFocus={onFocus} onBlur={onBlur} toolbarStyle={styles.toolbar} editorStyle={styles.editor} debug={true} />
-            </View>
-            <View style={[styles.editorContainer]}>
+            </View>)}
+            {isSelectedExample(2) && (<View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editorDark} debug={true} />
-            </View>
-            <View style={[styles.editorContainer]}>
+            </View>)}
+            {isSelectedExample(3) && (<View style={[styles.editorContainer]}>
               <RichTextEditor minHeight={minHeight} value={value} actionMap={getActionMap()} onValueChange={onValueChange} toolbarStyle={styles.toolbar} editorStyle={styles.editor} disabled={true} debug={true} />
-            </View>
+            </View>)}
           </ScrollView>
         </View>
       </SafeAreaView>
