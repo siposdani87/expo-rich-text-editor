@@ -28,7 +28,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-web": "~0.13.12",
-    "react-native-webview": "11.4.0"
+    "react-native-webview": "11.2.3"
   },
   "devDependencies": {
     "@expo-google-fonts/inter": "^0.1.0",
