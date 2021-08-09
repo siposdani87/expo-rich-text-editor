@@ -126,7 +126,7 @@ export const HTML = `<!DOCTYPE html>
                             height = newHeight;
                             sendAction('changeHeight', newHeight);
                         }
-                    }, 250);
+                    }, 350);
                 },
                 clickLink: function (href) {
                     sendAction('clickLink', href);
