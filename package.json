@@ -15,6 +15,13 @@
     "src/*",
     "package.json"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siposdani87/expo-rich-text-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siposdani87/expo-rich-text-editor/issues"
+  },
   "scripts": {
     "start": "expo start -c",
     "android": "expo start --android",
