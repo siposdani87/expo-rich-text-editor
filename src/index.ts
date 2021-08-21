@@ -1,2 +1,4 @@
-export { default as RichTextEditor } from './RichTextEditor';
-export { default as RichTextViewer } from './RichTextViewer';
+import RichTextEditor from './RichTextEditor';
+import RichTextViewer from './RichTextViewer';
+export { RichTextEditor, RichTextViewer };
+

@@ -1,11 +1,11 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onPress: (_action: string) => void, style?: any }, ref) {
-  const [data, setData] = useState([]);
+function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onPress: (_action: string) => void, style?: any }, ref: any) {
+  const [data, setData] = useState<any[]>([]);
 
   useImperativeHandle(ref, () => ({
-    click: (action) => {
+    click: (action: string) => {
       props.onPress(action);
     },
   }));
@@ -15,7 +15,7 @@ function RichTextToolbar(props: { actionMap: any, selectedActions: string[], onP
     setData(getActions(actions, props.selectedActions));
   }, [props.actionMap, props.selectedActions]);
 
-  function getActions(actions: string[], selectedActions: string[]) {
+  function getActions(actions: string[], selectedActions: string[]) : any[]{
     return actions.map((action) => {
       return {
         action,

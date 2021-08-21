@@ -2,15 +2,13 @@ import { Inter_500Medium } from '@expo-google-fonts/inter';
 import { Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { RobotoCondensed_400Regular_Italic } from '@expo-google-fonts/roboto-condensed';
 import { MaterialIcons } from '@expo/vector-icons';
+import { RichTextEditor, RichTextViewer } from '@siposdani87/expo-rich-text-editor';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import RichTextEditor from './src/RichTextEditor';
-import RichTextViewer from './src/RichTextViewer';
-
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +18,7 @@ export default function App() {
   });
 
   let exampleNumber = null;
-  exampleNumber = null;
+  // exampleNumber = null;
   const [value, setValue] = useState(null);
   const numberOfLines = 5;
   const minHeight = 20 * numberOfLines;

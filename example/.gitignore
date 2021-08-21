@@ -1,0 +1,12 @@
+.idea/
+.expo/
+web-build/
+node_modules/
+
+package-lock.json
+yarn.lock
+
+npm-debug.*
+
+# macOS
+.DS_Store
