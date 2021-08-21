@@ -1,19 +1,23 @@
 {
   "name": "@siposdani87/expo-rich-text-editor",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView.",
-  "author": "Dániel Sipos",
+  "author": "Dániel Sipos",
   "license": "MIT",
   "homepage": "https://siposdani87.hu",
   "private": false,
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "keywords": [
+    "react-native",
+    "expo",
     "expo-rich-text-editor",
-    "rich text editor"
+    "richtext",
+    "editor"
   ],
   "files": [
-    "src/*",
-    "package.json"
+    "dist",
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -22,45 +26,61 @@
   "bugs": {
     "url": "https://github.com/siposdani87/expo-rich-text-editor/issues"
   },
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
-    "start": "expo start -c",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-    "tsc-test": "tsc --project . --noEmit"
+    "build-tsc": "rm -rf dist && tsc -p .",
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "npm run build-tsc",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
   },
-  "dependencies": {
-    "expo": "^42.0.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
-    "react-native-web": "~0.13.12",
-    "react-native-webview": "11.6.2"
+  "peerDependencies": {
+    "react": ">=16.13",
+    "react-native": ">=0.63.3",
+    "react-native-webview": ">=11.6.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/expo-rich-text-editor.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/expo-rich-text-editor.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@expo-google-fonts/inter": "^0.2.0",
-    "@expo-google-fonts/oswald": "^0.2.0",
-    "@expo-google-fonts/roboto-condensed": "^0.2.0",
-    "@expo/vector-icons": "^12.0.0",
-    "@types/react": "~16.9.35",
-    "@types/react-dom": "~16.9.8",
-    "@types/react-native": "~0.63.2",
-    "@typescript-eslint/eslint-plugin": "4.29.0",
-    "@typescript-eslint/parser": "4.29.0",
+    "@size-limit/preset-small-lib": "^5.0.3",
+    "@types/node": "^16.6.2",
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "^16.0.0",
+    "@types/react-native": "^0.63.3",
     "babel-preset-expo": "8.3.0",
-    "eslint-config-esnext": "4.1.0",
-    "eslint-config-react": "1.1.7",
-    "eslint-config-react-native": "4.1.0",
-    "eslint-plugin-import": "2.24.0",
-    "eslint-plugin-react": "7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-react-native": "3.11.0",
-    "eslint-plugin-unused-imports": "1.1.2",
-    "expo-app-loading": "^1.0.0",
-    "expo-font": "~9.2.1",
-    "expo-status-bar": "~1.0.4",
-    "react-native-safe-area-context": "3.2.0",
-    "typescript": "~4.0.0"
+    "expo": "^42.0.0",
+    "husky": "^7.0.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-native": "^0.63.3",
+    "react-native-webview": "11.6.2",
+    "size-limit": "^5.0.3",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.3.5"
   }
 }

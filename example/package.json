@@ -1,0 +1,56 @@
+{
+  "name": "@siposdani87/example",
+  "version": "1.0.0",
+  "author": "Dániel Sipos",
+  "license": "MIT",
+  "main": "node_modules/expo/AppEntry.js",
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-rich-text-editor",
+    "richtext",
+    "editor"
+  ],
+  "scripts": {
+    "start": "expo start -c",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "tsc-test": "tsc --project . --noEmit"
+  },
+  "dependencies": {
+    "@siposdani87/expo-rich-text-editor": "file:../",
+    "expo": "^42.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-web": "~0.13.12",
+    "react-native-webview": "11.6.2"
+  },
+  "devDependencies": {
+    "@expo-google-fonts/inter": "^0.2.0",
+    "@expo-google-fonts/oswald": "^0.2.0",
+    "@expo-google-fonts/roboto-condensed": "^0.2.0",
+    "@expo/vector-icons": "^12.0.0",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "4.29.2",
+    "@typescript-eslint/parser": "4.29.2",
+    "babel-preset-expo": "8.3.0",
+    "eslint-config-esnext": "4.1.0",
+    "eslint-config-react": "1.1.7",
+    "eslint-config-react-native": "4.1.0",
+    "eslint-plugin-import": "2.24.1",
+    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-react-native": "3.11.0",
+    "eslint-plugin-unused-imports": "1.1.4",
+    "expo-app-loading": "^1.0.0",
+    "expo-font": "~9.2.1",
+    "expo-status-bar": "~1.0.4",
+    "react-native-safe-area-context": "3.2.0",
+    "typescript": "~4.0.0"
+  }
+}

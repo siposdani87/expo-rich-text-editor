@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { Linking, StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { View, StyleSheet, Platform, Linking } from 'react-native';
+import { HTML } from './editor';
 import RichTextToolbar from './RichTextToolbar';
 
-import { HTML } from './editor';
-let htmlSource = require('./editor.html');
-if (Platform.OS === 'android' || Platform.OS === 'web') {
-    htmlSource = { html: HTML };
-}
+// let htmlSource = require('./editor.html');
+// if (Platform.OS === 'android' || Platform.OS === 'web') {
+   let htmlSource = { html: HTML };
+// }
 
 export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, selectionColor?: string, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
@@ -16,9 +16,9 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
     const [inited, setInited] = useState(false);
     const [minHeight] = useState(props.minHeight || 40);
     const [height, setHeight] = useState(minHeight);
-    const [selectedActions, setSelectedActions] = useState([]);
-    const webViewRef = useRef(null);
-    const toolbarRef = useRef(null);
+    const [selectedActions, setSelectedActions] = useState<string[]>([]);
+    const webViewRef = useRef<any>(null);
+    const toolbarRef = useRef<any>(null);
 
     const Actions = {
         changeHtml: (html: string) => {
@@ -35,10 +35,10 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         clickLink: (url: string) => {
             Linking.openURL(url);
         },
-        onFocus: () => {
+        onFocus: (_: string) => {
             props.onFocus?.();
         },
-        onBlur: () => {
+        onBlur: (_: string) => {
             props.onBlur?.();
         },
         log: (message: string) => {
@@ -74,10 +74,10 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         }
     }, [inited, props.disabled]);
 
-    function onMessage(event) {
+    function onMessage(event: any) {
         try {
             const message = JSON.parse(event.nativeEvent.data);
-            const action = Actions[message.type];
+            const action = Actions[message?.type as keyof typeof Actions] as (arg: any) => void;
             if (action) {
                 action(message.data);
             } else {
@@ -97,31 +97,31 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         sendAction('setHtml', html);
     }
 
-    function setColor(color: string) {
+    function setColor(color?: string) {
         if (color) {
             sendAction('setColor', color);
         }
     }
 
-    function setFontSize(fontSize: number) {
+    function setFontSize(fontSize?: number) {
         if (fontSize) {
             sendAction('setFontSize', fontSize);
         }
     }
 
-    function setFontFamily(fontFamily: string) {
+    function setFontFamily(fontFamily?: string) {
         if (fontFamily) {
             sendAction('setFontFamily', fontFamily);
         }
     }
 
-    function setLinkColor(color: string) {
+    function setLinkColor(color?: string) {
         if (color) {
             sendAction('setLinkColor', color);
         }
     }
 
-    function setSelectionColor(color: string) {
+    function setSelectionColor(color?: string) {
         if (color) {
             sendAction('setSelectionColor', color);
         }
@@ -135,7 +135,7 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         setInited(true);
     }
 
-    function onError(syntheticEvent) {
+    function onError(syntheticEvent: any) {
         const { nativeEvent } = syntheticEvent;
         console.warn('WebView error: ', nativeEvent);
     }
