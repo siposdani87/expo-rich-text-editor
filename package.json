@@ -41,8 +41,8 @@
   },
   "peerDependencies": {
     "react": ">=16.13",
-    "react-native": ">=0.63.3",
-    "react-native-webview": ">=11.6.0"
+    "react-native": "*",
+    "react-native-webview": "*"
   },
   "husky": {
     "hooks": {
