@@ -1,7 +1,8 @@
 {
-  "name": "@siposdani87/example",
+  "name": "@siposdani87/expo-rich-text-editor-example",
   "version": "1.0.0",
   "author": "Dániel Sipos",
+  "description": "Exmaple of expo-rich-text-editor",
   "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
   "keywords": [
