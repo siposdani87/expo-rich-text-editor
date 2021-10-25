@@ -2,7 +2,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
-    "ecmaVersion": 11,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "impliedStrict": true,
@@ -17,8 +17,7 @@
   ],
   "plugins": [
     "@typescript-eslint",
-    "react-hooks",
-    "unused-imports"
+    "react-hooks"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": "off",
