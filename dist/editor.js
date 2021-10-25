@@ -314,5 +314,5 @@ const HTML = `<!DOCTYPE html>
 </body>
 
 </html>`;
-
 export default HTML;
+//# sourceMappingURL=editor.js.map
