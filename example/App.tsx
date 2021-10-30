@@ -2,7 +2,7 @@ import { Inter_500Medium } from '@expo-google-fonts/inter';
 import { Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { RobotoCondensed_400Regular_Italic } from '@expo-google-fonts/roboto-condensed';
 import { MaterialIcons } from '@expo/vector-icons';
-import { RichTextEditor, RichTextViewer } from '@siposdani87/expo-rich-text-editor/src';
+import { RichTextEditor, RichTextViewer } from '@siposdani87/expo-rich-text-editor';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
@@ -19,7 +19,7 @@ export default function App() {
 
   let exampleNumber = null;
   // exampleNumber = 0;
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<string>('');
   const numberOfLines = 5;
   const minHeight = 20 * numberOfLines;
 
@@ -35,7 +35,7 @@ export default function App() {
     }, 2000);
   }, []);
 
-  async function onValueChange(v) {
+  async function onValueChange(v: string) {
     console.log('onValueChange', v);
     setValue(v);
   }
@@ -43,7 +43,7 @@ export default function App() {
   function getActionMap() {
     const size = 24;
 
-    function getColor(selected) {
+    function getColor(selected: boolean) {
       return selected ? 'red' : 'black';
     }
 
@@ -68,7 +68,7 @@ export default function App() {
     console.log('onBlur');
   }
 
-  function isSelectedExample(index) {
+  function isSelectedExample(index: number) {
     return index === exampleNumber || exampleNumber === null;
   }
 

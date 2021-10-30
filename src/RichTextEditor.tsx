@@ -6,7 +6,7 @@ import RichTextToolbar from './RichTextToolbar';
 
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
-   let htmlSource = { html: HTML };
+const htmlSource = { html: HTML };
 // }
 
 export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, selectionColor?: string, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {

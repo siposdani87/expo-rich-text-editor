@@ -5,7 +5,7 @@ import HTML from './editor';
 import RichTextToolbar from './RichTextToolbar';
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
-let htmlSource = { html: HTML };
+const htmlSource = { html: HTML };
 // }
 export default function RichTextEditor(props) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
