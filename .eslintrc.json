@@ -18,7 +18,9 @@
         "@typescript-eslint",
         "react-hooks"
     ],
-    "rules": {},
+    "rules": {
+        "no-unused-vars": ["warn", { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }]
+    },
     "settings": {
         "react": {
             "version": "detect"

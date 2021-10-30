@@ -16,24 +16,28 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "test": "jest --watchAll",
     "tsc-test": "tsc --project . --noEmit"
   },
+  "jest": {
+    "preset": "jest-expo"
+  },
   "dependencies": {
-    "@siposdani87/expo-rich-text-editor": "file:../",
+    "@siposdani87/expo-rich-text-editor": "../siposdani87-expo-rich-text-editor-0.1.0.tgz",
     "expo": "^43.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "0.17.1",
     "react-native-webview": "11.13.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
     "@expo-google-fonts/inter": "^0.2.0",
     "@expo-google-fonts/oswald": "^0.2.0",
     "@expo-google-fonts/roboto-condensed": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@types/react": "~17.0.21",
-    "@types/react-dom": "~17.0.9",
     "@types/react-native": "~0.64.12",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
@@ -49,6 +53,7 @@
     "expo-app-loading": "~1.2.1",
     "expo-font": "~10.0.3",
     "expo-status-bar": "~1.1.0",
+    "jest-expo": "~43.0.0",
     "react-native-safe-area-context": "3.3.2",
     "typescript": "~4.3.5"
   }
