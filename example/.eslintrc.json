@@ -1,67 +1,37 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json",
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "impliedStrict": true,
-      "jsx": true
-    }
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "react-native"
-  ],
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-unused-vars": "off",
-		"unused-imports/no-unused-imports": "error",
-		"unused-imports/no-unused-vars": ["warn", { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }],
-    "semi": "off",
-    "@typescript-eslint/semi": ["error"],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "comma-dangle": ["error", "always-multiline"],
-    "import/namespace": "off",
-    "import/named": "off",
-    "import/no-namespace": "off",
-    "import/no-commonjs": "off",
-    "import/prefer-default-export": "off",
-    "arrow-body-style": "off",
-    "class-methods-use-this": "off",
-    "no-undef": "off",
-    "no-invalid-this": "off",
-    "no-use-before-define": "off",
-    "no-console": "off",
-    "no-unused-expressions": "off",
-    "react/jsx-no-bind": "off",
-    "react/jsx-handler-names": "off",
-    "react/jsx-boolean-value": ["error", "always"],
-    "react/sort-comp": "off",
-    "react/prop-types": "off",
-    "react/display-name": "off",
-    "react/prefer-stateless-function": "off",
-    "react-native/no-inline-styles": "off",
-    "react-native/no-color-literals": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "off"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "impliedStrict": true,
+            "jsx": true
+        }
     },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
+    "extends": [
+        "@react-native-community"
+    ],
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {},
+    "globals": {
+        "JSX": "readonly"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
     }
-  }
 }

@@ -1,15 +1,28 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import HTML from './editor';
-import RichTextToolbar from './RichTextToolbar';
+import RichTextToolbar, { ActionMap } from './RichTextToolbar';
 
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
 const htmlSource = { html: HTML };
 // }
 
-export default function RichTextEditor(props: { value: string, onValueChange: (_value: string) => void, onFocus?: () => void, onBlur?: () => void, selectionColor?: string, actionMap?: any, minHeight?: number, linkStyle?: any, editorStyle?: any, toolbarStyle?: any, disabled?: boolean, debug?: boolean }) {
+export default function RichTextEditor(props: {
+    value: string;
+    onValueChange: (_value: string) => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
+    selectionColor?: string;
+    actionMap?: ActionMap;
+    minHeight?: number;
+    linkStyle?: any;
+    editorStyle?: any;
+    toolbarStyle?: any;
+    disabled?: boolean;
+    debug?: boolean;
+}) {
     const editorStyle = StyleSheet.flatten(props.editorStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [value, setValue] = useState(props.value);
@@ -48,36 +61,50 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         },
     };
 
+    const sendAction = useCallback(
+        (type: string, data: any = null) => {
+            if (data === undefined || data === null) {
+                return;
+            }
+
+            const message = JSON.stringify({ type, data });
+            webViewRef.current?.postMessage(message);
+        },
+        [webViewRef],
+    );
+
     useEffect(() => {
         setValue(props.value);
     }, [inited, props.value]);
 
     useEffect(() => {
         if (inited) {
-            setHTML(value);
+            sendAction('setHtml', value);
         }
-    }, [inited, value]);
+    }, [inited, value, sendAction]);
 
     useEffect(() => {
         if (inited) {
-            setColor(editorStyle?.color);
-            setFontFamily(editorStyle?.fontFamily);
-            setFontSize(editorStyle?.fontSize);
-            setLinkColor(linkStyle?.color);
-            setSelectionColor(props.selectionColor);
+            sendAction('setColor', editorStyle?.color);
+            sendAction('setFontFamily', editorStyle?.fontFamily);
+            sendAction('setFontSize', editorStyle?.fontSize);
+            sendAction('setLinkColor', linkStyle?.color);
+            sendAction('setSelectionColor', props.selectionColor);
         }
-    }, [inited, editorStyle]);
+    }, [inited, editorStyle, linkStyle, props.selectionColor, sendAction]);
 
     useEffect(() => {
         if (inited) {
-            setDisabled(!!props.disabled);
+            sendAction('setDisabled', !!props.disabled);
         }
-    }, [inited, props.disabled]);
+    }, [inited, props.disabled, sendAction]);
 
-    function onMessage(event: any) {
+    const onMessage = (event: any) => {
         try {
             const message = JSON.parse(event.nativeEvent.data);
-            const action = Actions[message?.type as keyof typeof Actions] as (arg: any) => void;
+            const action = Actions[message?.type as keyof typeof Actions] as (
+                _arg: any,
+            ) => void;
             if (action) {
                 action(message.data);
             } else {
@@ -86,85 +113,64 @@ export default function RichTextEditor(props: { value: string, onValueChange: (_
         } catch (e) {
             console.error('onMessage: ', e);
         }
-    }
+    };
 
-    function sendAction(type: string, data: any = null) {
-        const message = JSON.stringify({ type, data });
-        webViewRef.current?.postMessage(message);
-    }
-
-    function setHTML(html: string) {
-        sendAction('setHtml', html);
-    }
-
-    function setColor(color?: string) {
-        if (color) {
-            sendAction('setColor', color);
-        }
-    }
-
-    function setFontSize(fontSize?: number) {
-        if (fontSize) {
-            sendAction('setFontSize', fontSize);
-        }
-    }
-
-    function setFontFamily(fontFamily?: string) {
-        if (fontFamily) {
-            sendAction('setFontFamily', fontFamily);
-        }
-    }
-
-    function setLinkColor(color?: string) {
-        if (color) {
-            sendAction('setLinkColor', color);
-        }
-    }
-
-    function setSelectionColor(color?: string) {
-        if (color) {
-            sendAction('setSelectionColor', color);
-        }
-    }
-
-    function setDisabled(disabled: boolean) {
-        sendAction('setDisabled', disabled);
-    }
-
-    function onLoad() {
+    const onLoad = () => {
         setInited(true);
-    }
+    };
 
-    function onError(syntheticEvent: any) {
+    const onError = (syntheticEvent: any) => {
         const { nativeEvent } = syntheticEvent;
         console.warn('WebView error: ', nativeEvent);
-    }
+    };
 
-    function onPress(action: string) {
+    const onPress = (action: string) => {
         if (!props.disabled) {
             handleSelectedActions(action);
             sendAction(action);
         }
-    }
+    };
 
-    function handleSelectedActions(action: string) {
-        if (action === 'code'){
+    const handleSelectedActions = (action: string) => {
+        if (action === 'code') {
             const index = selectedActions.indexOf('code');
-            if (index === -1){
+            if (index === -1) {
                 setSelectedActions(['code']);
             } else {
                 setSelectedActions([]);
             }
         }
-    }
+    };
 
     return (
-        <Fragment>
-            <RichTextToolbar ref={toolbarRef} style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress} />
+        <>
+            {props.actionMap && (
+                <RichTextToolbar
+                    ref={toolbarRef}
+                    style={[styles.toolbarContainer, props.toolbarStyle]}
+                    actionMap={props.actionMap}
+                    selectedActions={selectedActions}
+                    onPress={onPress}
+                />
+            )}
             <View style={[styles.editorContainer, editorStyle]}>
-                <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError} />
+                <WebView
+                    ref={webViewRef}
+                    source={htmlSource}
+                    style={[styles.webView, { height }]}
+                    textZoom={100}
+                    scrollEnabled={false}
+                    hideKeyboardAccessoryView={true}
+                    keyboardDisplayRequiresUserAction={false}
+                    onMessage={onMessage}
+                    originWhitelist={['*']}
+                    dataDetectorTypes={'none'}
+                    bounces={false}
+                    onLoad={onLoad}
+                    onError={onError}
+                />
             </View>
-        </Fragment>
+        </>
     );
 }
 

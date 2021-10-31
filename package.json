@@ -1,6 +1,6 @@
 {
   "name": "@siposdani87/expo-rich-text-editor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView.",
   "author": "Dániel Sipos",
   "license": "MIT",
@@ -29,31 +29,19 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc -p .",
+    "build": "tsc -p . && npm pack",
     "clean": "rm -rf dist",
-    "lint": "eslint --ext ts src/",
+    "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
     "react": ">=17.0",
     "react-native": "*",
     "react-native-webview": "*"
   },
-  "size-limit": [
-    {
-      "path": "dist/expo-rich-text-editor.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/expo-rich-text-editor.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^6.0.3",
+    "@react-native-community/eslint-config": "^3.0.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.6.2",
     "@types/react": "~17.0.21",
@@ -62,19 +50,12 @@
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^7.32.0",
-    "eslint-config-esnext": "4.1.0",
-    "eslint-config-react": "1.1.7",
-    "eslint-config-react-native": "4.1.0",
-    "eslint-plugin-import": "2.25.2",
-    "eslint-plugin-react": "7.26.1",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-react-native": "3.11.0",
     "expo": "^43.0.0",
+    "prettier": "^2.4.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
     "react-native-webview": "11.13.0",
-    "size-limit": "^6.0.3",
     "typescript": "~4.3.5"
   }
 }
