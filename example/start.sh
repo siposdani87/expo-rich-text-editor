@@ -1,11 +1,7 @@
 #!/bin/bash
 
-sudo npm i -g eslint expo-cli expo-optimize
-rm -rf package-lock.json
-yarn remove @siposdani87/expo-rich-text-editor
-yarn add file:../
-yarn install
-yarn outdated
-eslint . --fix
+# sudo npm i -g expo-cli expo-optimize
+rm -rf node_modules/@siposdani87
+npm i
 npm run tsc-test 
 expo start -c

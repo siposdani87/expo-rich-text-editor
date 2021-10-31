@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import RichTextEditor from './RichTextEditor';
 
-export default function RichTextViewer(props: { html: string, linkStyle?: any, editorStyle?: any, debug?: boolean }) {
-    function onValueChange() {
+export default function RichTextViewer(props: {
+    html: string;
+    linkStyle?: any;
+    editorStyle?: any;
+    debug?: boolean;
+}) {
+    const onValueChange = useCallback(() => {
         // empty onValueChange
-    }
+    }, []);
 
     return (
-        <RichTextEditor value={props.html} onValueChange={onValueChange} linkStyle={props.linkStyle} editorStyle={props.editorStyle} debug={props.debug} disabled={true} />
+        <RichTextEditor
+            value={props.html}
+            onValueChange={onValueChange}
+            linkStyle={props.linkStyle}
+            editorStyle={props.editorStyle}
+            debug={props.debug}
+            disabled={true}
+        />
     );
 }

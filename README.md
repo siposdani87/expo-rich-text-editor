@@ -24,21 +24,18 @@ import { RichTextEditor, RichTextViewer } from '@siposdani87/expo-rich-text-edit
 
 export const RichTextComponents = () => {
     return (
-        <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
-            items={[
-                { label: 'Football', value: 'football' },
-                { label: 'Baseball', value: 'baseball' },
-                { label: 'Hockey', value: 'hockey' },
-            ]}
-        />
+        <>
+            <RichTextViewer html={value} editorStyle={styles.editorViewer} linkStyle={styles.linkStyle} />
+        </>
     );
 };
 ```
 
 ### Props
 
+#### RichTextEditor
 
+#### RichTextViewer
 
 ## Preview
 ![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/doc/images/expo-rich-text-editor.png)
