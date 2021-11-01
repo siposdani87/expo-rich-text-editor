@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 | debug       | boolean | Print debug information to console |
 
 ## Preview
-![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/doc/images/expo-rich-text-editor.png)
+![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/images/expo-rich-text-editor.png)
 
 ## Bugs or Requests
 
