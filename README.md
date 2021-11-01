@@ -1,6 +1,6 @@
 # @siposdani87/expo-rich-text-editor
 
-[![npm package](https://img.shields.io/npm/v/@siposdani87/expo-rich-text-editor.svg)](https://https://www.npmjs.com/package/@siposdani87/expo-rich-text-editor)
+[![npm package](https://img.shields.io/npm/v/@siposdani87/expo-rich-text-editor.svg)](https://www.npmjs.com/package/@siposdani87/expo-rich-text-editor)
 
 <a href="https://www.buymeacoffee.com/siposdani87" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="width: 150px !important;"></a>
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 | toolbarStyle    | Style                   | Style for toolbar container |
 | selectionColor  | string                  | Color of text selection |
 | minHeight       | number                  | Min height of container |
-| disabled        | boolean                 | Disable editing on componenet |
+| disabled        | boolean                 | Disable editing on component |
 | debug           | boolean                 | Print debug information to console |
 
 ### RichTextViewer
