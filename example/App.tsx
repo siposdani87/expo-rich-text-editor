@@ -21,7 +21,7 @@ export default function App() {
         RobotoCondensed_400Regular_Italic,
     });
 
-    let exampleNumber = null;
+    const exampleNumber = null;
     // exampleNumber = 0;
     const [value, setValue] = useState<string>('');
     const numberOfLines = 5;
@@ -40,17 +40,17 @@ export default function App() {
         }, 2000);
     }, []);
 
-    async function onValueChange(v: string) {
+    const onValueChange = (v: string): void => {
         console.log('onValueChange', v);
         setValue(v);
-    }
+    };
 
-    function getActionMap(): ActionMap {
+    const getColor = (selected: boolean): string => {
+      return selected ? 'red' : 'black';
+    };
+
+    const getActionMap = (): ActionMap => {
         const size = 24;
-
-        function getColor(selected: boolean) {
-            return selected ? 'red' : 'black';
-        }
 
         return {
             undo: ({ selected }) => (
@@ -117,19 +117,19 @@ export default function App() {
                 />
             ),
         };
-    }
+    };
 
-    function onFocus() {
+    const onFocus = (): void => {
         console.log('onFocus');
-    }
+    };
 
-    function onBlur() {
+    const onBlur = (): void => {
         console.log('onBlur');
-    }
+    };
 
-    function isSelectedExample(index: number) {
+    const isSelectedExample = (index: number): boolean => {
         return index === exampleNumber || exampleNumber === null;
-    }
+    };
 
     if (!fontsLoaded) {
         return <AppLoading />;
@@ -144,9 +144,9 @@ export default function App() {
                         {isSelectedExample(0) && (
                             <View style={[styles.editorContainer]}>
                                 <RichTextViewer
-                                    html={value}
-                                    editorStyle={styles.editorViewer}
-                                    linkStyle={styles.linkStyle}
+                                    value={value}
+                                    editorStyle={styles.viewer}
+                                    linkStyle={styles.link}
                                     debug={true}
                                 />
                             </View>
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     editorContainer: {
         margin: 10,
     },
-    editorViewer: {
+    viewer: {
         borderColor: 'green',
         borderWidth: 1,
         padding: 5,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         fontFamily: 'RobotoCondensed_400Regular_Italic',
         fontSize: 12,
     },
-    linkStyle: {
+    link: {
         color: 'green',
     },
     toolbar: {

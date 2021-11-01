@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import RichTextEditor from './RichTextEditor';
 
 export default function RichTextViewer(props: {
-    html: string;
+    value: string;
     linkStyle?: any;
     editorStyle?: any;
     debug?: boolean;
@@ -13,7 +13,7 @@ export default function RichTextViewer(props: {
 
     return (
         <RichTextEditor
-            value={props.html}
+            value={props.value}
             onValueChange={onValueChange}
             linkStyle={props.linkStyle}
             editorStyle={props.editorStyle}
