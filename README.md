@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 
 | Prop        | Type    | Description |
 | ----------- | ------- | ----------- |
-| value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, br |
+| value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, ul, ol, li, br |
 | editorStyle | Style   | Style for editor container |
 | linkStyle   | Style   | Style for link (a tag) |
 | debug       | boolean | Print debug information to console |
