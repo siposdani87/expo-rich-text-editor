@@ -19,23 +19,107 @@ expo install @siposdani87/expo-rich-text-editor
 
 ### Basic Usage
 
+Check example directory for more samples and options.
+
 ```js
-import { RichTextEditor, RichTextViewer } from '@siposdani87/expo-rich-text-editor';
+import { MaterialIcons } from '@expo/vector-icons';
+import { RichTextEditor, RichTextViewer, ActionMap } from '@siposdani87/expo-rich-text-editor';
+
+const htmlStr = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal words</p>';
 
 export const RichTextComponents = () => {
+    const [value, setValue] = useState('');
+
+    const getColor = (selected: boolean): string => {
+      return selected ? 'red' : 'black';
+    };
+
+    const getActionMap = (): ActionMap => {
+        return {
+            bold: ({ selected }) => (
+                <MaterialIcons
+                    name="format-bold"
+                    size={14}
+                    color={getColor(selected)}
+                />
+            ),
+        };
+    };
+
+    const onValueChange = (v: string): void => {
+        console.log('onValueChange', v);
+        setValue(v);
+    };
+
     return (
         <>
-            <RichTextViewer html={value} editorStyle={styles.editorViewer} linkStyle={styles.linkStyle} />
+            <RichTextEditor
+                minHeight={150}
+                value={value}
+                selectionColor="green"
+                actionMap={getActionMap()}
+                onValueChange={onValueChange}
+                toolbarStyle={styles.toolbar}
+                editorStyle={styles.editor}
+            />
+
+            <RichTextViewer value={htmlStr} editorStyle={styles.viewer} linkStyle={styles.link} />
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    viewer: {
+        borderColor: 'green',
+        borderWidth: 1,
+        padding: 5,
+        // fontFamily: 'Oswald_400Regular',
+    },
+    editor: {
+        borderColor: 'blue',
+        borderWidth: 1,
+        padding: 5,
+        // fontFamily: 'Inter_500Medium',
+        fontSize: 18,
+    },
+    toolbar: {
+        borderColor: 'red',
+        borderWidth: 1,
+    },
+    link: {
+        color: 'green',
+    },
+});
+
 ```
 
-### Props
+## Props
 
-#### RichTextEditor
+### RichTextEditor
 
-#### RichTextViewer
+| Prop            | Type                    | Description |
+| --------------- | ----------------------- | ----------- |
+| value *         | string                  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, br |
+| onValueChange * | (value: string) => void | Call this function on value changed |
+| onFocus         | () => void              | Call this function on component focus |
+| onBlur          | () => void              | Call this function on component blur |
+| actionMap       | ActionMap               | Action config for toolbar component |
+| editorStyle     | Style                   | Style for editor container |
+| linkStyle       | Style                   | Style for link (a tag) |
+| toolbarStyle    | Style                   | Style for toolbar container |
+| selectionColor  | string                  | Color of text selection |
+| minHeight       | number                  | Min height of container |
+| disabled        | boolean                 | Disable editing on componenet |
+| debug           | boolean                 | Print debug information to console |
+
+### RichTextViewer
+
+| Prop        | Type    | Description |
+| ----------- | ------- | ----------- |
+| value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, br |
+| editorStyle | Style   | Style for editor container |
+| linkStyle   | Style   | Style for link (a tag) |
+| debug       | boolean | Print debug information to console |
 
 ## Preview
 ![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/doc/images/expo-rich-text-editor.png)
