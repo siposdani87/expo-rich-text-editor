@@ -29,7 +29,7 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc -p . && npm pack",
+    "build": "tsc -p .",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
