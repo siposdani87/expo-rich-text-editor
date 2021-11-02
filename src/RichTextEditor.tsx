@@ -127,18 +127,15 @@ export default function RichTextEditor(props: {
     const onPress = (action: string) => {
         if (!props.disabled) {
             handleSelectedActions(action);
-            sendAction(action);
+            sendAction(action, '');
         }
     };
 
     const handleSelectedActions = (action: string) => {
         if (action === 'code') {
             const index = selectedActions.indexOf('code');
-            if (index === -1) {
-                setSelectedActions(['code']);
-            } else {
-                setSelectedActions([]);
-            }
+            const actions = index === -1 ? ['code'] : [];
+            setSelectedActions(actions);
         }
     };
 
