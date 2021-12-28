@@ -44,7 +44,7 @@ export default function RichTextEditor(props) {
             }
         },
     };
-    const sendAction = useCallback((type, data = null) => {
+    const sendAction = useCallback((type, data) => {
         if (data === undefined || data === null) {
             return;
         }
