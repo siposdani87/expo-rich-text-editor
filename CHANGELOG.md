@@ -1,3 +1,15 @@
+## 0.5.0 - TBD
+
+* 
+
+## 0.4.0 - 2020-12-28
+
+* Upgrade Expo SDK to version 44
+
+## 0.3.0 - 2020-11-02
+
+* Fix action handlers
+
 ## 0.2.0 - 2020-11-01
 
 * Published to NPM
