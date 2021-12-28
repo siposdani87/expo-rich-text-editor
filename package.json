@@ -4,7 +4,7 @@
   "description": "This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView.",
   "author": "Dániel Sipos",
   "license": "MIT",
-  "homepage": "https://siposdani87.hu",
+  "homepage": "https://siposdani87.com",
   "private": false,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -51,12 +51,12 @@
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^7.32.0",
-    "expo": "^43.0.0",
+    "expo": "^44.0.0",
     "prettier": "^2.4.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-native": "0.64.2",
-    "react-native-webview": "11.13.0",
+    "react-native": "0.64.3",
+    "react-native-webview": "11.15.0",
     "typescript": "~4.3.5"
   }
 }
