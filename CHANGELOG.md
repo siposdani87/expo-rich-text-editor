@@ -1,6 +1,7 @@
 ## 0.5.0 - TBD
 
-* 
+* Improve typings
+* Upgrade packges
 
 ## 0.4.0 - 2020-12-28
 
@@ -12,14 +13,14 @@
 
 ## 0.2.0 - 2020-11-01
 
-* Published to NPM
+* Publish to NPM
 * Upgrade Expo SDK to version 43
-* Improved ESlint and TypeScript configs
+* Improve ESlint and TypeScript configs
 
 ## 0.1.0 - 2020-12-10
 
 * Upgrade Expo SDK to version 40
-* Fixed style issues on HTML handler
+* Fix style issues on HTML handler
 
 ## 0.0.1 - 2020-10-14
 
