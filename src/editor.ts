@@ -128,8 +128,8 @@ const HTML = `<!DOCTYPE html>
                         }
                     }, 350);
                 },
-                clickLink: function (href) {
-                    sendAction('clickLink', href);
+                onClickLink: function (href) {
+                    sendAction('onClickLink', href);
                 },
                 focus: function () {
                     sendAction('onFocus');
@@ -180,7 +180,7 @@ const HTML = `<!DOCTYPE html>
                         e.preventDefault();
                         var href = e.currentTarget.getAttribute('href');
                         log(href);
-                        Actions.clickLink(href);
+                        Actions.onClickLink(href);
                     };
                     var links = document.getElementsByTagName('a');
                     for (var i = 0; i < links.length; i++) {
