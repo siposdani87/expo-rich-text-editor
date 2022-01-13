@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState, } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, View, } from 'react-native';
 function RichTextToolbar(props, ref) {
     const [data, setData] = useState([]);
     useImperativeHandle(ref, () => ({

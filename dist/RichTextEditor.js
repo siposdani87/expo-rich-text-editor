@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, View, } from 'react-native';
 import { WebView } from 'react-native-webview';
 import HTML from './editor';
 import RichTextToolbar from './RichTextToolbar';
@@ -22,20 +22,23 @@ export default function RichTextEditor(props) {
             setValue(html);
             props.onValueChange(html);
         },
-        changeHeight: (h) => {
-            if (h < minHeight) {
-                h = minHeight;
+        changeHeight: (newHeight) => {
+            if (newHeight < minHeight) {
+                newHeight = minHeight;
             }
             const offset = editorStyle?.fontSize || 16;
-            setHeight(h + offset);
+            setHeight(newHeight + offset);
         },
-        clickLink: (url) => {
+        onClickLink: (url) => {
+            if (props.onClickLink) {
+                return props.onClickLink(url);
+            }
             Linking.openURL(url);
         },
-        onFocus: (_) => {
+        onFocus: () => {
             props.onFocus?.();
         },
-        onBlur: (_) => {
+        onBlur: () => {
             props.onBlur?.();
         },
         log: (message) => {
@@ -73,9 +76,9 @@ export default function RichTextEditor(props) {
             sendAction('setDisabled', !!props.disabled);
         }
     }, [inited, props.disabled, sendAction]);
-    const onMessage = (event) => {
+    const onMessage = ({ nativeEvent }) => {
         try {
-            const message = JSON.parse(event.nativeEvent.data);
+            const message = JSON.parse(nativeEvent.data);
             const action = Actions[message?.type];
             if (action) {
                 action(message.data);
@@ -91,8 +94,7 @@ export default function RichTextEditor(props) {
     const onLoad = () => {
         setInited(true);
     };
-    const onError = (syntheticEvent) => {
-        const { nativeEvent } = syntheticEvent;
+    const onError = ({ nativeEvent }) => {
         console.warn('WebView error: ', nativeEvent);
     };
     const onPress = (action) => {
