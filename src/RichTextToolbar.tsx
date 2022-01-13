@@ -4,7 +4,14 @@ import React, {
     useImperativeHandle,
     useState,
 } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    FlatList,
+    StyleProp,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    ViewStyle,
+} from 'react-native';
 
 interface Action {
     name: string;
@@ -22,7 +29,7 @@ function RichTextToolbar(
         actionMap: ActionMap;
         selectedActions: string[];
         onPress: (_actionName: string) => void;
-        style?: any;
+        style?: StyleProp<ViewStyle>;
     },
     ref: any,
 ) {
@@ -49,7 +56,7 @@ function RichTextToolbar(
         }));
     };
 
-    const renderAction = (action: Action) => {
+    const renderAction = (action: Action): JSX.Element => {
         const icon = props.actionMap[action.name](action);
         return (
             <TouchableOpacity

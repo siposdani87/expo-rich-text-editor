@@ -1,6 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import {
+    Linking,
+    StyleProp,
+    StyleSheet,
+    TextStyle,
+    View,
+    ViewStyle,
+} from 'react-native';
 import { WebView } from 'react-native-webview';
+import {
+    WebViewErrorEvent,
+    WebViewMessageEvent,
+} from 'react-native-webview/lib/WebViewTypes';
 import HTML from './editor';
 import RichTextToolbar, { ActionMap } from './RichTextToolbar';
 
@@ -14,21 +25,22 @@ export default function RichTextEditor(props: {
     onValueChange: (_value: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
+    onClickLink?: (_url: string) => void;
     selectionColor?: string;
     actionMap?: ActionMap;
     minHeight?: number;
-    linkStyle?: any;
-    editorStyle?: any;
-    toolbarStyle?: any;
+    linkStyle?: StyleProp<TextStyle>;
+    editorStyle?: StyleProp<TextStyle>;
+    toolbarStyle?: StyleProp<ViewStyle>;
     disabled?: boolean;
     debug?: boolean;
 }) {
-    const editorStyle = StyleSheet.flatten(props.editorStyle);
-    const linkStyle = StyleSheet.flatten(props.linkStyle);
-    const [value, setValue] = useState(props.value);
-    const [inited, setInited] = useState(false);
-    const [minHeight] = useState(props.minHeight || 40);
-    const [height, setHeight] = useState(minHeight);
+    const editorStyle = StyleSheet.flatten<TextStyle>(props.editorStyle);
+    const linkStyle = StyleSheet.flatten<TextStyle>(props.linkStyle);
+    const [value, setValue] = useState<string>(props.value);
+    const [inited, setInited] = useState<boolean>(false);
+    const [minHeight] = useState<number>(props.minHeight || 40);
+    const [height, setHeight] = useState<number>(minHeight);
     const [selectedActions, setSelectedActions] = useState<string[]>([]);
     const webViewRef = useRef<any>(null);
     const toolbarRef = useRef<any>(null);
@@ -38,20 +50,23 @@ export default function RichTextEditor(props: {
             setValue(html);
             props.onValueChange(html);
         },
-        changeHeight: (h: number) => {
-            if (h < minHeight) {
-                h = minHeight;
+        changeHeight: (newHeight: number) => {
+            if (newHeight < minHeight) {
+                newHeight = minHeight;
             }
             const offset = editorStyle?.fontSize || 16;
-            setHeight(h + offset);
+            setHeight(newHeight + offset);
         },
-        clickLink: (url: string) => {
+        onClickLink: (url: string) => {
+            if (props.onClickLink) {
+                return props.onClickLink(url);
+            }
             Linking.openURL(url);
         },
-        onFocus: (_: string) => {
+        onFocus: () => {
             props.onFocus?.();
         },
-        onBlur: (_: string) => {
+        onBlur: () => {
             props.onBlur?.();
         },
         log: (message: string) => {
@@ -62,7 +77,7 @@ export default function RichTextEditor(props: {
     };
 
     const sendAction = useCallback(
-        (type: string, data: any) => {
+        (type: string, data: any): void => {
             if (data === undefined || data === null) {
                 return;
             }
@@ -99,9 +114,9 @@ export default function RichTextEditor(props: {
         }
     }, [inited, props.disabled, sendAction]);
 
-    const onMessage = (event: any) => {
+    const onMessage = ({ nativeEvent }: WebViewMessageEvent): void => {
         try {
-            const message = JSON.parse(event.nativeEvent.data);
+            const message = JSON.parse(nativeEvent.data);
             const action = Actions[message?.type as keyof typeof Actions] as (
                 _arg: any,
             ) => void;
@@ -115,23 +130,22 @@ export default function RichTextEditor(props: {
         }
     };
 
-    const onLoad = () => {
+    const onLoad = (): void => {
         setInited(true);
     };
 
-    const onError = (syntheticEvent: any) => {
-        const { nativeEvent } = syntheticEvent;
+    const onError = ({ nativeEvent }: WebViewErrorEvent) => {
         console.warn('WebView error: ', nativeEvent);
     };
 
-    const onPress = (action: string) => {
+    const onPress = (action: string): void => {
         if (!props.disabled) {
             handleSelectedActions(action);
             sendAction(action, '');
         }
     };
 
-    const handleSelectedActions = (action: string) => {
+    const handleSelectedActions = (action: string): void => {
         if (action === 'code') {
             const index = selectedActions.indexOf('code');
             const actions = index === -1 ? ['code'] : [];

@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import RichTextEditor from './RichTextEditor';
 
 export default function RichTextViewer(props: {
     value: string;
-    linkStyle?: any;
-    editorStyle?: any;
+    linkStyle?: StyleProp<ViewStyle>;
+    editorStyle?: StyleProp<ViewStyle>;
     debug?: boolean;
 }) {
     const onValueChange = useCallback(() => {
