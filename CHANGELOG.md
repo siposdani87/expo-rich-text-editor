@@ -1,4 +1,8 @@
-## 0.5.0 - TBD
+## 0.6.0 - TBD
+
+* 
+
+## 0.5.0 - 2021-01-14
 
 * Improve typings
 * Upgrade packges
