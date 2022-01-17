@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import RichTextEditor from './RichTextEditor';
 
 export default function RichTextViewer(props: {
     value: string;
-    linkStyle?: StyleProp<ViewStyle>;
+    linkStyle?: StyleProp<TextStyle>;
     editorStyle?: StyleProp<ViewStyle>;
     debug?: boolean;
 }) {
