@@ -2,6 +2,10 @@
 
 * 
 
+## 0.5.1 - 2021-01-17
+
+* Fix linkStyle type
+
 ## 0.5.0 - 2021-01-14
 
 * Improve typings
