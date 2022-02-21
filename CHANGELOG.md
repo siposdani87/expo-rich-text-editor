@@ -1,25 +1,29 @@
-## 0.6.0 - TBD
+## 0.7.0 - TBD
 
 * 
 
-## 0.5.1 - 2021-01-17
+## 0.6.0 - 2022-02-21
+
+* Fix editorStyle type
+
+## 0.5.1 - 2022-01-17
 
 * Fix linkStyle type
 
-## 0.5.0 - 2021-01-14
+## 0.5.0 - 2022-01-14
 
 * Improve typings
 * Upgrade packges
 
-## 0.4.0 - 2020-12-28
+## 0.4.0 - 2021-12-28
 
 * Upgrade Expo SDK to version 44
 
-## 0.3.0 - 2020-11-02
+## 0.3.0 - 2021-11-02
 
 * Fix action handlers
 
-## 0.2.0 - 2020-11-01
+## 0.2.0 - 2021-11-01
 
 * Publish to NPM
 * Upgrade Expo SDK to version 43
