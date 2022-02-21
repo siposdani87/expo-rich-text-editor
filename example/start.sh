@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# sudo npm i -g expo-cli expo-optimize
 npm i
 rm -rf node_modules/@siposdani87
 mkdir -p node_modules/@siposdani87/expo-rich-text-editor
