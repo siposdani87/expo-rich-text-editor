@@ -1,8 +1,8 @@
 /// <reference types="react" />
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 export default function RichTextViewer(props: {
     value: string;
     linkStyle?: StyleProp<TextStyle>;
-    editorStyle?: StyleProp<ViewStyle>;
+    editorStyle?: StyleProp<TextStyle>;
     debug?: boolean;
 }): JSX.Element;
