@@ -7,12 +7,12 @@ import {
     RichTextViewer,
     ActionMap,
 } from '@siposdani87/expo-rich-text-editor';
-import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -22,10 +22,15 @@ export default function App() {
     });
 
     const exampleNumber = null;
-    // exampleNumber = 0;
     const [value, setValue] = useState<string>('');
     const numberOfLines = 5;
     const minHeight = 20 * numberOfLines;
+
+    useEffect(()=> {
+        if (fontsLoaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -132,7 +137,7 @@ export default function App() {
     };
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return null;
     }
 
     return (
