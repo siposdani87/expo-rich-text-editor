@@ -1,6 +1,7 @@
-## 0.7.0 - TBD
+## 0.7.0 - 2022-05-13
 
-* 
+* Upgrade Expo SDK to version 45
+* Change expo-app-loading to expo-splash-screen
 
 ## 0.6.0 - 2022-02-21
 
