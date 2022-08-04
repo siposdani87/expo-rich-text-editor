@@ -11,45 +11,45 @@
     "editor"
   ],
   "scripts": {
-    "start": "expo start -c",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-    "test": "jest --watchAll",
-    "tsc-test": "tsc --project . --noEmit"
+    "start": "npx expo start -c",
+    "android": "npx expo start --android",
+    "ios": "npx expo start --ios",
+    "web": "npx expo start --web",
+    "eject": "npx expo eject",
+    "test": "npx jest --watchAll",
+    "tsc-test": "npx tsc --project . --noEmit"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
     "@siposdani87/expo-rich-text-editor": "file:../",
-    "expo": "^45.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-webview": "11.18.1",
-    "expo-splash-screen": "~0.15.1"
+    "expo": "^46.0.0",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-native": "0.69.3",
+    "react-native-webview": "11.23.0",
+    "expo-splash-screen": "~0.16.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.18.6",
     "@expo-google-fonts/inter": "^0.2.0",
     "@expo-google-fonts/oswald": "^0.2.0",
     "@expo-google-fonts/roboto-condensed": "^0.2.0",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/eslint-config": "^3.0.1",
     "@types/babel__core": "^7.1.16",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "~0.67.6",
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
-    "babel-preset-expo": "~9.1.0",
-    "eslint": "^7.32.0",
-    "expo-font": "~10.1.0",
-    "expo-status-bar": "~1.3.0",
-    "jest-expo": "^45.0.0",
-    "prettier": "^2.4.1",
-    "react-native-safe-area-context": "4.2.4",
-    "typescript": "~4.3.5"
+    "babel-preset-expo": "~9.2.0",
+    "eslint": "^8.21.0",
+    "expo-font": "~10.2.0",
+    "expo-status-bar": "~1.4.0",
+    "jest-expo": "^46.0.0",
+    "prettier": "^2.7.1",
+    "react-native-safe-area-context": "4.3.1",
+    "typescript": "^4.6.3"
   }
 }
