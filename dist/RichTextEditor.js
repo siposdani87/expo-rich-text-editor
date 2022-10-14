@@ -12,9 +12,9 @@ export default function RichTextEditor(props) {
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [value, setValue] = useState(props.value);
     const [inited, setInited] = useState(false);
-    const [minHeight] = useState(props.minHeight || 40);
+    const [minHeight] = useState(props.minHeight ?? 40);
     const [height, setHeight] = useState(minHeight);
-    const [selectedActions, setSelectedActions] = useState([]);
+    const [selectedActionKeys, setSelectedActionKeys] = useState([]);
     const webViewRef = useRef(null);
     const toolbarRef = useRef(null);
     const Actions = {
@@ -99,19 +99,19 @@ export default function RichTextEditor(props) {
     };
     const onPress = (action) => {
         if (!props.disabled) {
-            handleSelectedActions(action);
+            handleSelectedActionKeys(action);
             sendAction(action, '');
         }
     };
-    const handleSelectedActions = (action) => {
+    const handleSelectedActionKeys = (action) => {
         if (action === 'code') {
-            const index = selectedActions.indexOf('code');
+            const index = selectedActionKeys.indexOf('code');
             const actions = index === -1 ? ['code'] : [];
-            setSelectedActions(actions);
+            setSelectedActionKeys(actions);
         }
     };
     return (<>
-            {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActions={selectedActions} onPress={onPress}/>)}
+            {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={[styles.toolbarContainer, props.toolbarStyle]} actionMap={props.actionMap} selectedActionKeys={selectedActionKeys} onPress={onPress}/>)}
             <View style={[styles.editorContainer, editorStyle]}>
                 <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError}/>
             </View>

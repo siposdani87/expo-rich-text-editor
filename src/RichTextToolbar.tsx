@@ -1,20 +1,21 @@
 import React, {
     forwardRef,
     useEffect,
+    useId,
     useImperativeHandle,
     useState,
 } from 'react';
 import {
     FlatList,
+    Pressable,
     StyleProp,
     StyleSheet,
-    TouchableOpacity,
     View,
     ViewStyle,
 } from 'react-native';
 
 interface Action {
-    name: string;
+    key: string;
     selected: boolean;
 }
 
@@ -27,13 +28,14 @@ export interface ActionMap {
 function RichTextToolbar(
     props: {
         actionMap: ActionMap;
-        selectedActions: string[];
-        onPress: (_actionName: string) => void;
+        selectedActionKeys: string[];
+        onPress: (_actionKey: string) => void;
         style?: StyleProp<ViewStyle>;
     },
     ref: any,
 ) {
-    const [data, setData] = useState<Action[]>([]);
+    const id = useId();
+    const [actions, setActions] = useState<Action[]>([]);
 
     useImperativeHandle(ref, () => ({
         click: (action: string) => {
@@ -42,37 +44,35 @@ function RichTextToolbar(
     }));
 
     useEffect(() => {
-        const actions = Object.keys(props.actionMap || {});
-        setData(getActions(actions, props.selectedActions));
-    }, [props.actionMap, props.selectedActions]);
+        const actionKeys = Object.keys(props.actionMap || {});
+        setActions(createActions(actionKeys, props.selectedActionKeys));
+    }, [props.actionMap, props.selectedActionKeys]);
 
-    const getActions = (
-        names: string[],
-        selectedActions: string[],
+    const createActions = (
+        actionKeys: string[],
+        selectedActionKeys: string[],
     ): Action[] => {
-        return names.map<Action>((name) => ({
-            name,
-            selected: selectedActions.includes(name),
+        return actionKeys.map<Action>((key) => ({
+            key,
+            selected: selectedActionKeys.includes(key),
         }));
     };
 
     const renderAction = (action: Action): JSX.Element => {
-        const icon = props.actionMap[action.name](action);
+        const icon = props.actionMap[action.key](action);
         return (
-            <TouchableOpacity
+            <Pressable
                 style={styles.touchableOpacity}
-                activeOpacity={0.6}
-                key={action.name}
-                onPress={() => props.onPress(action.name)}
+                onPress={() => props.onPress(action.key)}
             >
                 {icon}
-            </TouchableOpacity>
+            </Pressable>
         );
     };
 
-    const keyExtractor = (action: Action): string => action.name;
+    const keyExtractor = (action: Action): string => `${id}-${action.key}`;
 
-    if (data.length === 0) {
+    if (actions.length === 0) {
         return null;
     }
 
@@ -81,7 +81,7 @@ function RichTextToolbar(
             <FlatList
                 horizontal={true}
                 keyExtractor={keyExtractor}
-                data={data}
+                data={actions}
                 alwaysBounceHorizontal={false}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => renderAction(item)}

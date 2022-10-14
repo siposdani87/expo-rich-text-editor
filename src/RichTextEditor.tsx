@@ -39,9 +39,9 @@ export default function RichTextEditor(props: {
     const linkStyle = StyleSheet.flatten<TextStyle>(props.linkStyle);
     const [value, setValue] = useState<string>(props.value);
     const [inited, setInited] = useState<boolean>(false);
-    const [minHeight] = useState<number>(props.minHeight || 40);
+    const [minHeight] = useState<number>(props.minHeight ?? 40);
     const [height, setHeight] = useState<number>(minHeight);
-    const [selectedActions, setSelectedActions] = useState<string[]>([]);
+    const [selectedActionKeys, setSelectedActionKeys] = useState<string[]>([]);
     const webViewRef = useRef<any>(null);
     const toolbarRef = useRef<any>(null);
 
@@ -134,22 +134,22 @@ export default function RichTextEditor(props: {
         setInited(true);
     };
 
-    const onError = ({ nativeEvent }: WebViewErrorEvent) => {
+    const onError = ({ nativeEvent }: WebViewErrorEvent): void => {
         console.warn('WebView error: ', nativeEvent);
     };
 
     const onPress = (action: string): void => {
         if (!props.disabled) {
-            handleSelectedActions(action);
+            handleSelectedActionKeys(action);
             sendAction(action, '');
         }
     };
 
-    const handleSelectedActions = (action: string): void => {
+    const handleSelectedActionKeys = (action: string): void => {
         if (action === 'code') {
-            const index = selectedActions.indexOf('code');
+            const index = selectedActionKeys.indexOf('code');
             const actions = index === -1 ? ['code'] : [];
-            setSelectedActions(actions);
+            setSelectedActionKeys(actions);
         }
     };
 
@@ -160,7 +160,7 @@ export default function RichTextEditor(props: {
                     ref={toolbarRef}
                     style={[styles.toolbarContainer, props.toolbarStyle]}
                     actionMap={props.actionMap}
-                    selectedActions={selectedActions}
+                    selectedActionKeys={selectedActionKeys}
                     onPress={onPress}
                 />
             )}

@@ -1,34 +1,35 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState, } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View, } from 'react-native';
+import React, { forwardRef, useEffect, useId, useImperativeHandle, useState, } from 'react';
+import { FlatList, Pressable, StyleSheet, View, } from 'react-native';
 function RichTextToolbar(props, ref) {
-    const [data, setData] = useState([]);
+    const id = useId();
+    const [actions, setActions] = useState([]);
     useImperativeHandle(ref, () => ({
         click: (action) => {
             props.onPress(action);
         },
     }));
     useEffect(() => {
-        const actions = Object.keys(props.actionMap || {});
-        setData(getActions(actions, props.selectedActions));
-    }, [props.actionMap, props.selectedActions]);
-    const getActions = (names, selectedActions) => {
-        return names.map((name) => ({
-            name,
-            selected: selectedActions.includes(name),
+        const actionKeys = Object.keys(props.actionMap || {});
+        setActions(createActions(actionKeys, props.selectedActionKeys));
+    }, [props.actionMap, props.selectedActionKeys]);
+    const createActions = (actionKeys, selectedActionKeys) => {
+        return actionKeys.map((key) => ({
+            key,
+            selected: selectedActionKeys.includes(key),
         }));
     };
     const renderAction = (action) => {
-        const icon = props.actionMap[action.name](action);
-        return (<TouchableOpacity style={styles.touchableOpacity} activeOpacity={0.6} key={action.name} onPress={() => props.onPress(action.name)}>
+        const icon = props.actionMap[action.key](action);
+        return (<Pressable style={styles.touchableOpacity} onPress={() => props.onPress(action.key)}>
                 {icon}
-            </TouchableOpacity>);
+            </Pressable>);
     };
-    const keyExtractor = (action) => action.name;
-    if (data.length === 0) {
+    const keyExtractor = (action) => `${id}-${action.key}`;
+    if (actions.length === 0) {
         return null;
     }
     return (<View style={[styles.toolbarContainer, props.style]}>
-            <FlatList horizontal={true} keyExtractor={keyExtractor} data={data} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={({ item }) => renderAction(item)}/>
+            <FlatList horizontal={true} keyExtractor={keyExtractor} data={actions} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={({ item }) => renderAction(item)}/>
         </View>);
 }
 const styles = StyleSheet.create({
