@@ -1,3 +1,7 @@
+## 0.8.1 - 2022-10-09
+
+* Upgrade packages
+
 ## 0.8.0 - 2022-08-04
 
 * Upgrade Expo SDK to version 46
