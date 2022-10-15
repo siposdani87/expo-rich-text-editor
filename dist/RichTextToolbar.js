@@ -3,6 +3,19 @@ import { FlatList, Pressable, StyleSheet, View, } from 'react-native';
 function RichTextToolbar(props, ref) {
     const id = useId();
     const [actions, setActions] = useState([]);
+    const createActions = (actionKeys, selectedActionKeys) => {
+        return actionKeys.map((key) => ({
+            key,
+            selected: selectedActionKeys.includes(key),
+        }));
+    };
+    const renderAction = (action) => {
+        const iconElement = props.actionMap[action.key](action);
+        return (<Pressable onPress={() => props.onPress(action.key)}>
+                <View style={styles.actionContainer}>{iconElement}</View>
+            </Pressable>);
+    };
+    const keyExtractor = (action) => `${id}-${action.key}`;
     useImperativeHandle(ref, () => ({
         click: (action) => {
             props.onPress(action);
@@ -12,19 +25,6 @@ function RichTextToolbar(props, ref) {
         const actionKeys = Object.keys(props.actionMap || {});
         setActions(createActions(actionKeys, props.selectedActionKeys));
     }, [props.actionMap, props.selectedActionKeys]);
-    const createActions = (actionKeys, selectedActionKeys) => {
-        return actionKeys.map((key) => ({
-            key,
-            selected: selectedActionKeys.includes(key),
-        }));
-    };
-    const renderAction = (action) => {
-        const icon = props.actionMap[action.key](action);
-        return (<Pressable style={styles.touchableOpacity} onPress={() => props.onPress(action.key)}>
-                {icon}
-            </Pressable>);
-    };
-    const keyExtractor = (action) => `${id}-${action.key}`;
     if (actions.length === 0) {
         return null;
     }
@@ -34,7 +34,7 @@ function RichTextToolbar(props, ref) {
 }
 const styles = StyleSheet.create({
     toolbarContainer: {},
-    touchableOpacity: {
+    actionContainer: {
         marginRight: 8,
         marginBottom: 2,
     },

@@ -37,17 +37,6 @@ function RichTextToolbar(
     const id = useId();
     const [actions, setActions] = useState<Action[]>([]);
 
-    useImperativeHandle(ref, () => ({
-        click: (action: string) => {
-            props.onPress(action);
-        },
-    }));
-
-    useEffect(() => {
-        const actionKeys = Object.keys(props.actionMap || {});
-        setActions(createActions(actionKeys, props.selectedActionKeys));
-    }, [props.actionMap, props.selectedActionKeys]);
-
     const createActions = (
         actionKeys: string[],
         selectedActionKeys: string[],
@@ -59,18 +48,27 @@ function RichTextToolbar(
     };
 
     const renderAction = (action: Action): JSX.Element => {
-        const icon = props.actionMap[action.key](action);
+        const iconElement = props.actionMap[action.key](action);
+
         return (
-            <Pressable
-                style={styles.touchableOpacity}
-                onPress={() => props.onPress(action.key)}
-            >
-                {icon}
+            <Pressable onPress={() => props.onPress(action.key)}>
+                <View style={styles.actionContainer}>{iconElement}</View>
             </Pressable>
         );
     };
 
     const keyExtractor = (action: Action): string => `${id}-${action.key}`;
+
+    useImperativeHandle(ref, () => ({
+        click: (action: string) => {
+            props.onPress(action);
+        },
+    }));
+
+    useEffect(() => {
+        const actionKeys = Object.keys(props.actionMap || {});
+        setActions(createActions(actionKeys, props.selectedActionKeys));
+    }, [props.actionMap, props.selectedActionKeys]);
 
     if (actions.length === 0) {
         return null;
@@ -92,7 +90,7 @@ function RichTextToolbar(
 
 const styles = StyleSheet.create({
     toolbarContainer: {},
-    touchableOpacity: {
+    actionContainer: {
         marginRight: 8,
         marginBottom: 2,
     },

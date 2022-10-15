@@ -88,6 +88,45 @@ export default function RichTextEditor(props: {
         [webViewRef],
     );
 
+    const onMessage = ({ nativeEvent }: WebViewMessageEvent): void => {
+        try {
+            const message = JSON.parse(nativeEvent.data);
+            const action = Actions[message?.type as keyof typeof Actions] as (
+                _arg: any,
+            ) => void;
+            if (action) {
+                action(message.data);
+            } else {
+                console.warn(`Missing Actions.${message.type} method`);
+            }
+        } catch (e) {
+            console.error('onMessage: ', e);
+        }
+    };
+
+    const onLoad = (): void => {
+        setInited(true);
+    };
+
+    const onError = ({ nativeEvent }: WebViewErrorEvent): void => {
+        console.warn('WebView error: ', nativeEvent);
+    };
+
+    const onPress = (actionKey: string): void => {
+        if (!props.disabled) {
+            handleSelectedActionKeys(actionKey);
+            sendAction(actionKey, '');
+        }
+    };
+
+    const handleSelectedActionKeys = (action: string): void => {
+        if (action === 'code') {
+            const index = selectedActionKeys.indexOf('code');
+            const actions = index === -1 ? ['code'] : [];
+            setSelectedActionKeys(actions);
+        }
+    };
+
     useEffect(() => {
         setValue(props.value);
     }, [inited, props.value]);
@@ -114,51 +153,12 @@ export default function RichTextEditor(props: {
         }
     }, [inited, props.disabled, sendAction]);
 
-    const onMessage = ({ nativeEvent }: WebViewMessageEvent): void => {
-        try {
-            const message = JSON.parse(nativeEvent.data);
-            const action = Actions[message?.type as keyof typeof Actions] as (
-                _arg: any,
-            ) => void;
-            if (action) {
-                action(message.data);
-            } else {
-                console.warn(`Missing Actions.${message.type} method`);
-            }
-        } catch (e) {
-            console.error('onMessage: ', e);
-        }
-    };
-
-    const onLoad = (): void => {
-        setInited(true);
-    };
-
-    const onError = ({ nativeEvent }: WebViewErrorEvent): void => {
-        console.warn('WebView error: ', nativeEvent);
-    };
-
-    const onPress = (action: string): void => {
-        if (!props.disabled) {
-            handleSelectedActionKeys(action);
-            sendAction(action, '');
-        }
-    };
-
-    const handleSelectedActionKeys = (action: string): void => {
-        if (action === 'code') {
-            const index = selectedActionKeys.indexOf('code');
-            const actions = index === -1 ? ['code'] : [];
-            setSelectedActionKeys(actions);
-        }
-    };
-
     return (
         <>
             {props.actionMap && (
                 <RichTextToolbar
                     ref={toolbarRef}
-                    style={[styles.toolbarContainer, props.toolbarStyle]}
+                    style={props.toolbarStyle}
                     actionMap={props.actionMap}
                     selectedActionKeys={selectedActionKeys}
                     onPress={onPress}
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     editorContainer: {
         flex: 1,
     },
-    toolbarContainer: {},
     webView: {
         flex: 0,
         backgroundColor: 'transparent',
