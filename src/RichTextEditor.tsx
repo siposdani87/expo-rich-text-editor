@@ -13,7 +13,7 @@ import {
     WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 import HTML from './editor';
-import RichTextToolbar, { ActionMap } from './RichTextToolbar';
+import RichTextToolbar, { ActionKey, ActionMap } from './RichTextToolbar';
 
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
@@ -41,7 +41,9 @@ export default function RichTextEditor(props: {
     const [inited, setInited] = useState<boolean>(false);
     const [minHeight] = useState<number>(props.minHeight ?? 40);
     const [height, setHeight] = useState<number>(minHeight);
-    const [selectedActionKeys, setSelectedActionKeys] = useState<string[]>([]);
+    const [selectedActionKeys, setSelectedActionKeys] = useState<ActionKey[]>(
+        [],
+    );
     const webViewRef = useRef<any>(null);
     const toolbarRef = useRef<any>(null);
 
@@ -112,18 +114,18 @@ export default function RichTextEditor(props: {
         console.warn('WebView error: ', nativeEvent);
     };
 
-    const onPress = (actionKey: string): void => {
+    const onPress = (actionKey: ActionKey): void => {
         if (!props.disabled) {
             handleSelectedActionKeys(actionKey);
-            sendAction(actionKey, '');
+            sendAction(ActionKey[actionKey], '');
         }
     };
 
-    const handleSelectedActionKeys = (action: string): void => {
-        if (action === 'code') {
-            const index = selectedActionKeys.indexOf('code');
-            const actions = index === -1 ? ['code'] : [];
-            setSelectedActionKeys(actions);
+    const handleSelectedActionKeys = (actionKey: ActionKey): void => {
+        if (actionKey === ActionKey.code) {
+            const contains = selectedActionKeys.includes(ActionKey.code);
+            const actionKeys = contains ? [] : [ActionKey.code];
+            setSelectedActionKeys(actionKeys);
         }
     };
 
