@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, View, } from 'react-native';
 import { WebView } from 'react-native-webview';
 import HTML from './editor';
-import RichTextToolbar from './RichTextToolbar';
+import RichTextToolbar, { ActionKey } from './RichTextToolbar';
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
 const htmlSource = { html: HTML };
@@ -78,14 +78,14 @@ export default function RichTextEditor(props) {
     const onPress = (actionKey) => {
         if (!props.disabled) {
             handleSelectedActionKeys(actionKey);
-            sendAction(actionKey, '');
+            sendAction(ActionKey[actionKey], '');
         }
     };
-    const handleSelectedActionKeys = (action) => {
-        if (action === 'code') {
-            const index = selectedActionKeys.indexOf('code');
-            const actions = index === -1 ? ['code'] : [];
-            setSelectedActionKeys(actions);
+    const handleSelectedActionKeys = (actionKey) => {
+        if (actionKey === ActionKey.code) {
+            const contains = selectedActionKeys.includes(ActionKey.code);
+            const actionKeys = contains ? [] : [ActionKey.code];
+            setSelectedActionKeys(actionKeys);
         }
     };
     useEffect(() => {

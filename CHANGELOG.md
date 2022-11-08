@@ -1,3 +1,7 @@
+## 0.8.2 - TBD
+
+* Add enum to actionMap keys
+
 ## 0.8.1 - 2022-10-09
 
 * Upgrade packages

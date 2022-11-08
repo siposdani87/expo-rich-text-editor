@@ -25,7 +25,7 @@ Check example directory for more samples and options.
 
 ```js
 import { MaterialIcons } from '@expo/vector-icons';
-import { RichTextEditor, RichTextViewer, ActionMap } from '@siposdani87/expo-rich-text-editor';
+import { RichTextEditor, RichTextViewer, ActionMap, ActionKey } from '@siposdani87/expo-rich-text-editor';
 
 const htmlStr = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal words</p>';
 
@@ -38,7 +38,7 @@ export const RichTextComponents = () => {
 
     const getActionMap = (): ActionMap => {
         return {
-            bold: ({ selected }) => (
+            [ActionKey.bold]: ({ selected }) => (
                 <MaterialIcons
                     name="format-bold"
                     size={14}

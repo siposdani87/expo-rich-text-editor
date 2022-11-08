@@ -15,21 +15,33 @@ import {
 } from 'react-native';
 
 interface Action {
-    key: string;
+    key: ActionKey;
     selected: boolean;
 }
 
 type RendererActionElement = (_action: Action) => JSX.Element;
 
-export interface ActionMap {
-    [key: string]: RendererActionElement;
+export enum ActionKey {
+    undo,
+    redo,
+    bold,
+    italic,
+    underline,
+    unorderedList,
+    orderedList,
+    clear,
+    code,
 }
+
+export type ActionMap = {
+    [key in ActionKey]: RendererActionElement;
+};
 
 function RichTextToolbar(
     props: {
         actionMap: ActionMap;
-        selectedActionKeys: string[];
-        onPress: (_actionKey: string) => void;
+        selectedActionKeys: ActionKey[];
+        onPress: (_actionKey: ActionKey) => void;
         style?: StyleProp<ViewStyle>;
     },
     ref: any,
@@ -38,9 +50,10 @@ function RichTextToolbar(
     const [actions, setActions] = useState<Action[]>([]);
 
     const createActions = (
-        actionKeys: string[],
-        selectedActionKeys: string[],
+        actionKeys: ActionKey[],
+        selectedActionKeys: ActionKey[],
     ): Action[] => {
+        console.log(actionKeys, selectedActionKeys);
         return actionKeys.map<Action>((key) => ({
             key,
             selected: selectedActionKeys.includes(key),
@@ -60,13 +73,15 @@ function RichTextToolbar(
     const keyExtractor = (action: Action): string => `${id}-${action.key}`;
 
     useImperativeHandle(ref, () => ({
-        click: (action: string) => {
-            props.onPress(action);
+        click: (actionKey: ActionKey) => {
+            props.onPress(actionKey);
         },
     }));
 
     useEffect(() => {
-        const actionKeys = Object.keys(props.actionMap || {});
+        const actionKeys = Object.keys(props.actionMap).map<ActionKey>((key) =>
+            parseInt(key, 10),
+        );
         setActions(createActions(actionKeys, props.selectedActionKeys));
     }, [props.actionMap, props.selectedActionKeys]);
 
@@ -92,7 +107,6 @@ const styles = StyleSheet.create({
     toolbarContainer: {},
     actionContainer: {
         marginRight: 8,
-        marginBottom: 2,
     },
 });
 
