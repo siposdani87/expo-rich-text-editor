@@ -1,5 +1,6 @@
-## 0.8.2 - TBD
+## 0.9.0 - 2022-11-08
 
+* Upgrade Expo SDK to version 47
 * Add enum to actionMap keys
 
 ## 0.8.1 - 2022-10-09
