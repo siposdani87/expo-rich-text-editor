@@ -53,7 +53,6 @@ function RichTextToolbar(
         actionKeys: ActionKey[],
         selectedActionKeys: ActionKey[],
     ): Action[] => {
-        console.log(actionKeys, selectedActionKeys);
         return actionKeys.map<Action>((key) => ({
             key,
             selected: selectedActionKeys.includes(key),
