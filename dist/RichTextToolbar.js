@@ -16,7 +16,6 @@ function RichTextToolbar(props, ref) {
     const id = useId();
     const [actions, setActions] = useState([]);
     const createActions = (actionKeys, selectedActionKeys) => {
-        console.log(actionKeys, selectedActionKeys);
         return actionKeys.map((key) => ({
             key,
             selected: selectedActionKeys.includes(key),
