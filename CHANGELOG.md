@@ -1,6 +1,6 @@
 ## 0.9.2 - TBD
 
-* 
+* Rename viewerStyle prop
 
 ## 0.9.1 - 2022-11-11
 

@@ -155,7 +155,7 @@ export default function App() {
                             <View style={[styles.editorContainer]}>
                                 <RichTextViewer
                                     value={value}
-                                    editorStyle={styles.viewer}
+                                    viewerStyle={styles.viewer}
                                     linkStyle={styles.link}
                                     debug={true}
                                 />
