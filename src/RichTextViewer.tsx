@@ -5,7 +5,7 @@ import RichTextEditor from './RichTextEditor';
 export default function RichTextViewer(props: {
     value: string;
     linkStyle?: StyleProp<TextStyle>;
-    editorStyle?: StyleProp<TextStyle>;
+    viewerStyle?: StyleProp<TextStyle>;
     debug?: boolean;
 }) {
     const onValueChange = useCallback(() => {
@@ -17,7 +17,7 @@ export default function RichTextViewer(props: {
             value={props.value}
             onValueChange={onValueChange}
             linkStyle={props.linkStyle}
-            editorStyle={props.editorStyle}
+            editorStyle={props.viewerStyle}
             debug={props.debug}
             disabled={true}
         />
