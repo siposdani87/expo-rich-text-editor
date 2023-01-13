@@ -12,18 +12,15 @@ This rich text editor written in TypeScript and use React Hooks structure. This 
 
 ### Installing
 
-```
+```bash
 npm install @siposdani87/expo-rich-text-editor
-
-# Expo
-expo install @siposdani87/expo-rich-text-editor
 ```
 
 ### Basic Usage
 
 Check example directory for more samples and options.
 
-```js
+```typescript
 import { MaterialIcons } from '@expo/vector-icons';
 import { RichTextEditor, RichTextViewer, ActionMap, ActionKey } from '@siposdani87/expo-rich-text-editor';
 
@@ -65,7 +62,7 @@ export const RichTextComponents = () => {
                 editorStyle={styles.editor}
             />
 
-            <RichTextViewer value={htmlStr} editorStyle={styles.viewer} linkStyle={styles.link} />
+            <RichTextViewer value={htmlStr} viewerStyle={styles.viewer} linkStyle={styles.link} />
         </>
     );
 };
@@ -92,7 +89,6 @@ const styles = StyleSheet.create({
         color: 'green',
     },
 });
-
 ```
 
 ## Props
@@ -101,7 +97,7 @@ const styles = StyleSheet.create({
 
 | Prop            | Type                    | Description |
 | --------------- | ----------------------- | ----------- |
-| value *         | string                  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, br |
+| value *         | string                  | HTML string with standard tags e.g.: p, b, strong, i, em, u, a, br |
 | onValueChange * | (value: string) => void | Call this function on value changed |
 | onFocus         | () => void              | Call this function on component focus |
 | onBlur          | () => void              | Call this function on component blur |
@@ -119,13 +115,22 @@ const styles = StyleSheet.create({
 | Prop        | Type    | Description |
 | ----------- | ------- | ----------- |
 | value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, ul, ol, li, br |
-| editorStyle | Style   | Style for editor container |
+| viewerStyle | Style   | Style for viewer container |
 | linkStyle   | Style   | Style for link (a tag) |
 | debug       | boolean | Print debug information to console |
 
 ## Preview
+
 ![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/images/expo-rich-text-editor.png)
 
 ## Bugs or Requests
 
 If you encounter any problems feel free to open an [issue](https://github.com/siposdani87/expo-rich-text-editor/issues/new?template=bug_report.md). If you feel the library is missing a feature, please raise a [ticket](https://github.com/siposdani87/expo-rich-text-editor/issues/new?template=feature_request.md). Pull request are also welcome.
+
+## Developer
+
+[Dániel Sipos](https://siposdani87.com)
+
+## Sponsors
+
+This project is generously supported by [TrophyMap](https://trophymap.org), [I18Nature](https://i18nature.com), and several other amazing organizations.
