@@ -4,7 +4,7 @@
 [![Download](https://img.shields.io/npm/dt/@siposdani87/expo-rich-text-editor.svg?style=square)](https://www.npmjs.com/package/@siposdani87/expo-rich-text-editor)
 [![License](https://img.shields.io/npm/l/@siposdani87/expo-rich-text-editor.svg?style=square)](./LICENSE)
 
-<a href="https://www.buymeacoffee.com/siposdani87" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="width: 150px !important;"></a>
+<a href="https://www.buymeacoffee.com/siposdani87" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="width: 150px !important;" /></a>
 
 This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView. It has base editing options.
 
