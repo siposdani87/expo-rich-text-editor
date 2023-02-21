@@ -2,7 +2,7 @@
   "name": "@siposdani87/expo-rich-text-editor",
   "version": "0.9.2",
   "description": "This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView.",
-  "author": "Dániel Sipos",
+  "author": "Dániel Sipos <siposdani87@gmail.com> (https://siposdani87.com)",
   "license": "MIT",
   "homepage": "https://siposdani87.com",
   "private": false,

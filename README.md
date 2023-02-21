@@ -27,7 +27,7 @@ import { RichTextEditor, RichTextViewer, ActionMap, ActionKey } from '@siposdani
 const htmlStr = '<p><i><u>Underline italic text</u></i> <b>bold word</b> normal words</p>';
 
 export const RichTextComponents = () => {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState<string>('');
 
     const getColor = (selected: boolean): string => {
       return selected ? 'red' : 'black';
