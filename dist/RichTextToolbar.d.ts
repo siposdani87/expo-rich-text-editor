@@ -4,7 +4,7 @@ interface Action {
     key: ActionKey;
     selected: boolean;
 }
-declare type RendererActionElement = (_action: Action) => JSX.Element;
+type RendererActionElement = (_action: Action) => JSX.Element;
 export declare enum ActionKey {
     undo = 0,
     redo = 1,
@@ -16,7 +16,7 @@ export declare enum ActionKey {
     clear = 7,
     code = 8
 }
-export declare type ActionMap = {
+export type ActionMap = {
     [key in ActionKey]: RendererActionElement;
 };
 declare const _default: React.ForwardRefExoticComponent<{

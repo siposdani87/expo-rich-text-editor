@@ -1,6 +1,11 @@
-## 0.9.2 - TBD
+## 1.0.0 - TBD
+
+*
+
+## 0.9.2 - 2023-02-25
 
 * Rename viewerStyle prop
+* Upgrade Expo SDK to version 48
 
 ## 0.9.1 - 2022-11-11
 
