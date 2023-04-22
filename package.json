@@ -44,12 +44,11 @@
   "dependencies": {
     "expo": "^48.0.0",
     "react": "18.2.0",
-    "react-native": "0.71.3",
+    "react-native": "0.71.6",
     "react-native-webview": "11.26.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^3.0.1",
-    "@types/jest": "^27.0.2",
     "@types/react": "~18.0.27",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",

@@ -27,6 +27,7 @@ function RichTextToolbar(props, ref) {
                 <View style={styles.actionContainer}>{iconElement}</View>
             </Pressable>);
     };
+    const renderItem = ({ item }) => renderAction(item);
     const keyExtractor = (action) => `${id}-${action.key}`;
     useImperativeHandle(ref, () => ({
         click: (actionKey) => {
@@ -41,7 +42,7 @@ function RichTextToolbar(props, ref) {
         return null;
     }
     return (<View style={[styles.toolbarContainer, props.style]}>
-            <FlatList horizontal={true} keyExtractor={keyExtractor} data={actions} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={({ item }) => renderAction(item)}/>
+            <FlatList horizontal={true} keyExtractor={keyExtractor} data={actions} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={renderItem}/>
         </View>);
 }
 const styles = StyleSheet.create({
