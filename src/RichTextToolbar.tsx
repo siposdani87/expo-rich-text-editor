@@ -1,4 +1,5 @@
 import React, {
+    ReactNode,
     forwardRef,
     useEffect,
     useId,
@@ -7,6 +8,7 @@ import React, {
 } from 'react';
 import {
     FlatList,
+    ListRenderItem,
     Pressable,
     StyleProp,
     StyleSheet,
@@ -19,7 +21,7 @@ interface Action {
     selected: boolean;
 }
 
-type RendererActionElement = (_action: Action) => JSX.Element;
+type RendererActionElement = (_action: Action) => ReactNode;
 
 export enum ActionKey {
     undo,
@@ -59,7 +61,7 @@ function RichTextToolbar(
         }));
     };
 
-    const renderAction = (action: Action): JSX.Element => {
+    const renderAction = (action: Action) => {
         const iconElement = props.actionMap[action.key](action);
 
         return (
@@ -68,6 +70,8 @@ function RichTextToolbar(
             </Pressable>
         );
     };
+
+    const renderItem: ListRenderItem<Action> = ({ item }) => renderAction(item);
 
     const keyExtractor = (action: Action): string => `${id}-${action.key}`;
 
@@ -96,7 +100,7 @@ function RichTextToolbar(
                 data={actions}
                 alwaysBounceHorizontal={false}
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => renderAction(item)}
+                renderItem={renderItem}
             />
         </View>
     );

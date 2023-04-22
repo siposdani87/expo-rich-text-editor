@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 interface Action {
     key: ActionKey;
     selected: boolean;
 }
-type RendererActionElement = (_action: Action) => JSX.Element;
+type RendererActionElement = (_action: Action) => ReactNode;
 export declare enum ActionKey {
     undo = 0,
     redo = 1,
