@@ -26,7 +26,7 @@
     "@siposdani87/expo-rich-text-editor": "file:../",
     "expo": "^48.0.0",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-webview": "11.26.0",
     "expo-splash-screen": "~0.18.2",
     "@expo-google-fonts/inter": "^0.2.0",
