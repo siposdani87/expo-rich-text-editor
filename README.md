@@ -101,13 +101,15 @@ const styles = StyleSheet.create({
 | onValueChange * | (value: string) => void | Call this function on value changed |
 | onFocus         | () => void              | Call this function on component focus |
 | onBlur          | () => void              | Call this function on component blur |
-| actionMap       | ActionMap               | Action config for toolbar component |
-| editorStyle     | Style                   | Style for editor container |
-| linkStyle       | Style                   | Style for link (a tag) |
-| toolbarStyle    | Style                   | Style for toolbar container |
+| onClickLink     | (href: string) => void  | Call this function on link clicked |
 | selectionColor  | string                  | Color of text selection |
+| actionMap       | ActionMap               | Action config for toolbar component |
 | minHeight       | number                  | Min height of container |
+| linkStyle       | Style                   | Style for link (a tag) |
+| editorStyle     | Style                   | Style for editor container |
+| toolbarStyle    | Style                   | Style for toolbar container |
 | disabled        | boolean                 | Disable editing on component |
+| autoFocus       | boolean                 | Auto focus on component |
 | debug           | boolean                 | Print debug information to console |
 
 ### RichTextViewer
@@ -115,8 +117,9 @@ const styles = StyleSheet.create({
 | Prop        | Type    | Description |
 | ----------- | ------- | ----------- |
 | value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, ul, ol, li, br |
-| viewerStyle | Style   | Style for viewer container |
+| onClickLink     | (href: string) => void  | Call this function on link clicked |
 | linkStyle   | Style   | Style for link (a tag) |
+| viewerStyle | Style   | Style for viewer container |
 | debug       | boolean | Print debug information to console |
 
 ## Preview
