@@ -1,12 +1,12 @@
-/// <reference types="react" />
+import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { ActionMap } from './RichTextToolbar';
 export default function RichTextEditor(props: {
     value: string;
-    onValueChange: (_value: string) => void;
+    onValueChange: (value: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
-    onClickLink?: (_url: string) => void;
+    onClickLink?: (url: string) => void;
     selectionColor?: string;
     actionMap?: ActionMap;
     minHeight?: number;
@@ -14,5 +14,6 @@ export default function RichTextEditor(props: {
     editorStyle?: StyleProp<TextStyle>;
     toolbarStyle?: StyleProp<ViewStyle>;
     disabled?: boolean;
+    autoFocus?: boolean;
     debug?: boolean;
-}): JSX.Element;
+}): React.JSX.Element;

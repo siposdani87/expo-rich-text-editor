@@ -113,7 +113,7 @@
                 },
                 changeHeight: function () {
                     setTimeout(function () {
-                        var newHeight = height;
+                        var newHeight = 0;
                         if (isCode) {
                             textareaEditor.style.height = '';
                             textareaEditor.style.height = textareaEditor.scrollHeight + 'px';
@@ -202,6 +202,12 @@
                         document.body.classList.add('disabled-select');
                     } else {
                         document.body.classList.remove('disabled-select');
+                    }
+                },
+                setAutoFocus: function (autoFocus) {
+                    contentEditor.autofocus = autoFocus;
+                    if (autoFocus) {
+                        contentEditor.focus();
                     }
                 },
                 undo: function () {
@@ -295,7 +301,9 @@
                 return [content, textarea];
             };
 
-            var [contentEditor, textareaEditor] = init(document.getElementsByClassName('editors')[0]);
+            var [contentEditorNode, textareaEditorNode] = init(document.getElementsByClassName('editors')[0]);
+            contentEditor = contentEditorNode;
+            textareaEditor = textareaEditorNode;
 
             Actions.code();
             Actions.changeHeight();

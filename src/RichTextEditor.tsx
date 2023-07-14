@@ -33,6 +33,7 @@ export default function RichTextEditor(props: {
     editorStyle?: StyleProp<TextStyle>;
     toolbarStyle?: StyleProp<ViewStyle>;
     disabled?: boolean;
+    autoFocus?: boolean;
     debug?: boolean;
 }) {
     const editorStyle = StyleSheet.flatten<TextStyle>(props.editorStyle);
@@ -154,6 +155,12 @@ export default function RichTextEditor(props: {
             sendAction('setDisabled', !!props.disabled);
         }
     }, [inited, props.disabled, sendAction]);
+
+    useEffect(() => {
+        if (inited) {
+            sendAction('setAutoFocus', !!props.autoFocus);
+        }
+    }, [inited, props.autoFocus, sendAction]);
 
     return (
         <>
