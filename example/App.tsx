@@ -174,6 +174,7 @@ export default function App() {
                                     toolbarStyle={styles.toolbar}
                                     editorStyle={styles.editor}
                                     debug={true}
+                                    autoFocus={true}
                                 />
                             </View>
                         )}

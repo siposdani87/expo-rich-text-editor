@@ -26,7 +26,7 @@ export default function RichTextEditor(props) {
             if (newHeight < minHeight) {
                 newHeight = minHeight;
             }
-            const offset = editorStyle?.fontSize || 16;
+            const offset = editorStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url) => {
@@ -110,6 +110,11 @@ export default function RichTextEditor(props) {
             sendAction('setDisabled', !!props.disabled);
         }
     }, [inited, props.disabled, sendAction]);
+    useEffect(() => {
+        if (inited) {
+            sendAction('setAutoFocus', !!props.autoFocus);
+        }
+    }, [inited, props.autoFocus, sendAction]);
     return (<>
             {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={props.toolbarStyle} actionMap={props.actionMap} selectedActionKeys={selectedActionKeys} onPress={onPress}/>)}
             <View style={[styles.editorContainer, editorStyle]}>
