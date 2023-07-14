@@ -1,6 +1,12 @@
-## 1.0.5 - TBD
+## 1.0.6 - TBD
 
 *
+
+## 1.0.5 - 2023-07-14
+
+* Upgrade React Native to version 0.72.3
+* Add autoFocus prop
+* Improve documentation
 
 ## 1.0.4 - 2023-07-06
 
