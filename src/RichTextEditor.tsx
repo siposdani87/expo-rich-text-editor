@@ -22,10 +22,10 @@ const htmlSource = { html: HTML };
 
 export default function RichTextEditor(props: {
     value: string;
-    onValueChange: (_value: string) => void;
+    onValueChange: (value: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
-    onClickLink?: (_url: string) => void;
+    onClickLink?: (url: string) => void;
     selectionColor?: string;
     actionMap?: ActionMap;
     minHeight?: number;
@@ -56,7 +56,7 @@ export default function RichTextEditor(props: {
             if (newHeight < minHeight) {
                 newHeight = minHeight;
             }
-            const offset = editorStyle?.fontSize || 16;
+            const offset = editorStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url: string) => {
