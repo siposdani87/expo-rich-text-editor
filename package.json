@@ -44,7 +44,7 @@
   "dependencies": {
     "expo": "^49.0.0",
     "react": "18.2.0",
-    "react-native": "0.72.3",
+    "react-native": "0.72.4",
     "react-native-webview": "13.2.2"
   },
   "devDependencies": {
