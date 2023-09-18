@@ -58,35 +58,42 @@ export const RichTextComponents = () => {
                 selectionColor="green"
                 actionMap={getActionMap()}
                 onValueChange={onValueChange}
+                linkStyle={styles.link}
+                textStyle={styles.text}
+                containerStyle={styles.editor}
                 toolbarStyle={styles.toolbar}
-                editorStyle={styles.editor}
             />
-
-            <RichTextViewer value={htmlStr} viewerStyle={styles.viewer} linkStyle={styles.link} />
+            <RichTextViewer
+                value={htmlStr}
+                linkStyle={styles.link}
+                textStyle={styles.text}
+                containerStyle={styles.viewer}
+            />
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    text: {
+        // fontFamily: 'Inter_500Medium',
+        fontSize: 18,
+    },
+    link: {
+        color: 'green',
+    },
     viewer: {
         borderColor: 'green',
         borderWidth: 1,
         padding: 5,
-        // fontFamily: 'Oswald_400Regular',
     },
     editor: {
         borderColor: 'blue',
         borderWidth: 1,
         padding: 5,
-        // fontFamily: 'Inter_500Medium',
-        fontSize: 18,
     },
     toolbar: {
         borderColor: 'red',
         borderWidth: 1,
-    },
-    link: {
-        color: 'green',
     },
 });
 ```
@@ -105,22 +112,24 @@ const styles = StyleSheet.create({
 | selectionColor  | string                  | Color of text selection |
 | actionMap       | ActionMap               | Action config for toolbar component |
 | minHeight       | number                  | Min height of container |
-| linkStyle       | Style                   | Style for link (a tag) |
-| editorStyle     | Style                   | Style for editor container |
-| toolbarStyle    | Style                   | Style for toolbar container |
+| textStyle       | StyleProp<TextStyle>    | Style of base text |
+| linkStyle       | StyleProp<TextStyle>    | Style of link (a tag) |
+| containerStyle  | StyleProp<ViewStyle>    | Style of content container |
+| toolbarStyle    | StyleProp<ViewStyle>    | Style of toolbar container |
 | disabled        | boolean                 | Disable editing on component |
 | autoFocus       | boolean                 | Auto focus on component |
 | debug           | boolean                 | Print debug information to console |
 
 ### RichTextViewer
 
-| Prop        | Type    | Description |
-| ----------- | ------- | ----------- |
-| value *     | string  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, ul, ol, li, br |
+| Prop            | Type                    | Description |
+| --------------- | ----------------------- | ----------- |
+| value *         | string                  | HTML string with standard tags eg.: p, b, strong, i, em, u, a, ul, ol, li, br |
 | onClickLink     | (href: string) => void  | Call this function on link clicked |
-| linkStyle   | Style   | Style for link (a tag) |
-| viewerStyle | Style   | Style for viewer container |
-| debug       | boolean | Print debug information to console |
+| textStyle       | StyleProp<TextStyle>    | Style of base text |
+| linkStyle       | StyleProp<TextStyle>    | Style of link (a tag) |
+| containerStyle  | StyleProp<ViewStyle>    | Style of content container |
+| debug           | boolean                 | Print debug information to console |
 
 ## Preview
 

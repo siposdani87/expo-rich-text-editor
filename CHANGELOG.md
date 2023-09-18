@@ -1,6 +1,9 @@
-## 1.0.6 - TBD
+## 1.0.7 - TBD
 
-*
+## 1.0.6 - 2023-09-18
+
+* Add textStyle and containerStyle props
+* Upgrade React Native to version 0.72.4
 
 ## 1.0.5 - 2023-07-14
 

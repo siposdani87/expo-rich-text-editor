@@ -8,7 +8,8 @@ import RichTextToolbar, { ActionKey } from './RichTextToolbar';
 const htmlSource = { html: HTML };
 // }
 export default function RichTextEditor(props) {
-    const editorStyle = StyleSheet.flatten(props.editorStyle);
+    const containerStyle = StyleSheet.flatten(props.containerStyle);
+    const textStyle = StyleSheet.flatten(props.textStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [value, setValue] = useState(props.value);
     const [inited, setInited] = useState(false);
@@ -26,7 +27,7 @@ export default function RichTextEditor(props) {
             if (newHeight < minHeight) {
                 newHeight = minHeight;
             }
-            const offset = editorStyle?.fontSize ?? 16;
+            const offset = textStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url) => {
@@ -98,13 +99,13 @@ export default function RichTextEditor(props) {
     }, [inited, value, sendAction]);
     useEffect(() => {
         if (inited) {
-            sendAction('setColor', editorStyle?.color);
-            sendAction('setFontFamily', editorStyle?.fontFamily);
-            sendAction('setFontSize', editorStyle?.fontSize);
+            sendAction('setColor', textStyle?.color);
+            sendAction('setFontFamily', textStyle?.fontFamily);
+            sendAction('setFontSize', textStyle?.fontSize);
             sendAction('setLinkColor', linkStyle?.color);
             sendAction('setSelectionColor', props.selectionColor);
         }
-    }, [inited, editorStyle, linkStyle, props.selectionColor, sendAction]);
+    }, [inited, textStyle, linkStyle, props.selectionColor, sendAction]);
     useEffect(() => {
         if (inited) {
             sendAction('setDisabled', !!props.disabled);
@@ -117,7 +118,7 @@ export default function RichTextEditor(props) {
     }, [inited, props.autoFocus, sendAction]);
     return (<>
             {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={props.toolbarStyle} actionMap={props.actionMap} selectedActionKeys={selectedActionKeys} onPress={onPress}/>)}
-            <View style={[styles.editorContainer, editorStyle]}>
+            <View style={[styles.editorContainer, containerStyle]}>
                 <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError}/>
             </View>
         </>);

@@ -11,7 +11,8 @@ export default function RichTextEditor(props: {
     actionMap?: ActionMap;
     minHeight?: number;
     linkStyle?: StyleProp<TextStyle>;
-    editorStyle?: StyleProp<TextStyle>;
+    textStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     toolbarStyle?: StyleProp<ViewStyle>;
     disabled?: boolean;
     autoFocus?: boolean;
