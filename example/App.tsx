@@ -155,7 +155,8 @@ export default function App() {
                             <View style={[styles.editorContainer]}>
                                 <RichTextViewer
                                     value={value}
-                                    viewerStyle={styles.viewer}
+                                    containerStyle={styles.viewer}
+                                    textStyle={styles.viewerText}
                                     linkStyle={styles.link}
                                     debug={true}
                                 />
@@ -172,7 +173,8 @@ export default function App() {
                                     onFocus={onFocus}
                                     onBlur={onBlur}
                                     toolbarStyle={styles.toolbar}
-                                    editorStyle={styles.editor}
+                                    containerStyle={styles.editor}
+                                    textStyle={styles.editorText}
                                     debug={true}
                                     autoFocus={true}
                                 />
@@ -186,7 +188,8 @@ export default function App() {
                                     actionMap={getActionMap()}
                                     onValueChange={onValueChange}
                                     toolbarStyle={styles.toolbar}
-                                    editorStyle={styles.editorDark}
+                                    containerStyle={styles.editorDark}
+                                    textStyle={styles.editorDarkText}
                                     debug={true}
                                 />
                             </View>
@@ -199,7 +202,8 @@ export default function App() {
                                     actionMap={getActionMap()}
                                     onValueChange={onValueChange}
                                     toolbarStyle={styles.toolbar}
-                                    editorStyle={styles.editor}
+                                    containerStyle={styles.editor}
+                                    textStyle={styles.editorText}
                                     disabled={true}
                                     debug={true}
                                 />
@@ -223,12 +227,16 @@ const styles = StyleSheet.create({
         borderColor: 'green',
         borderWidth: 1,
         padding: 5,
+    },
+    viewerText: {
         fontFamily: 'Oswald_400Regular',
     },
     editor: {
         borderColor: 'blue',
         borderWidth: 1,
         padding: 5,
+    },
+    editorText: {
         fontFamily: 'Inter_500Medium',
         fontSize: 18,
     },
@@ -236,10 +244,12 @@ const styles = StyleSheet.create({
         borderColor: 'blue',
         borderWidth: 1,
         backgroundColor: 'black',
-        color: 'white',
         padding: 15,
+    },
+    editorDarkText: {
         fontFamily: 'RobotoCondensed_400Regular_Italic',
         fontSize: 12,
+        color: 'white',
     },
     link: {
         color: 'green',

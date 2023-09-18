@@ -30,13 +30,15 @@ export default function RichTextEditor(props: {
     actionMap?: ActionMap;
     minHeight?: number;
     linkStyle?: StyleProp<TextStyle>;
-    editorStyle?: StyleProp<TextStyle>;
+    textStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     toolbarStyle?: StyleProp<ViewStyle>;
     disabled?: boolean;
     autoFocus?: boolean;
     debug?: boolean;
 }) {
-    const editorStyle = StyleSheet.flatten<TextStyle>(props.editorStyle);
+    const containerStyle = StyleSheet.flatten<ViewStyle>(props.containerStyle);
+    const textStyle = StyleSheet.flatten<TextStyle>(props.textStyle);
     const linkStyle = StyleSheet.flatten<TextStyle>(props.linkStyle);
     const [value, setValue] = useState<string>(props.value);
     const [inited, setInited] = useState<boolean>(false);
@@ -57,7 +59,7 @@ export default function RichTextEditor(props: {
             if (newHeight < minHeight) {
                 newHeight = minHeight;
             }
-            const offset = editorStyle?.fontSize ?? 16;
+            const offset = textStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url: string) => {
@@ -142,13 +144,13 @@ export default function RichTextEditor(props: {
 
     useEffect(() => {
         if (inited) {
-            sendAction('setColor', editorStyle?.color);
-            sendAction('setFontFamily', editorStyle?.fontFamily);
-            sendAction('setFontSize', editorStyle?.fontSize);
+            sendAction('setColor', textStyle?.color);
+            sendAction('setFontFamily', textStyle?.fontFamily);
+            sendAction('setFontSize', textStyle?.fontSize);
             sendAction('setLinkColor', linkStyle?.color);
             sendAction('setSelectionColor', props.selectionColor);
         }
-    }, [inited, editorStyle, linkStyle, props.selectionColor, sendAction]);
+    }, [inited, textStyle, linkStyle, props.selectionColor, sendAction]);
 
     useEffect(() => {
         if (inited) {
@@ -173,7 +175,7 @@ export default function RichTextEditor(props: {
                     onPress={onPress}
                 />
             )}
-            <View style={[styles.editorContainer, editorStyle]}>
+            <View style={[styles.editorContainer, containerStyle]}>
                 <WebView
                     ref={webViewRef}
                     source={htmlSource}
