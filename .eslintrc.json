@@ -10,7 +10,7 @@
         }
     },
     "extends": [
-        "@react-native-community"
+        "universe/native"
     ],
     "plugins": [
         "@typescript-eslint"
