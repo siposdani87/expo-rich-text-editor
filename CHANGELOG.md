@@ -1,3 +1,7 @@
+## 1.0.8 - 2024-03-02
+
+* Upgrade React Native to version 0.73.4
+
 ## 1.0.7 - 2024-01-19
 
 * Upgrade Expo SDK to version 50
