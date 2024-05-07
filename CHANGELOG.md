@@ -1,3 +1,11 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## 1.0.9 - 2024-05-07
+
+* Upgrade React Native to version 0.73.6
+
 ## 1.0.8 - 2024-03-02
 
 * Upgrade React Native to version 0.73.4
