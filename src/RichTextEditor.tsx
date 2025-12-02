@@ -12,8 +12,9 @@ import {
     WebViewErrorEvent,
     WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes';
-import HTML from './editor';
+
 import RichTextToolbar, { ActionKey, ActionMap } from './RichTextToolbar';
+import HTML from './editor';
 
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
@@ -182,11 +183,11 @@ export default function RichTextEditor(props: {
                     style={[styles.webView, { height }]}
                     textZoom={100}
                     scrollEnabled={false}
-                    hideKeyboardAccessoryView={true}
+                    hideKeyboardAccessoryView
                     keyboardDisplayRequiresUserAction={false}
                     onMessage={onMessage}
                     originWhitelist={['*']}
-                    dataDetectorTypes={'none'}
+                    dataDetectorTypes="none"
                     bounces={false}
                     onLoad={onLoad}
                     onError={onError}

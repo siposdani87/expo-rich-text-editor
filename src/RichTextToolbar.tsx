@@ -95,7 +95,7 @@ function RichTextToolbar(
     return (
         <View style={[styles.toolbarContainer, props.style]}>
             <FlatList
-                horizontal={true}
+                horizontal
                 keyExtractor={keyExtractor}
                 data={actions}
                 alwaysBounceHorizontal={false}

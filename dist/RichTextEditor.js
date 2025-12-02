@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, StyleSheet, View, } from 'react-native';
 import { WebView } from 'react-native-webview';
-import HTML from './editor';
 import RichTextToolbar, { ActionKey } from './RichTextToolbar';
+import HTML from './editor';
 // let htmlSource = require('./editor.html');
 // if (Platform.OS === 'android' || Platform.OS === 'web') {
 const htmlSource = { html: HTML };
@@ -119,7 +119,7 @@ export default function RichTextEditor(props) {
     return (<>
             {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={props.toolbarStyle} actionMap={props.actionMap} selectedActionKeys={selectedActionKeys} onPress={onPress}/>)}
             <View style={[styles.editorContainer, containerStyle]}>
-                <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView={true} keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes={'none'} bounces={false} onLoad={onLoad} onError={onError}/>
+                <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes="none" bounces={false} onLoad={onLoad} onError={onError}/>
             </View>
         </>);
 }

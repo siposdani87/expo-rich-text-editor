@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
 import RichTextEditor from './RichTextEditor';
 
 export default function RichTextViewer(props: {
@@ -23,7 +24,7 @@ export default function RichTextViewer(props: {
             textStyle={props.textStyle}
             containerStyle={props.containerStyle}
             debug={props.debug}
-            disabled={true}
+            disabled
         />
     );
 }

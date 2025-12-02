@@ -7,3 +7,6 @@ npm-debug.*
 
 # macOS
 .DS_Store
+
+android
+ios

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.0 - 2025-01-19
+
+* Upgrade Expo SDK to version 52
+
 ## 1.0.9 - 2024-05-07
 
 * Upgrade React Native to version 0.73.6
