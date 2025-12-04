@@ -6,7 +6,8 @@
     "module": "ESNext",
     "target": "ESNext",
     "lib": [
-      "ESNext"
+      "ESNext",
+      "DOM"
     ],
     "moduleResolution": "Node",
     "jsx": "react-native",
@@ -31,6 +32,5 @@
     "**/*.test.ts",
     "**/*.spec.ts",
     "dist"
-  ],
-  "extends": "expo/tsconfig.base"
+  ]
 }

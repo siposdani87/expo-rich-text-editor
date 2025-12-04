@@ -9,3 +9,21 @@ export {
     ActionMap,
     ActionKey,
 };
+
+export {
+    useEditorActions,
+    useEditorInitialization,
+    useMessageHandler,
+    useSelectedActionKeys,
+    useSendAction,
+} from './hooks';
+export type {
+    EditorActions,
+    UseEditorActionsParams,
+    UseMessageHandlerParams,
+    UseSelectedActionKeysParams,
+    UseSendActionParams,
+    UseEditorInitializationParams,
+} from './hooks';
+
+export type { RichTextEditorProps } from './types';

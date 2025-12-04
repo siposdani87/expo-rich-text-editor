@@ -73,6 +73,7 @@ const HTML = `<!DOCTYPE html>
             var contentEditor = null;
             var textareaEditor = null;
             var isWebView = window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage === 'function';
+            var isIframe = window.parent !== window;
             var height = 0;
             var timeoutHtml = null;
             var selection = document.getSelection();
@@ -91,14 +92,16 @@ const HTML = `<!DOCTYPE html>
             };
 
             function sendAction(type, data) {
+                var message = JSON.stringify({ type, data });
                 if (isWebView) {
-                    var message = JSON.stringify({ type, data });
                     window.ReactNativeWebView.postMessage(message);
+                } else if (isIframe) {
+                    window.parent.postMessage(message, '*');
                 }
             };
 
             function log(message) {
-                if (isWebView) {
+                if (isWebView || isIframe) {
                     sendAction('log', message);
                 } else {
                     console.log(message);
@@ -308,7 +311,7 @@ const HTML = `<!DOCTYPE html>
             Actions.code();
             Actions.changeHeight();
             log('initialized');
-            if (!isWebView) {
+            if (!isWebView && !isIframe) {
                 Actions.setColor('grey');
                 Actions.setFontSize('20');
                 Actions.setFontFamily('Roboto');
