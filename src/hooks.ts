@@ -94,13 +94,16 @@ export function useSelectedActionKeys(_params?: UseSelectedActionKeysParams) {
         [],
     );
 
-    const handleSelectedActionKeys = useCallback((actionKey: ActionKey): void => {
-        if (actionKey === ActionKey.code) {
-            const contains = selectedActionKeys.includes(ActionKey.code);
-            const actionKeys = contains ? [] : [ActionKey.code];
-            setSelectedActionKeys(actionKeys);
-        }
-    }, [selectedActionKeys]);
+    const handleSelectedActionKeys = useCallback(
+        (actionKey: ActionKey): void => {
+            if (actionKey === ActionKey.code) {
+                const contains = selectedActionKeys.includes(ActionKey.code);
+                const actionKeys = contains ? [] : [ActionKey.code];
+                setSelectedActionKeys(actionKeys);
+            }
+        },
+        [selectedActionKeys],
+    );
 
     return { selectedActionKeys, handleSelectedActionKeys };
 }

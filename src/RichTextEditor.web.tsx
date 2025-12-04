@@ -33,7 +33,8 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
     const { handleMessage } = useMessageHandler({ actions });
 
-    const { selectedActionKeys, handleSelectedActionKeys } = useSelectedActionKeys();
+    const { selectedActionKeys, handleSelectedActionKeys } =
+        useSelectedActionKeys();
 
     const postMessage = useCallback(
         (message: string): void => {

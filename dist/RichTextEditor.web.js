@@ -73,7 +73,7 @@ export default function RichTextEditor(props) {
             <View style={[styles.editorContainer, containerStyle]}>
                 <iframe ref={iframeRef} srcDoc={HTML} style={{
             width: '100%',
-            height: `${height}px`,
+            height,
             border: 'none',
             backgroundColor: 'transparent',
         }} onLoad={onLoad} onError={onError} title="Rich Text Editor"/>
