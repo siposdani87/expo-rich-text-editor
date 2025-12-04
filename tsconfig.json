@@ -1,33 +1,36 @@
 {
-    "compilerOptions": {
-      "outDir": "dist",
-      "baseUrl": ".",
-      "rootDir": "src",
-      "module": "ESNext",
-      "target": "ESNext",
-      "lib": ["ESNext"],
-      "moduleResolution": "Node",
-      "jsx": "react-native",
-      "declaration": true,
-      "sourceMap": true,
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "noImplicitReturns": true,
-      "noFallthroughCasesInSwitch": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true
-    },
-    "include": [
-      "src"
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "rootDir": "src",
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
     ],
-    "exclude": [
-      "**/__mocks__/*",
-      "**/__tests__/*",
-      "**/templates/*",
-      "node_modules",
-      "**/*.test.ts",
-      "**/*.spec.ts",
-      "dist"
-    ]
-  }
+    "moduleResolution": "Node",
+    "jsx": "react-native",
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/__mocks__/*",
+    "**/__tests__/*",
+    "**/templates/*",
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "dist"
+  ],
+  "extends": "expo/tsconfig.base"
+}
