@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
-import { WebView } from 'react-native-webview';
-import {
-    WebViewErrorEvent,
-    WebViewMessageEvent,
-} from 'react-native-webview/lib/WebViewTypes';
 
 import RichTextToolbar, { ActionKey } from './RichTextToolbar';
 import HTML from './editor';
@@ -17,18 +12,13 @@ import {
 } from './hooks';
 import { RichTextEditorProps } from './types';
 
-// let htmlSource = require('./editor.html');
-// if (Platform.OS === 'android' || Platform.OS === 'web') {
-const htmlSource = { html: HTML };
-// }
-
 export default function RichTextEditor(props: RichTextEditorProps) {
     const containerStyle = StyleSheet.flatten<ViewStyle>(props.containerStyle);
     const textStyle = StyleSheet.flatten<TextStyle>(props.textStyle);
     const linkStyle = StyleSheet.flatten<TextStyle>(props.linkStyle);
     const [inited, setInited] = useState<boolean>(false);
     const [minHeight] = useState<number>(props.minHeight ?? 40);
-    const webViewRef = useRef<any>(null);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
     const toolbarRef = useRef<any>(null);
 
     const { actions, value, setValue, height } = useEditorActions({
@@ -48,23 +38,34 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
     const postMessage = useCallback(
         (message: string): void => {
-            webViewRef.current?.postMessage(message);
+            const iframe = iframeRef.current;
+            if (iframe?.contentWindow) {
+                iframe.contentWindow.postMessage(message, '*');
+            }
         },
-        [webViewRef],
+        [iframeRef],
     );
 
     const { sendAction } = useSendAction({ postMessage });
 
-    const onMessage = ({ nativeEvent }: WebViewMessageEvent): void => {
-        handleMessage(nativeEvent.data);
-    };
+    const onMessage = useCallback(
+        (event: MessageEvent): void => {
+            // Only accept messages from our iframe
+            if (event.source !== iframeRef.current?.contentWindow) {
+                return;
+            }
+
+            handleMessage(event.data);
+        },
+        [handleMessage],
+    );
 
     const onLoad = (): void => {
         setInited(true);
     };
 
-    const onError = ({ nativeEvent }: WebViewErrorEvent): void => {
-        console.warn('WebView error: ', nativeEvent);
+    const onError = (): void => {
+        console.warn('iframe error');
     };
 
     const onPress = (actionKey: ActionKey): void => {
@@ -89,6 +90,14 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         sendAction,
     });
 
+    // Setup message listener for iframe
+    useEffect(() => {
+        window.addEventListener('message', onMessage);
+        return () => {
+            window.removeEventListener('message', onMessage);
+        };
+    }, [onMessage]);
+
     return (
         <>
             {props.actionMap && (
@@ -101,20 +110,18 @@ export default function RichTextEditor(props: RichTextEditorProps) {
                 />
             )}
             <View style={[styles.editorContainer, containerStyle]}>
-                <WebView
-                    ref={webViewRef}
-                    source={htmlSource}
-                    style={[styles.webView, { height }]}
-                    textZoom={100}
-                    scrollEnabled={false}
-                    hideKeyboardAccessoryView
-                    keyboardDisplayRequiresUserAction={false}
-                    onMessage={onMessage}
-                    originWhitelist={['*']}
-                    dataDetectorTypes="none"
-                    bounces={false}
+                <iframe
+                    ref={iframeRef}
+                    srcDoc={HTML}
+                    style={{
+                        width: '100%',
+                        height,
+                        border: 'none',
+                        backgroundColor: 'transparent',
+                    }}
                     onLoad={onLoad}
                     onError={onError}
+                    title="Rich Text Editor"
                 />
             </View>
         </>
@@ -124,9 +131,5 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 const styles = StyleSheet.create({
     editorContainer: {
         flex: 1,
-    },
-    webView: {
-        flex: 0,
-        backgroundColor: 'transparent',
     },
 });

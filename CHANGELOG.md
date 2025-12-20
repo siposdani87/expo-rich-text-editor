@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.2.0 - 2025-12-02
+
+* Upgrade Expo SDK to version 54
+* Update React to version 19.1
+* Update React Native to version 0.81.5
+* Update TypeScript to version 5.9.2
+
+## 1.1.0 - 2025-01-19
+
+* Upgrade Expo SDK to version 52
+
 ## 1.0.9 - 2024-05-07
 
 * Upgrade React Native to version 0.73.6

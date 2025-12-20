@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
 });
-//# sourceMappingURL=RichTextEditor.js.map
+//# sourceMappingURL=RichTextEditor.native.js.map

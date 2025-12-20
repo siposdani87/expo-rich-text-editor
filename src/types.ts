@@ -1,0 +1,21 @@
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+
+import { ActionMap } from './RichTextToolbar';
+
+export interface RichTextEditorProps {
+    value: string;
+    onValueChange: (value: string) => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
+    onClickLink?: (url: string) => void;
+    selectionColor?: string;
+    actionMap?: ActionMap;
+    minHeight?: number;
+    linkStyle?: StyleProp<TextStyle>;
+    textStyle?: StyleProp<TextStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    toolbarStyle?: StyleProp<ViewStyle>;
+    disabled?: boolean;
+    autoFocus?: boolean;
+    debug?: boolean;
+}

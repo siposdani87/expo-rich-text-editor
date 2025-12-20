@@ -1,20 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { WebView } from 'react-native-webview';
 import RichTextToolbar, { ActionKey } from './RichTextToolbar';
 import HTML from './editor';
 import { useEditorActions, useEditorInitialization, useMessageHandler, useSelectedActionKeys, useSendAction, } from './hooks';
-// let htmlSource = require('./editor.html');
-// if (Platform.OS === 'android' || Platform.OS === 'web') {
-const htmlSource = { html: HTML };
-// }
 export default function RichTextEditor(props) {
     const containerStyle = StyleSheet.flatten(props.containerStyle);
     const textStyle = StyleSheet.flatten(props.textStyle);
     const linkStyle = StyleSheet.flatten(props.linkStyle);
     const [inited, setInited] = useState(false);
     const [minHeight] = useState(props.minHeight ?? 40);
-    const webViewRef = useRef(null);
+    const iframeRef = useRef(null);
     const toolbarRef = useRef(null);
     const { actions, value, setValue, height } = useEditorActions({
         onValueChange: props.onValueChange,
@@ -28,17 +23,24 @@ export default function RichTextEditor(props) {
     const { handleMessage } = useMessageHandler({ actions });
     const { selectedActionKeys, handleSelectedActionKeys } = useSelectedActionKeys();
     const postMessage = useCallback((message) => {
-        webViewRef.current?.postMessage(message);
-    }, [webViewRef]);
+        const iframe = iframeRef.current;
+        if (iframe?.contentWindow) {
+            iframe.contentWindow.postMessage(message, '*');
+        }
+    }, [iframeRef]);
     const { sendAction } = useSendAction({ postMessage });
-    const onMessage = ({ nativeEvent }) => {
-        handleMessage(nativeEvent.data);
-    };
+    const onMessage = useCallback((event) => {
+        // Only accept messages from our iframe
+        if (event.source !== iframeRef.current?.contentWindow) {
+            return;
+        }
+        handleMessage(event.data);
+    }, [handleMessage]);
     const onLoad = () => {
         setInited(true);
     };
-    const onError = ({ nativeEvent }) => {
-        console.warn('WebView error: ', nativeEvent);
+    const onError = () => {
+        console.warn('iframe error');
     };
     const onPress = (actionKey) => {
         if (!props.disabled) {
@@ -59,10 +61,22 @@ export default function RichTextEditor(props) {
         autoFocus: props.autoFocus,
         sendAction,
     });
+    // Setup message listener for iframe
+    useEffect(() => {
+        window.addEventListener('message', onMessage);
+        return () => {
+            window.removeEventListener('message', onMessage);
+        };
+    }, [onMessage]);
     return (<>
             {props.actionMap && (<RichTextToolbar ref={toolbarRef} style={props.toolbarStyle} actionMap={props.actionMap} selectedActionKeys={selectedActionKeys} onPress={onPress}/>)}
             <View style={[styles.editorContainer, containerStyle]}>
-                <WebView ref={webViewRef} source={htmlSource} style={[styles.webView, { height }]} textZoom={100} scrollEnabled={false} hideKeyboardAccessoryView keyboardDisplayRequiresUserAction={false} onMessage={onMessage} originWhitelist={['*']} dataDetectorTypes="none" bounces={false} onLoad={onLoad} onError={onError}/>
+                <iframe ref={iframeRef} srcDoc={HTML} style={{
+            width: '100%',
+            height,
+            border: 'none',
+            backgroundColor: 'transparent',
+        }} onLoad={onLoad} onError={onError} title="Rich Text Editor"/>
             </View>
         </>);
 }
@@ -70,9 +84,5 @@ const styles = StyleSheet.create({
     editorContainer: {
         flex: 1,
     },
-    webView: {
-        flex: 0,
-        backgroundColor: 'transparent',
-    },
 });
-//# sourceMappingURL=RichTextEditor.js.map
+//# sourceMappingURL=RichTextEditor.web.js.map

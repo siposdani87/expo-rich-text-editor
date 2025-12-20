@@ -42,7 +42,7 @@ function RichTextToolbar(props, ref) {
         return null;
     }
     return (<View style={[styles.toolbarContainer, props.style]}>
-            <FlatList horizontal={true} keyExtractor={keyExtractor} data={actions} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={renderItem}/>
+            <FlatList horizontal keyExtractor={keyExtractor} data={actions} alwaysBounceHorizontal={false} showsHorizontalScrollIndicator={false} renderItem={renderItem}/>
         </View>);
 }
 const styles = StyleSheet.create({
