@@ -12,6 +12,7 @@
     "moduleResolution": "Node",
     "jsx": "react-native",
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,

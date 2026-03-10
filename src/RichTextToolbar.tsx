@@ -39,6 +39,10 @@ export type ActionMap = {
     [key in ActionKey]: RendererActionElement;
 };
 
+export interface RichTextToolbarHandle {
+    click: (actionKey: ActionKey) => void;
+}
+
 function RichTextToolbar(
     props: {
         actionMap: ActionMap;
@@ -46,7 +50,7 @@ function RichTextToolbar(
         onPress: (_actionKey: ActionKey) => void;
         style?: StyleProp<ViewStyle>;
     },
-    ref: any,
+    ref: React.Ref<RichTextToolbarHandle>,
 ) {
     const id = useId();
     const [actions, setActions] = useState<Action[]>([]);

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Linking } from 'react-native';
+import { Linking, StyleSheet, } from 'react-native';
 import { ActionKey } from './RichTextToolbar';
 export function useEditorActions(params) {
     const [value, setValue] = useState('');
@@ -13,7 +13,8 @@ export function useEditorActions(params) {
             if (newHeight < params.minHeight) {
                 newHeight = params.minHeight;
             }
-            const offset = params.textStyle?.fontSize ?? 16;
+            const flatStyle = StyleSheet.flatten(params.textStyle);
+            const offset = flatStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url) => {
@@ -84,10 +85,12 @@ export function useEditorInitialization(params) {
     }, [inited, value, sendAction]);
     useEffect(() => {
         if (inited) {
-            sendAction('setColor', textStyle?.color);
-            sendAction('setFontFamily', textStyle?.fontFamily);
-            sendAction('setFontSize', textStyle?.fontSize);
-            sendAction('setLinkColor', linkStyle?.color);
+            const flatTextStyle = StyleSheet.flatten(textStyle);
+            const flatLinkStyle = StyleSheet.flatten(linkStyle);
+            sendAction('setColor', flatTextStyle?.color);
+            sendAction('setFontFamily', flatTextStyle?.fontFamily);
+            sendAction('setFontSize', flatTextStyle?.fontSize);
+            sendAction('setLinkColor', flatLinkStyle?.color);
             sendAction('setSelectionColor', selectionColor);
         }
     }, [inited, textStyle, linkStyle, selectionColor, sendAction]);

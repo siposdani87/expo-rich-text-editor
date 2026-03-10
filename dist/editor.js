@@ -155,6 +155,9 @@ const HTML = `<!DOCTYPE html>
                     Actions.changeHeight();
                 },
                 setFontFamily: function (fontFamily) {
+                    if (!fontFamily || typeof fontFamily !== 'string') {
+                        return;
+                    }
                     var [capitalizeFontFamily, weightWithText, fontStyle] = fontFamily.split('_', 3);
                     var familyNames = capitalizeFontFamily.split(/(?=[A-Z])/);
                     var weight = weightWithText ? weightWithText.match(/[0-9]+/g)[0] : 400;
@@ -287,11 +290,18 @@ const HTML = `<!DOCTYPE html>
                 exec('defaultParagraphSeparator', 'p');
 
                 var onMessage = function (event) {
-                    var message = JSON.parse(event.data);
-                    var action = Actions[message.type];
-                    log(message);
-                    if (action) {
-                        action(message.data);
+                    try {
+                        var message = JSON.parse(event.data);
+                        if (!message || typeof message.type !== 'string') {
+                            return;
+                        }
+                        var action = Actions[message.type];
+                        log(message);
+                        if (action) {
+                            action(message.data);
+                        }
+                    } catch (e) {
+                        // Ignore non-JSON messages
                     }
                 };
 

@@ -1,7 +1,48 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Linking, StyleProp, TextStyle } from 'react-native';
+import {
+    ColorValue,
+    Linking,
+    StyleProp,
+    StyleSheet,
+    TextStyle,
+} from 'react-native';
 
 import { ActionKey } from './RichTextToolbar';
+
+/** Messages sent from the editor (WebView/iframe) to React Native */
+export type EditorToRNMessage =
+    | { type: 'changeHtml'; data: string }
+    | { type: 'changeHeight'; data: number }
+    | { type: 'onClickLink'; data: string }
+    | { type: 'onFocus'; data?: undefined }
+    | { type: 'onBlur'; data?: undefined }
+    | { type: 'log'; data: string };
+
+/** Commands sent from React Native to the editor (WebView/iframe) */
+export type RNToEditorCommand =
+    | { type: 'setHtml'; data: string }
+    | { type: 'setColor'; data: string }
+    | { type: 'setFontFamily'; data: string }
+    | { type: 'setFontSize'; data: number }
+    | { type: 'setLinkColor'; data: string }
+    | { type: 'setSelectionColor'; data: string }
+    | { type: 'setDisabled'; data: boolean }
+    | { type: 'setAutoFocus'; data: boolean }
+    | { type: 'undo'; data: string }
+    | { type: 'redo'; data: string }
+    | { type: 'bold'; data: string }
+    | { type: 'italic'; data: string }
+    | { type: 'underline'; data: string }
+    | { type: 'orderedList'; data: string }
+    | { type: 'unorderedList'; data: string }
+    | { type: 'clear'; data: string }
+    | { type: 'code'; data: string };
+
+/** Generic message format for consumers */
+export interface EditorMessage {
+    type: string;
+    data: unknown;
+}
 
 export interface EditorActions {
     changeHtml: (html: string) => void;
@@ -35,7 +76,8 @@ export function useEditorActions(params: UseEditorActionsParams) {
             if (newHeight < params.minHeight) {
                 newHeight = params.minHeight;
             }
-            const offset = (params.textStyle as any)?.fontSize ?? 16;
+            const flatStyle = StyleSheet.flatten<TextStyle>(params.textStyle);
+            const offset = flatStyle?.fontSize ?? 16;
             setHeight(newHeight + offset);
         },
         onClickLink: (url: string) => {
@@ -71,7 +113,7 @@ export function useMessageHandler(params: UseMessageHandlerParams) {
                 const message = JSON.parse(data);
                 const action = params.actions[
                     message?.type as keyof typeof params.actions
-                ] as (_arg: any) => void;
+                ] as ((_arg: string | number | boolean) => void) | undefined;
                 if (action) {
                     action(message.data);
                 } else {
@@ -114,7 +156,10 @@ export interface UseSendActionParams {
 
 export function useSendAction(params: UseSendActionParams) {
     const sendAction = useCallback(
-        (type: string, data: any): void => {
+        (
+            type: string,
+            data: string | number | boolean | ColorValue | undefined,
+        ): void => {
             if (data === undefined || data === null) {
                 return;
             }
@@ -136,7 +181,10 @@ export interface UseEditorInitializationParams {
     selectionColor?: string;
     disabled?: boolean;
     autoFocus?: boolean;
-    sendAction: (type: string, data: any) => void;
+    sendAction: (
+        type: string,
+        data: string | number | boolean | ColorValue | undefined,
+    ) => void;
 }
 
 export function useEditorInitialization(params: UseEditorInitializationParams) {
@@ -159,10 +207,12 @@ export function useEditorInitialization(params: UseEditorInitializationParams) {
 
     useEffect(() => {
         if (inited) {
-            sendAction('setColor', (textStyle as any)?.color);
-            sendAction('setFontFamily', (textStyle as any)?.fontFamily);
-            sendAction('setFontSize', (textStyle as any)?.fontSize);
-            sendAction('setLinkColor', (linkStyle as any)?.color);
+            const flatTextStyle = StyleSheet.flatten<TextStyle>(textStyle);
+            const flatLinkStyle = StyleSheet.flatten<TextStyle>(linkStyle);
+            sendAction('setColor', flatTextStyle?.color);
+            sendAction('setFontFamily', flatTextStyle?.fontFamily);
+            sendAction('setFontSize', flatTextStyle?.fontSize);
+            sendAction('setLinkColor', flatLinkStyle?.color);
             sendAction('setSelectionColor', selectionColor);
         }
     }, [inited, textStyle, linkStyle, selectionColor, sendAction]);

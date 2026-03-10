@@ -19,10 +19,14 @@ export declare enum ActionKey {
 export type ActionMap = {
     [key in ActionKey]: RendererActionElement;
 };
+export interface RichTextToolbarHandle {
+    click: (actionKey: ActionKey) => void;
+}
 declare const _default: React.ForwardRefExoticComponent<{
     actionMap: ActionMap;
     selectedActionKeys: ActionKey[];
     onPress: (_actionKey: ActionKey) => void;
     style?: StyleProp<ViewStyle>;
-} & React.RefAttributes<unknown>>;
+} & React.RefAttributes<RichTextToolbarHandle>>;
 export default _default;
+//# sourceMappingURL=RichTextToolbar.d.ts.map
