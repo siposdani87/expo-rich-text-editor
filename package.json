@@ -83,7 +83,7 @@
     "jest": "^30.3.0",
     "lint-staged": "^16.3.3",
     "prettier": "^3.2.4",
-    "react": "~19.1.0",
+    "react": "~19.2.4",
     "react-native": "~0.81.5",
     "react-native-webview": "^13.16.0",
     "react-test-renderer": "^19.1.0",
