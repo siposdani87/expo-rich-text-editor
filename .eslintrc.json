@@ -15,6 +15,7 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "ignorePatterns": ["**/__tests__/**"],
     "rules": {},
     "globals": {
         "JSX": "readonly"
