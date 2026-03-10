@@ -111,7 +111,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
                     keyboardDisplayRequiresUserAction={false}
                     onMessage={onMessage}
                     originWhitelist={['*']}
-                    dataDetectorTypes="none"
+                    dataDetectorTypes={['none']}
                     bounces={false}
                     onLoad={onLoad}
                     onError={onError}
