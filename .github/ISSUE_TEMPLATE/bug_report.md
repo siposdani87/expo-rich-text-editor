@@ -24,7 +24,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment:**
 - OS: [e.g. iOS 17, Android 14]
 - Expo SDK version: [e.g. 54]
-- Library version: [e.g. 1.2.1]
+- Library version: [e.g. 1.3.0]
 - React Native version: [e.g. 0.81.5]
 
 **Additional context**
