@@ -8,6 +8,25 @@
 
 This rich text editor written in TypeScript and use React Hooks structure. This component use the HTML ContentEditable div feature and React communicate and send data to native JavaScript via WebView. It has base editing options.
 
+## Supported Platforms
+
+| Platform | Supported | Notes |
+| -------- | --------- | ----- |
+| iOS      | Yes       | Via `react-native-webview` |
+| Android  | Yes       | Via `react-native-webview` |
+| Web      | Yes       | Via `<iframe>` with `contentEditable` |
+
+### Compatibility
+
+| Dependency             | Required Version |
+| ---------------------- | ---------------- |
+| Expo SDK               | >= 54            |
+| React                  | >= 19            |
+| React Native           | >= 0.81          |
+| react-native-webview   | >= 13 (iOS/Android only) |
+
+New Architecture (Fabric) is supported.
+
 ## Getting Started
 
 ### Installing
@@ -131,6 +150,117 @@ const styles = StyleSheet.create({
 | containerStyle  | StyleProp<ViewStyle>    | Style of content container |
 | debug           | boolean                 | Print debug information to console |
 
+### Available Toolbar Actions
+
+The `ActionKey` enum defines all available formatting actions:
+
+| ActionKey       | Description                |
+| --------------- | -------------------------- |
+| `undo`          | Undo last action           |
+| `redo`          | Redo last action           |
+| `bold`          | Toggle bold formatting     |
+| `italic`        | Toggle italic formatting   |
+| `underline`     | Toggle underline formatting|
+| `unorderedList` | Insert unordered list      |
+| `orderedList`   | Insert ordered list        |
+| `clear`         | Remove formatting          |
+| `code`          | Toggle HTML source editing |
+
+### Advanced Usage
+
+#### Custom Toolbar with All Actions
+
+```typescript
+import { ActionKey, ActionMap } from '@siposdani87/expo-rich-text-editor';
+
+const getFullActionMap = (getColor: (selected: boolean) => string): ActionMap => ({
+    [ActionKey.undo]: ({ selected }) => (
+        <MaterialIcons name="undo" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.redo]: ({ selected }) => (
+        <MaterialIcons name="redo" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.bold]: ({ selected }) => (
+        <MaterialIcons name="format-bold" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.italic]: ({ selected }) => (
+        <MaterialIcons name="format-italic" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.underline]: ({ selected }) => (
+        <MaterialIcons name="format-underlined" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.unorderedList]: ({ selected }) => (
+        <MaterialIcons name="format-list-bulleted" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.orderedList]: ({ selected }) => (
+        <MaterialIcons name="format-list-numbered" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.clear]: ({ selected }) => (
+        <MaterialIcons name="format-clear" size={14} color={getColor(selected)} />
+    ),
+    [ActionKey.code]: ({ selected }) => (
+        <MaterialIcons name="code" size={14} color={getColor(selected)} />
+    ),
+});
+```
+
+#### Programmatic Control via Toolbar Ref
+
+```typescript
+import { useRef } from 'react';
+import { RichTextToolbar, RichTextToolbarHandle, ActionKey } from '@siposdani87/expo-rich-text-editor';
+
+const toolbarRef = useRef<RichTextToolbarHandle>(null);
+
+// Trigger bold programmatically
+toolbarRef.current?.click(ActionKey.bold);
+```
+
+### Message Protocol
+
+The editor communicates between React Native and the embedded HTML editor via JSON messages with `{type, data}` pairs.
+
+**Editor → React Native** (`EditorToRNMessage`):
+
+| Type           | Data Type | Description                    |
+| -------------- | --------- | ------------------------------ |
+| `changeHtml`   | `string`  | HTML content changed           |
+| `changeHeight` | `number`  | Editor height changed          |
+| `onClickLink`  | `string`  | Link was clicked (href)        |
+| `onFocus`      | -         | Editor gained focus            |
+| `onBlur`       | -         | Editor lost focus              |
+| `log`          | `string`  | Debug log message              |
+
+**React Native → Editor** (`RNToEditorCommand`):
+
+| Type                | Data Type | Description                   |
+| ------------------- | --------- | ----------------------------- |
+| `setHtml`           | `string`  | Set editor HTML content       |
+| `setColor`          | `string`  | Set text color                |
+| `setFontFamily`     | `string`  | Set font family               |
+| `setFontSize`       | `number`  | Set font size                 |
+| `setLinkColor`      | `string`  | Set link color                |
+| `setSelectionColor` | `string`  | Set selection/caret color     |
+| `setDisabled`       | `boolean` | Enable/disable editing        |
+| `setAutoFocus`      | `boolean` | Set auto focus                |
+| `bold`, `italic`, etc. | `string` | Toggle formatting commands |
+
+## Migration Guide
+
+### From 1.1.x to 1.2.x
+
+- **Expo SDK 54** is now required (was SDK 52)
+- **React 19** is now required (was React 18)
+- **React Native 0.81+** is now required
+- New Architecture (Fabric) is now supported
+- Web platform support added via `<iframe>` (no changes needed if using iOS/Android only)
+
+### From 0.x to 1.x
+
+- `ActionMap` keys changed from string to `ActionKey` enum
+- `viewerStyle` prop renamed to `containerStyle`
+- Minimum Expo SDK version is now 50+
+
 ## Preview
 
 ![Overview](https://raw.githubusercontent.com/siposdani87/expo-rich-text-editor/master/images/expo-rich-text-editor.png)
@@ -138,6 +268,17 @@ const styles = StyleSheet.create({
 ## Bugs or Requests
 
 If you encounter any problems feel free to open an [issue](https://github.com/siposdani87/expo-rich-text-editor/issues/new?template=bug_report.md). If you feel the library is missing a feature, please raise a [ticket](https://github.com/siposdani87/expo-rich-text-editor/issues/new?template=feature_request.md). Pull request are also welcome.
+
+## Development
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup instructions and contribution guidelines.
+
+```bash
+npm ci          # Install dependencies
+npm run build   # Build the library
+npm run lint    # Check for lint errors
+npm run format  # Format source code
+```
 
 ## Developer
 
