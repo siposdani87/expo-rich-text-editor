@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 
-import RichTextToolbar, { ActionKey } from './RichTextToolbar';
+import RichTextToolbar, {
+    ActionKey,
+    RichTextToolbarHandle,
+} from './RichTextToolbar';
 import HTML from './editor';
 import {
     useEditorActions,
@@ -19,7 +22,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     const [inited, setInited] = useState<boolean>(false);
     const [minHeight] = useState<number>(props.minHeight ?? 40);
     const iframeRef = useRef<HTMLIFrameElement>(null);
-    const toolbarRef = useRef<any>(null);
+    const toolbarRef = useRef<RichTextToolbarHandle>(null);
 
     const { actions, value, setValue, height } = useEditorActions({
         onValueChange: props.onValueChange,

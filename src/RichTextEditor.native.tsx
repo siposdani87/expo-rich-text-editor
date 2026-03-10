@@ -6,7 +6,10 @@ import {
     WebViewMessageEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 
-import RichTextToolbar, { ActionKey } from './RichTextToolbar';
+import RichTextToolbar, {
+    ActionKey,
+    RichTextToolbarHandle,
+} from './RichTextToolbar';
 import HTML from './editor';
 import {
     useEditorActions,
@@ -28,8 +31,8 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     const linkStyle = StyleSheet.flatten<TextStyle>(props.linkStyle);
     const [inited, setInited] = useState<boolean>(false);
     const [minHeight] = useState<number>(props.minHeight ?? 40);
-    const webViewRef = useRef<any>(null);
-    const toolbarRef = useRef<any>(null);
+    const webViewRef = useRef<WebView>(null);
+    const toolbarRef = useRef<RichTextToolbarHandle>(null);
 
     const { actions, value, setValue, height } = useEditorActions({
         onValueChange: props.onValueChange,
