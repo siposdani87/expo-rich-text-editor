@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import RichTextToolbar, { ActionKey } from './RichTextToolbar';
+import RichTextToolbar, { ActionKey, } from './RichTextToolbar';
 import HTML from './editor';
 import { useEditorActions, useEditorInitialization, useMessageHandler, useSelectedActionKeys, useSendAction, } from './hooks';
 export default function RichTextEditor(props) {

@@ -8,3 +8,4 @@ export default function RichTextViewer(props: {
     containerStyle?: StyleProp<ViewStyle>;
     debug?: boolean;
 }): React.JSX.Element;
+//# sourceMappingURL=RichTextViewer.d.ts.map
