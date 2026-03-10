@@ -2,7 +2,7 @@
 
 ## Pre-Release
 
-- [x] Bump version to 1.2.1 in `package.json`
+- [x] Bump version to 1.3.0 in `package.json`
 
 ## Current State (Overall ~8/10)
 
@@ -53,7 +53,6 @@
 
 - [x] Add pre-commit hooks (husky + lint-staged)
 - [x] Add `.nvmrc` with Node 20
-- [x] Add Dependabot config for automated dep updates
 - [x] Set up commitlint with conventional commits enforcement
 
 ## TypeScript Improvements
