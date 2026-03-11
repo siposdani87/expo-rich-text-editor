@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.3.0 - 2026-03-10
+
+* Upgrade Expo SDK to version 55
+* Update React to version 19.2.4
+* Update React Native to version 0.83.4
+* New Architecture (Fabric) is now mandatory
+
 ## 1.2.0 - 2025-12-02
 
 * Upgrade Expo SDK to version 54
