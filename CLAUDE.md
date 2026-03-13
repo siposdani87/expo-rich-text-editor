@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-An npm-published React Native rich text editor library (`@siposdani87/expo-rich-text-editor`) built for Expo SDK 54. Uses a WebView-based contentEditable approach with a JSON message bridge between React Native and an embedded HTML editor.
+An npm-published React Native rich text editor library (`@siposdani87/expo-rich-text-editor`) built for Expo SDK 55. Uses a WebView-based contentEditable approach with a JSON message bridge between React Native and an embedded HTML editor. New Architecture (Fabric) is required.
 
 ## Build & Development Commands
 
@@ -24,7 +24,7 @@ npm run android        # Run on Android
 npm run tsc-test       # TypeScript type check (no emit)
 ```
 
-No test suite exists — `npm test` is a no-op placeholder.
+`npm test` runs Jest with 18 unit and snapshot tests for hooks and toolbar.
 
 ## Architecture
 
@@ -69,7 +69,10 @@ All editor logic is extracted into composable hooks:
 
 ## Key Conventions
 
-- Library is published as npm package — `peerDependencies` define compatibility (expo >=54, react >=18, react-native >=0.70, react-native-webview >=13)
+- Library is published as npm package — `peerDependencies` define compatibility (expo >=55, react >=19, react-native >=0.83, react-native-webview >=13)
 - `dist/` is the build output included in the published package along with `src/`
 - The `example/` directory is an independent Expo app that references the library via `"file:../"` symlink
+- The example app has a `metro.config.js` that configures `watchFolders`, `nodeModulesPaths`, and `extraNodeModules` to resolve the symlinked parent library and prevent duplicate React copies
 - The root `package.json` has no `dependencies` — only `peerDependencies` and `devDependencies`
+- Pre-commit hooks via husky + lint-staged run ESLint and Prettier on staged `src/**/*.{ts,tsx}` files
+- Conventional commits enforced via commitlint

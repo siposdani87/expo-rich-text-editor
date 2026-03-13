@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/siposdani87/expo-rich-text-editor/compare/1.2.1...1.3.0) (2026-03-12)
+
+### Features
+
+* upgrade to Expo SDK 55 with React Native 0.83 and React 19.2 ([0833e7f](https://github.com/siposdani87/expo-rich-text-editor/commit/0833e7fc0f69d10470ff5aaa99b0fdab26616599))
+
 ## 1.2.0 - 2025-12-02
 
 * Upgrade Expo SDK to version 54

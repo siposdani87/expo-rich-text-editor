@@ -20,12 +20,12 @@ This rich text editor written in TypeScript and use React Hooks structure. This 
 
 | Dependency             | Required Version |
 | ---------------------- | ---------------- |
-| Expo SDK               | >= 54            |
+| Expo SDK               | >= 55            |
 | React                  | >= 19            |
-| React Native           | >= 0.81          |
+| React Native           | >= 0.83          |
 | react-native-webview   | >= 13 (iOS/Android only) |
 
-New Architecture (Fabric) is supported.
+New Architecture (Fabric) is **required** (Legacy Architecture is no longer supported by Expo SDK 55).
 
 ## Getting Started
 
@@ -246,6 +246,14 @@ The editor communicates between React Native and the embedded HTML editor via JS
 | `bold`, `italic`, etc. | `string` | Toggle formatting commands |
 
 ## Migration Guide
+
+### From 1.2.x to 1.3.x
+
+- **Expo SDK 55** is now required (was SDK 54)
+- **React Native 0.83+** is now required (was 0.81)
+- **New Architecture (Fabric) is now mandatory** — Legacy Architecture is no longer supported
+- No breaking API changes — drop-in upgrade
+- `react-native-webview` >= 13 requirement unchanged
 
 ### From 1.1.x to 1.2.x
 
