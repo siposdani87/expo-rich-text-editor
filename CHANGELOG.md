@@ -2,12 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.3.0 - 2026-03-10
+## [1.3.0](https://github.com/siposdani87/expo-rich-text-editor/compare/1.2.1...1.3.0) (2026-03-12)
 
-* Upgrade Expo SDK to version 55
-* Update React to version 19.2.4
-* Update React Native to version 0.83.4
-* New Architecture (Fabric) is now mandatory
+### Features
+
+* upgrade to Expo SDK 55 with React Native 0.83 and React 19.2 ([0833e7f](https://github.com/siposdani87/expo-rich-text-editor/commit/0833e7fc0f69d10470ff5aaa99b0fdab26616599))
 
 ## 1.2.0 - 2025-12-02
 
